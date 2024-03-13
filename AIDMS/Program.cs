@@ -9,6 +9,7 @@ namespace AIDMS
         public static void Main(string[] args)
         {
             // Test github
+            // Test G 1.1
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
