@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AIDMS.Models
+namespace AIDMS.Entities
 {
     public class Role
     {

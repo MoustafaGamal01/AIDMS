@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace AIDMS.Models
+namespace AIDMS.Entities
 {
     public class AIDMSContextClass:DbContext
     {

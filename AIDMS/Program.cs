@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
-using AIDMS.Models;
+using AIDMS.Entities;
 
 namespace AIDMS
 {
@@ -8,8 +8,6 @@ namespace AIDMS
     {
         public static void Main(string[] args)
         {
-            // Test github
-            // Test G 1.1
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.

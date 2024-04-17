@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AIDMS.Models
+namespace AIDMS.Entities
 {
     public class Notification
     {
