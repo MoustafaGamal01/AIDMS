@@ -12,12 +12,12 @@ namespace AIDMS.Entities
         public virtual UserDetails? UserDetails { get; set; }
 
         public virtual List<Application>? Applications { get; set; }
-        public virtual List<Document>? Documents { get; set; }
+        public virtual List<AIDocument>? Documents { get; set; }
         public virtual List<Notification>? Notifications { get; set; }
 
         public Student()
         {
-            Documents = new List<Document>();
+            Documents = new List<AIDocument>();
             Applications = new List<Application>();
             Notifications = new List<Notification>();
         }

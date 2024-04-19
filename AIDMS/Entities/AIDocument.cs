@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AIDMS.Entities
 {
-    public class Document
+    public class AIDocument
     {
         public int Id { get; set; }
 

@@ -4,10 +4,10 @@ namespace AIDMS.Repositories
 {
     public interface IDocumentRepository
     {
-        Task<Document> GetDocumentByIdAsync(int documentId);
-        Task<List<Document>> GetAllDocumentsAsync();
-        Task AddEmployeeAsync(Document document);
-        Task UpdateDocumentAsync(int documentId, Document document);
+        Task<AIDocument> GetDocumentByIdAsync(int documentId);
+        Task<List<AIDocument>> GetAllDocumentsAsync();
+        Task AddDocumentAsync(AIDocument document);
+        Task UpdateDocumentAsync(int documentId, AIDocument document);
         Task DeleteDocumentAsync(int documentId);
     }
 }

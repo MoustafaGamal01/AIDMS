@@ -16,7 +16,7 @@ namespace AIDMS.Entities
         public DbSet<Application> Applications { get; set; }
         public DbSet<UserDetails> UserDetails { get; set; }
         public DbSet<Notification> Notifications { get; set; }
-        public DbSet<Document> Documents { get; set; }
+        public DbSet<AIDocument> Documents { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Role> Roles { get; set; }
 
@@ -56,11 +56,11 @@ namespace AIDMS.Entities
                 .HasColumnType("decimal(18,2)");
 
             // Document 
-            modelBuilder.Entity<Document>()
+            modelBuilder.Entity<AIDocument>()
                .Property(d => d.FileName)
                .IsUnicode(true);
 
-            modelBuilder.Entity<Document>()
+            modelBuilder.Entity<AIDocument>()
                .Property(d => d.FileType)
                .IsUnicode(true);
 

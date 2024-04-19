@@ -44,10 +44,10 @@ namespace AIDMS.Entities
         public int PaymentId { get; set; }
         public virtual Payment? Payment { get; set; }
 
-        public virtual List<Document>? Documents { get; set; }
+        public virtual List<AIDocument>? Documents { get; set; }
         public Application()
         {
-            Documents = new List<Document>();
+            Documents = new List<AIDocument>();
         }
     }
 }
