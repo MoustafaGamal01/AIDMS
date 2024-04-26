@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\AIDMS.csproj": {}
   },
   "projects": {
@@ -20,12 +21,31 @@
           "C:\\Users\\AIA\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+=======
+    "D:\\AIDMS-master\\AIDMS\\AIDMS.csproj": {}
+  },
+  "projects": {
+    "D:\\AIDMS-master\\AIDMS\\AIDMS.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\AIDMS-master\\AIDMS\\AIDMS.csproj",
+        "projectName": "AIDMS",
+        "projectPath": "D:\\AIDMS-master\\AIDMS\\AIDMS.csproj",
+        "packagesPath": "C:\\Users\\Youssef Gemy\\.nuget\\packages\\",
+        "outputPath": "D:\\AIDMS-master\\AIDMS\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Youssef Gemy\\AppData\\Roaming\\NuGet\\NuGet.Config"
+>>>>>>> main
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+<<<<<<< HEAD
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+=======
+>>>>>>> main
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,11 +58,14 @@
           "warnAsError": [
             "NU1605"
           ]
+<<<<<<< HEAD
         },
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
+=======
+>>>>>>> main
         }
       },
       "frameworks": {
@@ -87,7 +110,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+>>>>>>> main
         }
       }
     }
