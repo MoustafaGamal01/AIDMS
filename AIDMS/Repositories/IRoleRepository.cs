@@ -6,7 +6,10 @@ namespace AIDMS.Repositories
     {
         Task<Role> GetRoleByIdAsync(int roleId);
 <<<<<<< HEAD
+<<<<<<< HEAD
         Task<Role> GetRoleByNameAsync(string roleName);
+=======
+>>>>>>> main
 =======
 >>>>>>> main
         Task<List<Role>> GetAllRolesAsync();

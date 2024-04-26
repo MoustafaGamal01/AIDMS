@@ -2,6 +2,7 @@
   "format": 1,
   "restore": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\AIDMS.csproj": {}
   },
   "projects": {
@@ -22,6 +23,8 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
 =======
+=======
+>>>>>>> main
     "D:\\AIDMS-master\\AIDMS\\AIDMS.csproj": {}
   },
   "projects": {
@@ -36,6 +39,9 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Youssef Gemy\\AppData\\Roaming\\NuGet\\NuGet.Config"
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
         ],
         "originalTargetFrameworks": [
@@ -43,7 +49,10 @@
         ],
         "sources": {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+=======
+>>>>>>> main
 =======
 >>>>>>> main
           "https://api.nuget.org/v3/index.json": {}
@@ -59,11 +68,14 @@
             "NU1605"
           ]
 <<<<<<< HEAD
+<<<<<<< HEAD
         },
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
+=======
+>>>>>>> main
 =======
 >>>>>>> main
         }
@@ -111,7 +123,11 @@
             }
           },
 <<<<<<< HEAD
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+>>>>>>> main
 =======
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
 >>>>>>> main

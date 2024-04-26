@@ -6,7 +6,10 @@ namespace AIDMS.Repositories
     {
         Task<Payment> GetPaymentByIdAsync(int paymentId);
 <<<<<<< HEAD
+<<<<<<< HEAD
         Task<Payment> GetByPaymentByNameAsync(string paymentName);
+=======
+>>>>>>> main
 =======
 >>>>>>> main
         Task<List<Payment>> GetAllPaymetnsAsync();

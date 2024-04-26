@@ -6,7 +6,10 @@ namespace AIDMS.Repositories
     {
         Task<Notification> GetNotificationByIdAsync(int notificationId);
 <<<<<<< HEAD
+<<<<<<< HEAD
         Task<Notification> GetNotificationByNameAsync(string notificationName);
+=======
+>>>>>>> main
 =======
 >>>>>>> main
         Task<List<Notification>> GetAllNotificationsAsync();

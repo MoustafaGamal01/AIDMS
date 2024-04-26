@@ -6,7 +6,10 @@ namespace AIDMS.Repositories
     {
         Task<UserDetails> GetUserDetailsByIdAsync(int userId);
 <<<<<<< HEAD
+<<<<<<< HEAD
         Task<UserDetails> GetUserDetailsByNameAsync(string userName);
+=======
+>>>>>>> main
 =======
 >>>>>>> main
         Task<List<UserDetails>> GetAllUsersDetailsAsync();

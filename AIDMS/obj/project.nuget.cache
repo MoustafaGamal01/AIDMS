@@ -1,6 +1,7 @@
 {
   "version": 2,
 <<<<<<< HEAD
+<<<<<<< HEAD
   "dgSpecHash": "y3F9EULNMwReTAClQxmr8RV4KrEnG8U+DB/nt2U+Y71D1SLsgiTINoEfpEaBZGj7I0DDVvVYlHkChg5V+M6rng==",
   "success": true,
   "projectFilePath": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\AIDMS.csproj",
@@ -88,6 +89,8 @@
     "C:\\Users\\AIA\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\AIA\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
 =======
+=======
+>>>>>>> main
   "dgSpecHash": "eB2zeUw4v5UGSXL2yEiR40otDELF+YJMAoKmc4fB1AZLawI0AaYC0qoYxUzFGWaWtsxUu5PMtyqsF99LhJnHIA==",
   "success": true,
   "projectFilePath": "D:\\AIDMS-master\\AIDMS\\AIDMS.csproj",
@@ -174,6 +177,9 @@
     "C:\\Users\\Youssef Gemy\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",
     "C:\\Users\\Youssef Gemy\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\Youssef Gemy\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
+<<<<<<< HEAD
+>>>>>>> main
+=======
 >>>>>>> main
   ],
   "logs": []

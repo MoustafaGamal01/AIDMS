@@ -14,6 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< HEAD
           "SelectedChildIndex": 1,
           "Children": [
             {
@@ -21,6 +22,11 @@
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
+=======
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+>>>>>>> main
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "StudentRepository.cs",
@@ -28,10 +34,21 @@
               "RelativeDocumentMoniker": "AIDMS\\Repositories\\StudentRepository.cs",
               "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Repositories\\StudentRepository.cs",
               "RelativeToolTip": "AIDMS\\Repositories\\StudentRepository.cs",
+<<<<<<< HEAD
               "ViewState": "AQIAACcAAAAAAAAAAAAAABsAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-19T13:13:46.988Z",
               "EditorCaption": ""
+=======
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAAB4AAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-19T13:13:46.988Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+>>>>>>> main
             }
           ]
         }
