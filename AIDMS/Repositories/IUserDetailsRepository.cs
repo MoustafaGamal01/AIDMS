@@ -5,13 +5,7 @@ namespace AIDMS.Repositories
     public interface IUserDetailsRepository
     {
         Task<UserDetails> GetUserDetailsByIdAsync(int userId);
-<<<<<<< HEAD
-<<<<<<< HEAD
         Task<UserDetails> GetUserDetailsByNameAsync(string userName);
-=======
->>>>>>> main
-=======
->>>>>>> main
         Task<List<UserDetails>> GetAllUsersDetailsAsync();
         Task AddUserDetailsAsync(UserDetails userDetails);
         Task UpdateUserDetailAsync(int userId, UserDetails userDetails);
