@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using AIDMS.Entities;
+using AIDMS.Repositories;
 
 namespace AIDMS
 {
@@ -16,6 +17,10 @@ namespace AIDMS
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            // Add Repos
+            builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+            
+            
             // Configure EF Core to use SQL Server with the connection string named "LocalCS"
             builder.Services.AddDbContext<AIDMSContextClass>(options =>
             {

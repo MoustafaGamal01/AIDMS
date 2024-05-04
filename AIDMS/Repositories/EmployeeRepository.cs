@@ -43,8 +43,7 @@ namespace AIDMS.Repositories
         public async Task<Employee> GetEmployeeByNameAsync(string employeeName)
         {
             return await context.Employees
-                .Include(e => e.UserDetails)
-                .FirstOrDefaultAsync(e => e.UserDetails.FirstName == employeeName || e.UserDetails.LastName == employeeName);
+                .FirstOrDefaultAsync(e => e.FirstName.Contains(employeeName) || e.LastName.Contains("employeeName"));
         }
 
         public async Task UpdateEmployeeAsync(int employeeId, Employee employee)

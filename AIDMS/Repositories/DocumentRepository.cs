@@ -9,10 +9,10 @@ namespace AIDMS.Repositories
 {
     public class DocumentRepository : IDocumentRepository
     {
-        private readonly AIDMSContextClass _context;
+        private readonly AIDMSContextClass context;
 
         public DocumentRepository(AIDMSContextClass context) {
-            this._context = context;
+            this.context = context;
         }
 
         public async Task AddDocumentAsync(AIDocument document)
@@ -23,24 +23,22 @@ namespace AIDMS.Repositories
 
         public async Task<List<AIDocument>> GetAllDocumentsByStudentIdAsync(int studentId)
         {
-            return await _context.Documents.Where(d => d.StudentId == studentId).ToListAsync(); 
+            return await context.Documents.Where(d => d.StudentId == studentId).ToListAsync(); 
         }
 
         public async Task<List<AIDocument>> GetAllDocumentsByStudentNameAsync(string studentName)
         {
-            var std = await _context.Students
-                .Include(s => s.UserDetails)
-                .SingleOrDefaultAsync(s => ((s.UserDetails.FirstName.Contains(studentName)) ||
-                (s.UserDetails.LastName.Contains(studentName)) ||
-                (s.UserDetails.FirstName + " " + s.UserDetails.LastName).Contains(studentName)));
-
+            var std = await context.Students
+                .SingleOrDefaultAsync(s => ((s.FirstName.Contains(studentName)) ||
+                (s.LastName.Contains(studentName)) ||
+                (s.FirstName + " " + s.LastName).Contains(studentName)));
 
             if (std == null)
             {
                 return new List<AIDocument>();
             }
 
-            var allDocuments = await _context.Documents
+            var allDocuments = await context.Documents
                 .Where(a => a.StudentId == std.Id)
                 .ToListAsync();
 

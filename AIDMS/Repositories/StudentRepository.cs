@@ -24,8 +24,7 @@ namespace AIDMS.Repositories
         public async Task<Student> GetStudentByNameAsync(string studentName)
         {
             return await _context.Students
-                .Include(s => s.UserDetails)
-                .FirstOrDefaultAsync(s => s.UserDetails.FirstName == studentName || s.UserDetails.LastName == studentName);
+                .FirstOrDefaultAsync(s => s.FirstName.Contains(studentName)  || s.LastName.Contains(studentName));
         }
 
         public async Task<List<Student>> GetAllStudentsAsync()

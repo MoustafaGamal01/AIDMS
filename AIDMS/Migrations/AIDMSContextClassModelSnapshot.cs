@@ -22,7 +22,50 @@ namespace AIDMS.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AIDMS.Models.Application", b =>
+            modelBuilder.Entity("AIDMS.Entities.AIDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ApplicationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Documents");
+                });
+
+            modelBuilder.Entity("AIDMS.Entities.Application", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -77,7 +120,7 @@ namespace AIDMS.Migrations
                     b.ToTable("Applications");
                 });
 
-            modelBuilder.Entity("AIDMS.Models.Document", b =>
+            modelBuilder.Entity("AIDMS.Entities.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -85,65 +128,51 @@ namespace AIDMS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ApplicationId")
+                    b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<string>("FileName")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("FileType")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("StudentId")
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UploadedAt")
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("dateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Documents");
-                });
-
-            modelBuilder.Entity("AIDMS.Models.Employee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("roleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("userDetailsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("roleId");
-
-                    b.HasIndex("userDetailsId");
-
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("AIDMS.Models.Notification", b =>
+            modelBuilder.Entity("AIDMS.Entities.Notification", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -178,7 +207,7 @@ namespace AIDMS.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("AIDMS.Models.Payment", b =>
+            modelBuilder.Entity("AIDMS.Entities.Payment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -201,7 +230,7 @@ namespace AIDMS.Migrations
                     b.ToTable("Payments");
                 });
 
-            modelBuilder.Entity("AIDMS.Models.Role", b =>
+            modelBuilder.Entity("AIDMS.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -212,13 +241,11 @@ namespace AIDMS.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .IsUnicode(true)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
@@ -226,25 +253,7 @@ namespace AIDMS.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("AIDMS.Models.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("userDetailsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("userDetailsId");
-
-                    b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("AIDMS.Models.UserDetails", b =>
+            modelBuilder.Entity("AIDMS.Entities.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -263,13 +272,14 @@ namespace AIDMS.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("GPA")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Password")
@@ -287,29 +297,48 @@ namespace AIDMS.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateOnly>("dateOfBirth")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("dateOfBirth")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserDetails");
+                    b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("AIDMS.Models.Application", b =>
+            modelBuilder.Entity("AIDMS.Entities.AIDocument", b =>
                 {
-                    b.HasOne("AIDMS.Models.Employee", "Employee")
+                    b.HasOne("AIDMS.Entities.Application", "Application")
+                        .WithMany("Documents")
+                        .HasForeignKey("ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AIDMS.Entities.Student", "Student")
+                        .WithMany("Documents")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Application");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("AIDMS.Entities.Application", b =>
+                {
+                    b.HasOne("AIDMS.Entities.Employee", "Employee")
                         .WithMany("Applications")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AIDMS.Models.Payment", "Payment")
+                    b.HasOne("AIDMS.Entities.Payment", "Payment")
                         .WithMany()
                         .HasForeignKey("PaymentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AIDMS.Models.Student", "Student")
+                    b.HasOne("AIDMS.Entities.Student", "Student")
                         .WithMany("Applications")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -322,53 +351,15 @@ namespace AIDMS.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("AIDMS.Models.Document", b =>
+            modelBuilder.Entity("AIDMS.Entities.Notification", b =>
                 {
-                    b.HasOne("AIDMS.Models.Application", "Application")
-                        .WithMany("Documents")
-                        .HasForeignKey("ApplicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AIDMS.Models.Student", "Student")
-                        .WithMany("Documents")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Application");
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("AIDMS.Models.Employee", b =>
-                {
-                    b.HasOne("AIDMS.Models.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("roleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AIDMS.Models.UserDetails", "UserDetails")
-                        .WithMany()
-                        .HasForeignKey("userDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-
-                    b.Navigation("UserDetails");
-                });
-
-            modelBuilder.Entity("AIDMS.Models.Notification", b =>
-                {
-                    b.HasOne("AIDMS.Models.Employee", "Employee")
+                    b.HasOne("AIDMS.Entities.Employee", "Employee")
                         .WithMany("Notifications")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AIDMS.Models.Student", "Student")
+                    b.HasOne("AIDMS.Entities.Student", "Student")
                         .WithMany("Notifications")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -379,30 +370,19 @@ namespace AIDMS.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("AIDMS.Models.Student", b =>
-                {
-                    b.HasOne("AIDMS.Models.UserDetails", "UserDetails")
-                        .WithMany()
-                        .HasForeignKey("userDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserDetails");
-                });
-
-            modelBuilder.Entity("AIDMS.Models.Application", b =>
+            modelBuilder.Entity("AIDMS.Entities.Application", b =>
                 {
                     b.Navigation("Documents");
                 });
 
-            modelBuilder.Entity("AIDMS.Models.Employee", b =>
+            modelBuilder.Entity("AIDMS.Entities.Employee", b =>
                 {
                     b.Navigation("Applications");
 
                     b.Navigation("Notifications");
                 });
 
-            modelBuilder.Entity("AIDMS.Models.Student", b =>
+            modelBuilder.Entity("AIDMS.Entities.Student", b =>
                 {
                     b.Navigation("Applications");
 

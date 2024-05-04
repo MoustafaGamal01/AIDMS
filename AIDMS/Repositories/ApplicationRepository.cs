@@ -34,10 +34,9 @@ namespace AIDMS.Repositories
         public async Task<List<Application>> GetAllApplicationsByStudentNameAsync(string studentName)
         {
             var std = await _context.Students
-                .Include(s => s.UserDetails)
-                .SingleOrDefaultAsync(s => ((s.UserDetails.FirstName.Contains(studentName)) || 
-                (s.UserDetails.LastName.Contains(studentName)) || 
-                (s.UserDetails.FirstName + " " + s.UserDetails.LastName).Contains(studentName)));
+                .SingleOrDefaultAsync(s => ((s.FirstName.Contains(studentName)) || 
+                (s.LastName.Contains(studentName)) || 
+                (s.FirstName + " " + s.LastName).Contains(studentName)));
 
             if (std == null)
             {

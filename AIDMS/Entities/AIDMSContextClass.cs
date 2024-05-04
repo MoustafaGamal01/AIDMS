@@ -14,7 +14,6 @@ namespace AIDMS.Entities
         public DbSet<Student> Students { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Application> Applications { get; set; }
-        public DbSet<UserDetails> UserDetails { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<AIDocument> Documents { get; set; }
         public DbSet<Payment> Payments { get; set; }
@@ -23,27 +22,10 @@ namespace AIDMS.Entities
         // Handle "Arabic Language" && "DateOnly prop" && "decimal prop" In Db  
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // User Details Including Student & Employee
-            modelBuilder.Entity<UserDetails>()
-                .Property(u => u.FirstName)
-                .IsUnicode(true);
-
-            modelBuilder.Entity<UserDetails>()
-                .Property(u => u.LastName)
-                .IsUnicode(true);
-
-            modelBuilder.Entity<UserDetails>()
-                .Property(e => e.dateOfBirth)
-                .HasColumnType("date");
-
-            // Role
-            modelBuilder.Entity<Role>()
-                .Property(r => r.Name)
-                .IsUnicode(true);
-
-            modelBuilder.Entity<Role>()
-                .Property(r => r.Description)
-                .IsUnicode(true);
+            // Student
+            modelBuilder.Entity<Student>()
+                .Property(s => s.GPA)
+                .HasColumnType("decimal(18,2)");
 
             // Notification
             modelBuilder.Entity<Notification>()
