@@ -49,7 +49,11 @@ namespace AIDMS.Entities
         public virtual List<Application>? Applications { get; set; }
         public virtual List<AIDocument>? Documents { get; set; }
         public virtual List<Notification>? Notifications { get; set; }
-
+        
+        [ForeignKey("Department")]
+        public int Dept_Id { get; set; }
+        public virtual Department? Department { get; set; }
+        
         public Student()
         {
             Documents = new List<AIDocument>();

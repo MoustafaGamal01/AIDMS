@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AIDMS.Migrations
 {
     [DbContext(typeof(AIDMSContextClass))]
-    [Migration("20240504163346_InitalMigration")]
-    partial class InitalMigration
+    [Migration("20240505054350_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,6 +121,27 @@ namespace AIDMS.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("Applications");
+                });
+
+            modelBuilder.Entity("AIDMS.Entities.Department", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Manager")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Department");
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Employee", b =>
@@ -267,6 +288,9 @@ namespace AIDMS.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
+                    b.Property<int>("Dept_Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -304,6 +328,8 @@ namespace AIDMS.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Dept_Id");
 
                     b.ToTable("Students");
                 });
@@ -373,9 +399,25 @@ namespace AIDMS.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("AIDMS.Entities.Student", b =>
+                {
+                    b.HasOne("AIDMS.Entities.Department", "Department")
+                        .WithMany("Students")
+                        .HasForeignKey("Dept_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+                });
+
             modelBuilder.Entity("AIDMS.Entities.Application", b =>
                 {
                     b.Navigation("Documents");
+                });
+
+            modelBuilder.Entity("AIDMS.Entities.Department", b =>
+                {
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Employee", b =>
