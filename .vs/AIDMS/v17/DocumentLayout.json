@@ -1,7 +1,28 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\AIA\\Desktop\\AIDMS\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|c:\\users\\aia\\desktop\\aidms\\aidms\\entities\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\entities\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\repositories\\studentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\repositories\\studentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\repositories\\istudentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\repositories\\istudentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\dtos\\studentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\dtos\\studentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +30,72 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Student.cs",
+              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Entities\\Student.cs",
+              "RelativeDocumentMoniker": "AIDMS\\Entities\\Student.cs",
+              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Entities\\Student.cs",
+              "RelativeToolTip": "AIDMS\\Entities\\Student.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-05T15:00:01.003Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StudentController.cs",
+              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\StudentController.cs",
+              "RelativeDocumentMoniker": "AIDMS\\Controllers\\StudentController.cs",
+              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\StudentController.cs",
+              "RelativeToolTip": "AIDMS\\Controllers\\StudentController.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAqwEoAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-05T14:50:38.709Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "StudentRepository.cs",
+              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Repositories\\StudentRepository.cs",
+              "RelativeDocumentMoniker": "AIDMS\\Repositories\\StudentRepository.cs",
+              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Repositories\\StudentRepository.cs",
+              "RelativeToolTip": "AIDMS\\Repositories\\StudentRepository.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAAC8AAAA/AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-05T14:29:38.304Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IStudentRepository.cs",
+              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Repositories\\IStudentRepository.cs",
+              "RelativeDocumentMoniker": "AIDMS\\Repositories\\IStudentRepository.cs",
+              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Repositories\\IStudentRepository.cs",
+              "RelativeToolTip": "AIDMS\\Repositories\\IStudentRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-05T14:29:16.679Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "StudentDto.cs",
+              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\StudentDto.cs",
+              "RelativeDocumentMoniker": "AIDMS\\DTOs\\StudentDto.cs",
+              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\StudentDto.cs",
+              "RelativeToolTip": "AIDMS\\DTOs\\StudentDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-05T14:28:10.412Z"
             }
           ]
         }

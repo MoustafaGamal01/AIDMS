@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AIDMS.Migrations
 {
     [DbContext(typeof(AIDMSContextClass))]
-    [Migration("20240505054350_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240505150223_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -141,7 +141,7 @@ namespace AIDMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Department");
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Employee", b =>
@@ -288,7 +288,7 @@ namespace AIDMS.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("Dept_Id")
+                    b.Property<int>("DeptId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -329,7 +329,7 @@ namespace AIDMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Dept_Id");
+                    b.HasIndex("DeptId");
 
                     b.ToTable("Students");
                 });
@@ -403,7 +403,7 @@ namespace AIDMS.Migrations
                 {
                     b.HasOne("AIDMS.Entities.Department", "Department")
                         .WithMany("Students")
-                        .HasForeignKey("Dept_Id")
+                        .HasForeignKey("DeptId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

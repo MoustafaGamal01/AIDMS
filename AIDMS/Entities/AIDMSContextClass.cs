@@ -18,6 +18,7 @@ namespace AIDMS.Entities
         public DbSet<AIDocument> Documents { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
         // Handle "Arabic Language" && "DateOnly prop" && "decimal prop" In Db  
         protected override void OnModelCreating(ModelBuilder modelBuilder)

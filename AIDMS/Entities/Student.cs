@@ -7,8 +7,8 @@ namespace AIDMS.Entities
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Age is required")]
-        [Range(0.0, 4.0, ErrorMessage = "Age must be between 0.0 and 4.0")]
+        [Required(ErrorMessage = "GPA is required")]
+        [Range(0.0, 4.0, ErrorMessage = "GPA must be between 0.0 and 4.0")]
         public decimal GPA { get; set; }
 
         [Required(ErrorMessage = "Age is required")]
@@ -46,14 +46,13 @@ namespace AIDMS.Entities
         public DateTime dateOfBirth { get; set; }
 
         // Nav Prop
-        public virtual List<Application>? Applications { get; set; }
-        public virtual List<AIDocument>? Documents { get; set; }
-        public virtual List<Notification>? Notifications { get; set; }
-        
         [ForeignKey("Department")]
-        public int Dept_Id { get; set; }
+        public int DeptId { get; set; }
         public virtual Department? Department { get; set; }
         
+        public virtual List<Application>? Applications { get; set; }
+        public virtual List<AIDocument>? Documents { get; set; }
+        public virtual List<Notification>? Notifications { get; set; } 
         public Student()
         {
             Documents = new List<AIDocument>();
