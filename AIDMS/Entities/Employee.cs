@@ -13,15 +13,15 @@ namespace AIDMS.Entities
 
         [Required(ErrorMessage = "First name is required")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "First name must be between 3 and 50 characters")]
-        public string FirstName { get; set; }
+        public string firstName { get; set; }
 
         [Required(ErrorMessage = "Last name is required")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Last name must be between 3 and 50 characters")]
-        public string LastName { get; set; }
+        public string lastName { get; set; }
 
         [Required(ErrorMessage = "Username is required")]
         [StringLength(50, MinimumLength = 6, ErrorMessage = "Username must be between 6 and 50 characters")]
-        public string UserName { get; set; }
+        public string userName { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
@@ -36,7 +36,7 @@ namespace AIDMS.Entities
         [Required(ErrorMessage = "Phone number is required")]
         [Phone(ErrorMessage = "Invalid phone number")]
         [StringLength(20, ErrorMessage = "Phone number must not exceed 20 characters")]
-        public string PhoneNumber { get; set; }
+        public string phoneNumber { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime dateOfBirth { get; set; }
@@ -44,8 +44,8 @@ namespace AIDMS.Entities
         // Nav Prop
         [ForeignKey("Role")]
         public int RoleId { get; set; }
-        
         Role Role { get; set; }
+        
         public virtual List<Application>? Applications { get; set; }
         public virtual List<Notification>? Notifications { get; set; }
         

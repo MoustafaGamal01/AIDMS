@@ -19,6 +19,8 @@ namespace AIDMS.Entities
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Supervisor> Supervisors { get; set; }
+
 
         // Handle "Arabic Language" && "DateOnly prop" && "decimal prop" In Db  
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,6 +28,10 @@ namespace AIDMS.Entities
             // Student
             modelBuilder.Entity<Student>()
                 .Property(s => s.GPA)
+                .HasColumnType("decimal(18,2)");
+
+            modelBuilder.Entity<Student>()
+                .Property(s => s.TotalPassedHours)
                 .HasColumnType("decimal(18,2)");
 
             // Notification

@@ -1,14 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
 
 namespace AIDMS.Entities
 {
-    public class Student
+    public class Supervisor
     {
         public int Id { get; set; }
-
-        [Range(0.0, 4.0, ErrorMessage = "GPA must be between 0.0 and 4.0")]
-        public decimal? GPA { get; set; }
 
         [Required(ErrorMessage = "Age is required")]
         [Range(1, 80, ErrorMessage = "Age must be between 1 and 80")]
@@ -39,36 +37,20 @@ namespace AIDMS.Entities
         [Required(ErrorMessage = "Phone number is required")]
         [Phone(ErrorMessage = "Invalid phone number")]
         [StringLength(20, ErrorMessage = "Phone number must not exceed 20 characters")]
-        public string PhoneNumber { get; set; }
+        public string phoneNumber { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime dateOfBirth { get; set; }
 
-        public decimal? TotalPassedHours { get; set; }
-
-        [Required(ErrorMessage = "Level is required")]
-        [Range(0.0, 4.0, ErrorMessage = "Level must be between 1 and 4")]
-        public int Level { get; set; }
-
-
-
         // Nav Prop
-        [ForeignKey("Department")]
-        public int DepartmentId { get; set; }
-        public virtual Department? Department { get; set; }
-
-        [ForeignKey("Supervisor")]
-        public int SupervisorId { get; set; }
-        public virtual Supervisor? Supervisor { get; set; }
-
         public virtual List<Application>? Applications { get; set; }
-        public virtual List<AIDocument>? Documents { get; set; }
-        public virtual List<Notification>? Notifications { get; set; } 
-        public Student()
+        public virtual List<Notification>? Notifications { get; set; }
+        public virtual List<Student>? Students { get; set; }
+        public Supervisor()
         {
-            Documents = new List<AIDocument>();
-            Applications = new List<Application>();
+            Students = new List<Student>();
             Notifications = new List<Notification>();
+            Applications = new List<Application>();
         }
     }
 }
