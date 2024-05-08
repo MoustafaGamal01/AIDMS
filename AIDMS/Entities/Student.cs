@@ -50,8 +50,6 @@ namespace AIDMS.Entities
         [Range(0.0, 4.0, ErrorMessage = "Level must be between 1 and 4")]
         public int Level { get; set; }
 
-
-
         // Nav Prop
         [ForeignKey("Department")]
         public int DepartmentId { get; set; }

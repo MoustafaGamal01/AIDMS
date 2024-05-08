@@ -6,7 +6,7 @@
         public string firstName { get; set; }
         public string lastName { get; set; }
         public int Age { get; set; }
-        public decimal GPA { get; set; }
+        public decimal? GPA { get; set; }
         public string studentDepartment { get; set; }
         public string userName { get; set; }
         public string phoneNumber { get; set; }

@@ -25,7 +25,7 @@ namespace AIDMS.Repositories
         public async Task<Student> GetAllStudentDataByNameAsync(string studentName)
         {
             return await _context.Students
-                .FirstOrDefaultAsync(s => s.FirstName.Contains(studentName)  || s.LastName.Contains(studentName));
+                .FirstOrDefaultAsync(s => s.firstName.Contains(studentName)  || s.lastName.Contains(studentName));
         }
 
         public async Task<Student> GetStudentPersonalInfoByIdAsync(int studentId)
@@ -35,7 +35,7 @@ namespace AIDMS.Repositories
 
         public async Task<Student> GetStudentPersonalInfoByNameAsync(string studentName)
         {
-            return await _context.Students.Include("Department").FirstOrDefaultAsync(i => (i.FirstName+' '+i.LastName) == studentName);
+            return await _context.Students.Include("Department").FirstOrDefaultAsync(i => (i.firstName+' '+i.lastName) == studentName);
         }
 
         public async Task<List<Student>> GetAllStudentsDataAsync()
@@ -47,6 +47,7 @@ namespace AIDMS.Repositories
         {
             return await _context.Students.Include("Department").ToListAsync();
         }
+
         public async Task AddStudentAsync(Student student)
         {
             _context.Students.Add(student);

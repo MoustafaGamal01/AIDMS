@@ -34,6 +34,32 @@ namespace AIDMS.Entities
                 .Property(s => s.TotalPassedHours)
                 .HasColumnType("decimal(18,2)");
 
+            modelBuilder.Entity<Student>()
+                .Property(n => n.firstName)
+                .IsUnicode(true);
+            
+            modelBuilder.Entity<Student>()
+                .Property(n => n.lastName)
+                .IsUnicode(true);
+
+            // Supervisor
+            modelBuilder.Entity<Supervisor>()
+                .Property(n => n.firstName)
+                .IsUnicode(true);
+
+            modelBuilder.Entity<Supervisor>()
+                .Property(n => n.lastName)
+                .IsUnicode(true);
+
+            // Employee
+            modelBuilder.Entity<Employee>()
+                .Property(n => n.firstName)
+                .IsUnicode(true);
+
+            modelBuilder.Entity<Employee>()
+                .Property(n => n.firstName)
+                .IsUnicode(true);
+
             // Notification
             modelBuilder.Entity<Notification>()
                 .Property(n => n.Message)

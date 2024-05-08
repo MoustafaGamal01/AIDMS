@@ -27,10 +27,10 @@ namespace AIDMS.Controllers
             studentDto.Age = std.Age;
             studentDto.phoneNumber = std.PhoneNumber;
             studentDto.Email = std.Email;
-            studentDto.userName = std.UserName;
+            studentDto.userName = std.userName;
             studentDto.GPA = std.GPA;
-            studentDto.firstName = std.FirstName;
-            studentDto.lastName = std.LastName;
+            studentDto.firstName = std.firstName;
+            studentDto.lastName = std.lastName;
             studentDto.studentDepartment = std.Department.Name;
 
             return Ok(studentDto);
@@ -49,10 +49,10 @@ namespace AIDMS.Controllers
                 studentDto.Age = std.Age;
                 studentDto.phoneNumber = std.PhoneNumber;
                 studentDto.Email = std.Email;
-                studentDto.userName = std.UserName;
+                studentDto.userName = std.userName;
                 studentDto.GPA = std.GPA;
-                studentDto.firstName = std.FirstName;
-                studentDto.lastName = std.LastName;
+                studentDto.firstName = std.firstName;
+                studentDto.lastName = std.lastName;
                 studentDto.studentDepartment = std.Department.Name;
                 studentsDto.Add(studentDto);
             }
