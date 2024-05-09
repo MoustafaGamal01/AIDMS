@@ -23,16 +23,14 @@ namespace AIDMS.Controllers
         {
             Student std = _student.GetStudentPersonalInfoByIdAsync(Id).GetAwaiter().GetResult();
             StudentDto studentDto = new StudentDto();
-            studentDto.Id = Id;
-            studentDto.Age = std.Age;
-            studentDto.phoneNumber = std.PhoneNumber;
-            studentDto.Email = std.Email;
-            studentDto.userName = std.userName;
+            studentDto.Id = std.Id;
             studentDto.GPA = std.GPA;
+            studentDto.TotalPassedHours = std.TotalPassedHours;
+            studentDto.Level = std.Level;
             studentDto.firstName = std.firstName;
             studentDto.lastName = std.lastName;
             studentDto.studentDepartment = std.Department.Name;
-
+            studentDto.studentDocuments = std.Documents;
             return Ok(studentDto);
         }
 
@@ -46,14 +44,13 @@ namespace AIDMS.Controllers
             {
                 StudentDto studentDto = new StudentDto();
                 studentDto.Id = std.Id;
-                studentDto.Age = std.Age;
-                studentDto.phoneNumber = std.PhoneNumber;
-                studentDto.Email = std.Email;
-                studentDto.userName = std.userName;
                 studentDto.GPA = std.GPA;
+                studentDto.TotalPassedHours = std.TotalPassedHours;
+                studentDto.Level = std.Level;
                 studentDto.firstName = std.firstName;
                 studentDto.lastName = std.lastName;
                 studentDto.studentDepartment = std.Department.Name;
+                studentDto.studentDocuments = std.Documents;
                 studentsDto.Add(studentDto);
             }
             return Ok(studentsDto);

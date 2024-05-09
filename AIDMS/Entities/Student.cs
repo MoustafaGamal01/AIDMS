@@ -52,11 +52,11 @@ namespace AIDMS.Entities
 
         // Nav Prop
         [ForeignKey("Department")]
-        public int DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
         public virtual Department? Department { get; set; }
 
         [ForeignKey("Supervisor")]
-        public int SupervisorId { get; set; }
+        public int? SupervisorId { get; set; }
         public virtual Supervisor? Supervisor { get; set; }
 
         public virtual List<Application>? Applications { get; set; }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AIDMS.Migrations
 {
     [DbContext(typeof(AIDMSContextClass))]
-    [Migration("20240508163148_init")]
-    partial class init
+    [Migration("20240509102712_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -299,7 +299,7 @@ namespace AIDMS.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -323,7 +323,7 @@ namespace AIDMS.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("SupervisorId")
+                    b.Property<int?>("SupervisorId")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("TotalPassedHours")
@@ -486,15 +486,11 @@ namespace AIDMS.Migrations
                 {
                     b.HasOne("AIDMS.Entities.Department", "Department")
                         .WithMany("Students")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.HasOne("AIDMS.Entities.Supervisor", "Supervisor")
                         .WithMany("Students")
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SupervisorId");
 
                     b.Navigation("Department");
 

@@ -11,7 +11,7 @@
   },
   {
     "ContainingType": "AIDMS.Controllers.StudentController",
-    "Method": "Add",
+    "Method": "Add\u064DStudent",
     "RelativePath": "api/Student",
     "HttpMethod": "POST",
     "IsController": true,
