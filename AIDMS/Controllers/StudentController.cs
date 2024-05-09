@@ -31,6 +31,7 @@ namespace AIDMS.Controllers
             studentDto.lastName = std.lastName;
             studentDto.studentDepartment = std.Department.Name;
             studentDto.studentDocuments = std.Documents;
+            studentDto.studentPicture = std.studentPicture;
             return Ok(studentDto);
         }
 
@@ -51,6 +52,7 @@ namespace AIDMS.Controllers
                 studentDto.lastName = std.lastName;
                 studentDto.studentDepartment = std.Department.Name;
                 studentDto.studentDocuments = std.Documents;
+                studentDto.studentPicture = std.studentPicture;
                 studentsDto.Add(studentDto);
             }
             return Ok(studentsDto);

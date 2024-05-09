@@ -341,6 +341,9 @@ namespace AIDMS.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<byte[]>("studentPicture")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("userName")
                         .IsRequired()
                         .HasMaxLength(50)

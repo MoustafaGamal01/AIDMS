@@ -10,6 +10,8 @@ namespace AIDMS.Entities
         [Range(0.0, 4.0, ErrorMessage = "GPA must be between 0.0 and 4.0")]
         public decimal? GPA { get; set; }
 
+        public byte[]? studentPicture { get; set; }
+
         [Required(ErrorMessage = "Age is required")]
         [Range(1, 80, ErrorMessage = "Age must be between 1 and 80")]
         public int Age { get; set; }

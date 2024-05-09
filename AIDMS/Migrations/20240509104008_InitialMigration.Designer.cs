@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AIDMS.Migrations
 {
     [DbContext(typeof(AIDMSContextClass))]
-    [Migration("20240509102712_InitialMigration")]
+    [Migration("20240509104008_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -343,6 +343,9 @@ namespace AIDMS.Migrations
                         .HasMaxLength(50)
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<byte[]>("studentPicture")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("userName")
                         .IsRequired()

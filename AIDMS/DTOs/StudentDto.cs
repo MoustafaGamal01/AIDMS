@@ -11,6 +11,7 @@ namespace AIDMS.DTOs
         public string studentDepartment { get; set; }
         public decimal? TotalPassedHours { get; set; }
         public int Level { get; set; }
+        public byte[]? studentPicture { get; set; }
         public List<AIDocument>? studentDocuments { get; set; }
     }
 }
