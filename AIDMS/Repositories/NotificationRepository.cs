@@ -43,4 +43,14 @@ public class NotificationRepository:INotificationRepository {
         _context.Notifications.Remove(notificationToDelete);
         await _context.SaveChangesAsync();
     }
+
+    public async Task<List<Notification>> GetAllNotificationsByStudentIdAsync(int studentId)
+    {
+        return await _context.Notifications.Where(i => i.StudentId == studentId).ToListAsync();
+    }
+
+    public async Task<List<Notification>> GetAllNotificationsByEmployeeIdAsync(int empId)
+    {
+        return await _context.Notifications.Where(i => i.EmployeeId == empId).ToListAsync();
+    }
 }

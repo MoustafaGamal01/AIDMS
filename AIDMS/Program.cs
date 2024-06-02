@@ -19,8 +19,9 @@ namespace AIDMS
             builder.Services.AddSwaggerGen();
             // Add Repos
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
-            
-            
+            builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
+            builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             // Configure EF Core to use SQL Server with the connection string named "LocalCS"
             builder.Services.AddDbContext<AIDMSContextClass>(options =>
             {

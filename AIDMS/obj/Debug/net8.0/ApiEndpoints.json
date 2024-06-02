@@ -1,17 +1,23 @@
 [
   {
     "ContainingType": "AIDMS.Controllers.StudentController",
-    "Method": "GetAllStudentsPersonalInfo",
-    "RelativePath": "api/Student",
+    "Method": "GetStudentPersonalInfoById",
+    "RelativePath": "{Id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
     "ContainingType": "AIDMS.Controllers.StudentController",
-    "Method": "Add\u064DStudent",
+    "Method": "AddStudent",
     "RelativePath": "api/Student",
     "HttpMethod": "POST",
     "IsController": true,
@@ -27,14 +33,46 @@
   },
   {
     "ContainingType": "AIDMS.Controllers.StudentController",
-    "Method": "GetStudentPersonalInfoById",
-    "RelativePath": "api/Student/{Id}",
+    "Method": "GetStudentNotifications",
+    "RelativePath": "notifications/{studentId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Id",
+        "Name": "studentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.StudentController",
+    "Method": "GetPendingApplicationsByStudentIdAsync",
+    "RelativePath": "pending/{studentId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.StudentController",
+    "Method": "GetReviewedApplicationsByStudentIdAsync",
+    "RelativePath": "reviewed/{studentId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentId",
         "Type": "System.Int32",
         "IsRequired": true
       }
