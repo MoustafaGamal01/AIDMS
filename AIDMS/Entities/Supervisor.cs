@@ -11,7 +11,7 @@ namespace AIDMS.Entities
         [Required(ErrorMessage = "Age is required")]
         [Range(1, 80, ErrorMessage = "Age must be between 1 and 80")]
         public int Age { get; set; }
-
+        public byte[]? supervisorPicture { get; set; }
         [Required(ErrorMessage = "First name is required")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "First name must be between 3 and 50 characters")]
         public string firstName { get; set; }
