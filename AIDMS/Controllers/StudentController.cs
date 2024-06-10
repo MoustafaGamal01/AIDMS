@@ -30,7 +30,7 @@ namespace AIDMS.Controllers
             Student std = _student.GetStudentPersonalInfoByIdAsync(Id).GetAwaiter().GetResult();
             if (std == null)
             {
-                return NotFound("There's no Student with this Id"); // Return 404 Not Found if student with the given ID is not found
+                return NotFound("There's no Student with this Id");
             }
             if (ModelState.IsValid)
             {
@@ -57,7 +57,7 @@ namespace AIDMS.Controllers
         //    List<StudentDto> studentsDto = new List<StudentDto>();
         //    if (stds == null)
         //    {
-        //        return NotFound("No Students Available"); // Return 404 Not Found if student with the given ID is not found
+        //        return NotFound("No Students Available");
         //    }
         //    if (ModelState.IsValid)
         //    {
@@ -80,18 +80,18 @@ namespace AIDMS.Controllers
         //    return BadRequest();
         //}
 
-        [HttpPost]
-        [Route("")]
-        public IActionResult AddStudent(Student student)
-        {
-            if (ModelState.IsValid)
-            {
-                _student.AddStudentAsync(student).GetAwaiter().GetResult();
-                string url = Url.Link("StudentPersonalInfo", new { student.Id });
-                return Created(url, student);
-            }
-            return BadRequest();
-        }
+        //[HttpPost]
+        //[Route("")]
+        //public IActionResult AddStudent(Student student)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _student.AddStudentAsync(student).GetAwaiter().GetResult();
+        //        string url = Url.Link("StudentPersonalInfo", new { student.Id });
+        //        return Created(url, student);
+        //    }
+        //    return BadRequest();
+        //}
 
         [HttpGet]
         [Route("pending/{studentId:int}")]
@@ -124,12 +124,21 @@ namespace AIDMS.Controllers
         public IActionResult GetStudentNotifications(int studentId)
         {
             var notifications = _notification.GetAllNotificationsByStudentIdAsync(studentId).GetAwaiter().GetResult();
+            List<StudentNotificationDto> notificationsListDto = new List<StudentNotificationDto>();
             if (notifications == null || (!ModelState.IsValid))
             {
                 return BadRequest();
             }
-            return Ok(notifications);
-        }
 
+            foreach (var notification in notifications)
+            {
+                StudentNotificationDto notificationDto = new StudentNotificationDto();
+                notificationDto.Message = notification.Message;
+                notificationDto.CreatedAt = notification.CreatedAt.ToString();
+                notificationDto.EmployeeName = notification.Employee.firstName + notification.Employee.lastName;
+                notificationsListDto.Add(notificationDto);
+            }
+            return Ok(notificationsListDto);
+        }
     }
 }
