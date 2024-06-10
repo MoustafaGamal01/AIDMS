@@ -1,16 +1,6 @@
 [
   {
     "ContainingType": "AIDMS.Controllers.StudentController",
-    "Method": "GetAllStudentsPersonalInfo",
-    "RelativePath": "api/Student",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "AIDMS.Controllers.StudentController",
     "Method": "GetStudentPersonalInfoById",
     "RelativePath": "api/Student/{Id}",
     "HttpMethod": "GET",
@@ -61,6 +51,22 @@
     "ContainingType": "AIDMS.Controllers.StudentController",
     "Method": "GetReviewedApplicationsByStudentIdAsync",
     "RelativePath": "api/Student/reviewed/{studentId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.StudentController",
+    "Method": "GetStudentSettings",
+    "RelativePath": "api/Student/settings/{studentId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

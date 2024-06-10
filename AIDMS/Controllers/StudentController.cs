@@ -25,9 +25,9 @@ namespace AIDMS.Controllers
 
         [HttpGet]
         [Route("{Id:int}", Name = "StudentPersonalInfo")]
-        public IActionResult GetStudentPersonalInfoById(int Id)
+        public async Task<IActionResult> GetStudentPersonalInfoById(int Id)
         {
-            Student std = _student.GetStudentPersonalInfoByIdAsync(Id).GetAwaiter().GetResult();
+            Student std = await _student.GetStudentPersonalInfoByIdAsync(Id);
             if (std == null)
             {
                 return NotFound("There's no Student with this Id");
@@ -49,55 +49,11 @@ namespace AIDMS.Controllers
             return BadRequest();
         }
 
-        //[HttpGet]
-        //[Route("")]
-        //public IActionResult GetAllStudentsPersonalInfo()
-        //{
-        //    List<Student> stds = _student.GetAllStudentsPersonalInfoAsync().GetAwaiter().GetResult();
-        //    List<StudentDto> studentsDto = new List<StudentDto>();
-        //    if (stds == null)
-        //    {
-        //        return NotFound("No Students Available");
-        //    }
-        //    if (ModelState.IsValid)
-        //    {
-        //        foreach (var std in stds)
-        //        {
-        //            StudentDto studentDto = new StudentDto();
-        //            studentDto.Id = std.Id;
-        //            studentDto.GPA = std.GPA;
-        //            studentDto.TotalPassedHours = std.TotalPassedHours;
-        //            studentDto.Level = std.Level;
-        //            studentDto.firstName = std.firstName;
-        //            studentDto.lastName = std.lastName;
-        //            studentDto.studentDepartment = std.Department.Name;
-        //            studentDto.studentDocuments = std.Documents;
-        //            studentDto.studentPicture = std.studentPicture;
-        //            studentsDto.Add(studentDto);
-        //        }
-        //        return Ok(studentsDto);
-        //    }
-        //    return BadRequest();
-        //}
-
-        //[HttpPost]
-        //[Route("")]
-        //public IActionResult AddStudent(Student student)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _student.AddStudentAsync(student).GetAwaiter().GetResult();
-        //        string url = Url.Link("StudentPersonalInfo", new { student.Id });
-        //        return Created(url, student);
-        //    }
-        //    return BadRequest();
-        //}
-
         [HttpGet]
         [Route("pending/{studentId:int}")]
-        public IActionResult GetPendingApplicationsByStudentIdAsync(int studentId)
+        public async Task<IActionResult> GetPendingApplicationsByStudentIdAsync(int studentId)
         {
-            var studentApplications = _application.GetAllPendingApplicationsByStudentIdAsync(studentId).GetAwaiter().GetResult();
+            var studentApplications = await _application.GetAllPendingApplicationsByStudentIdAsync(studentId);
 
             if (ModelState.IsValid)
             {
@@ -108,9 +64,9 @@ namespace AIDMS.Controllers
 
         [HttpGet]
         [Route("reviewed/{studentId:int}")]
-        public IActionResult GetReviewedApplicationsByStudentIdAsync(int studentId)
+        public async Task<IActionResult> GetReviewedApplicationsByStudentIdAsync(int studentId)
         {
-            var studentApplications = _application.GetAllReviewedApplicationsByStudentIdAsync(studentId).GetAwaiter().GetResult();
+            var studentApplications = await _application.GetAllReviewedApplicationsByStudentIdAsync(studentId);
 
             if (ModelState.IsValid)
             {
@@ -121,24 +77,49 @@ namespace AIDMS.Controllers
 
         [HttpGet]
         [Route("notifications/{studentId:int}")]
-        public IActionResult GetStudentNotifications(int studentId)
+        public async Task<IActionResult> GetStudentNotifications(int studentId)
         {
-            var notifications = _notification.GetAllNotificationsByStudentIdAsync(studentId).GetAwaiter().GetResult();
-            List<StudentNotificationDto> notificationsListDto = new List<StudentNotificationDto>();
-            if (notifications == null || (!ModelState.IsValid))
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
-            foreach (var notification in notifications)
+            var notifications = await _notification.GetAllNotificationsByStudentIdAsync(studentId);
+
+            if (notifications == null)
             {
-                StudentNotificationDto notificationDto = new StudentNotificationDto();
-                notificationDto.Message = notification.Message;
-                notificationDto.CreatedAt = notification.CreatedAt.ToString();
-                notificationDto.EmployeeName = notification.Employee.firstName + notification.Employee.lastName;
-                notificationsListDto.Add(notificationDto);
+                return NotFound();
             }
+
+            var notificationsListDto = notifications.Select(n => new StudentNotificationDto
+            {
+                Message = n.Message,
+                CreatedAt = n.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss"),
+            }).ToList();
+
             return Ok(notificationsListDto);
+        }
+
+        [HttpGet]
+        [Route("settings/{studentId:int}")]
+        public async Task<IActionResult> GetStudentSettings(int studentId)
+        {
+            var student = await _student.GetAllStudentDataByIdAsync(studentId);
+            if (student == null)
+            {
+                return NotFound("Student not found");
+            }
+            if (ModelState.IsValid)
+            {
+                UserSettingsDto userSettingsDto = new UserSettingsDto();
+                userSettingsDto.userName = student.userName;
+                userSettingsDto.email = student.Email;
+                userSettingsDto.Phone = student.PhoneNumber;
+                userSettingsDto.password = student.Password;
+                userSettingsDto.profilePicture = student.studentPicture;
+                return Ok(userSettingsDto);
+            }
+            return BadRequest();
         }
     }
 }
