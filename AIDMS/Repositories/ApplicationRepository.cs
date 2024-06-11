@@ -55,6 +55,11 @@ namespace AIDMS.Repositories
             return await _context.Applications.Where(i => i.StudentId == studentId && i.Status == "Reviewed").ToListAsync();
         }
 
+        public async Task<List<Application>> GetAllArchivedApplicationsByStudentIdAsync(int studentId)
+        {
+            return await _context.Applications.Where(i => i.StudentId == studentId && i.isArchived == true).ToListAsync();
+        }
+
         public async Task<List<Application>> GetAllPendingApplicationsByStudentIdAsync(int studentId)
         {
             return await _context.Applications.Where(i => i.StudentId == studentId && i.Status == "Pending").ToListAsync();
@@ -98,6 +103,11 @@ namespace AIDMS.Repositories
         public async Task<List<Application>> GetAllPendingApplicationsAsync()
         {
             return await _context.Applications.Where(i => i.Status == "Pending").ToListAsync();
+        }
+
+        public async Task<List<Application>> GetAllArchivedApplicationsAsync()
+        {
+            return await _context.Applications.Where(i => i.isArchived == true).ToListAsync();
         }
     }
 }
