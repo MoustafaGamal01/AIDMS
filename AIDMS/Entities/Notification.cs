@@ -27,6 +27,10 @@ namespace AIDMS.Entities
         public int? AIDocumentId { get; set; }
         public virtual AIDocument? AIDocument { get; set; }
 
+        [ForeignKey("Supervisor")]
+        public int? SupervisorId { get; set; }
+        public virtual Supervisor? Supervisor { get; set; }
+
         [ForeignKey("Employee")]
         public int? EmployeeId { get; set; }
         public virtual Employee? Employee { get; set; }

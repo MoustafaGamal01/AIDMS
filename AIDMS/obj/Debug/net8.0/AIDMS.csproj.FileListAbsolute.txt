@@ -135,3 +135,5 @@ C:\Users\AIA\Desktop\AIDMS\AIDMS\obj\Debug\net8.0\AIDMS.pdb
 C:\Users\AIA\Desktop\AIDMS\AIDMS\obj\Debug\net8.0\AIDMS.genruntimeconfig.cache
 C:\Users\AIA\Desktop\AIDMS\AIDMS\obj\Debug\net8.0\ref\AIDMS.dll
 C:\Users\AIA\Desktop\AIDMS\AIDMS\obj\Debug\net8.0\AIDMS.sourcelink.json
+C:\Users\AIA\Desktop\AIDMS\AIDMS\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\AIA\Desktop\AIDMS\AIDMS\bin\Debug\net8.0\MimeKit.dll

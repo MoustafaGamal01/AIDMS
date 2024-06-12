@@ -12,5 +12,14 @@ namespace AIDMS.Entities
 
         [StringLength(100, ErrorMessage = "Description must not exceed 100 characters")]
         public string Description { get; set; }
+
+        // Nav Prop
+        public virtual List<Employee>? Employees { get; set; }
+
+        public Role()
+        {
+            Employees = new List<Employee>();
+        }
+
     }
 }

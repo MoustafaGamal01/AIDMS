@@ -19,7 +19,7 @@ namespace AIDMS.Entities
         [Required(ErrorMessage = "Timestamp is required")]
         [DataType(DataType.DateTime)]
         public DateTime TimeStamp { get; set; }
-        
-        
+
+        public virtual Application? Application { get; set; }
     }
 }

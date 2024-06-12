@@ -30,7 +30,7 @@ namespace AIDMS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ApplicationId")
+                    b.Property<int?>("ApplicationId")
                         .HasColumnType("int");
 
                     b.Property<string>("FileName")
@@ -50,7 +50,7 @@ namespace AIDMS.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("StudentId")
+                    b.Property<int?>("StudentId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UploadedAt")
@@ -82,10 +82,10 @@ namespace AIDMS.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PaymentId")
+                    b.Property<int?>("PaymentId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ReviewDate")
@@ -97,7 +97,7 @@ namespace AIDMS.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("StudentId")
+                    b.Property<int?>("StudentId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("SubmittedAt")
@@ -119,7 +119,9 @@ namespace AIDMS.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.HasIndex("PaymentId");
+                    b.HasIndex("PaymentId")
+                        .IsUnique()
+                        .HasFilter("[PaymentId] IS NOT NULL");
 
                     b.HasIndex("StudentId");
 
@@ -170,7 +172,7 @@ namespace AIDMS.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("RoleId")
+                    b.Property<int?>("RoleId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("dateOfBirth")
@@ -201,6 +203,8 @@ namespace AIDMS.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Employees");
                 });
@@ -428,14 +432,12 @@ namespace AIDMS.Migrations
                     b.HasOne("AIDMS.Entities.Application", "Application")
                         .WithMany("Documents")
                         .HasForeignKey("ApplicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("AIDMS.Entities.Student", "Student")
                         .WithMany("Documents")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Application");
 
@@ -447,30 +449,39 @@ namespace AIDMS.Migrations
                     b.HasOne("AIDMS.Entities.Employee", "Employee")
                         .WithMany("Applications")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("AIDMS.Entities.Payment", "Payment")
-                        .WithMany()
-                        .HasForeignKey("PaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("Application")
+                        .HasForeignKey("AIDMS.Entities.Application", "PaymentId");
 
                     b.HasOne("AIDMS.Entities.Student", "Student")
                         .WithMany("Applications")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("AIDMS.Entities.Supervisor", null)
+                    b.HasOne("AIDMS.Entities.Supervisor", "Supervisor")
                         .WithMany("Applications")
-                        .HasForeignKey("SupervisorId");
+                        .HasForeignKey("SupervisorId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Employee");
 
                     b.Navigation("Payment");
 
                     b.Navigation("Student");
+
+                    b.Navigation("Supervisor");
+                });
+
+            modelBuilder.Entity("AIDMS.Entities.Employee", b =>
+                {
+                    b.HasOne("AIDMS.Entities.Role", "Role")
+                        .WithMany("Employees")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Notification", b =>
@@ -481,32 +492,39 @@ namespace AIDMS.Migrations
 
                     b.HasOne("AIDMS.Entities.Employee", "Employee")
                         .WithMany("Notifications")
-                        .HasForeignKey("EmployeeId");
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("AIDMS.Entities.Student", "Student")
                         .WithMany("Notifications")
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("AIDMS.Entities.Supervisor", null)
+                    b.HasOne("AIDMS.Entities.Supervisor", "Supervisor")
                         .WithMany("Notifications")
-                        .HasForeignKey("SupervisorId");
+                        .HasForeignKey("SupervisorId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("AIDocument");
 
                     b.Navigation("Employee");
 
                     b.Navigation("Student");
+
+                    b.Navigation("Supervisor");
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Student", b =>
                 {
                     b.HasOne("AIDMS.Entities.Department", "Department")
                         .WithMany("Students")
-                        .HasForeignKey("DepartmentId");
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("AIDMS.Entities.Supervisor", "Supervisor")
                         .WithMany("Students")
-                        .HasForeignKey("SupervisorId");
+                        .HasForeignKey("SupervisorId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Department");
 
@@ -528,6 +546,16 @@ namespace AIDMS.Migrations
                     b.Navigation("Applications");
 
                     b.Navigation("Notifications");
+                });
+
+            modelBuilder.Entity("AIDMS.Entities.Payment", b =>
+                {
+                    b.Navigation("Application");
+                });
+
+            modelBuilder.Entity("AIDMS.Entities.Role", b =>
+                {
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Student", b =>

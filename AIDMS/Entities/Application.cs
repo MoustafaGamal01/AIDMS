@@ -35,16 +35,20 @@ namespace AIDMS.Entities
 
         // Navigation properties
         [ForeignKey("Student")]
-        public int StudentId { get; set; }
+        public int? StudentId { get; set; }
         public virtual Student? Student { get; set; }
 
         [ForeignKey("Employee")]
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
         public virtual Employee? Employee { get; set; }
 
         [ForeignKey("Payment")] 
-        public int PaymentId { get; set; }
+        public int? PaymentId { get; set; }
         public virtual Payment? Payment { get; set; }
+
+        [ForeignKey("Supervisor")]
+        public int? SupervisorId { get; set; }
+        public virtual Supervisor? Supervisor { get; set; }
 
         public virtual List<AIDocument>? Documents { get; set; }
         public Application()

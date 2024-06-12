@@ -42,6 +42,33 @@ namespace AIDMS.Entities
                 .Property(n => n.lastName)
                 .IsUnicode(true);
 
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.Department)
+                .WithMany(a => a.Students)
+                .HasForeignKey(f => f.DepartmentId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.Supervisor)
+                .WithMany(a => a.Students)
+                .HasForeignKey(f => f.SupervisorId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Student>()
+                .HasMany(s => s.Applications)
+                .WithOne(a => a.Student)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Student>()
+                .HasMany(s => s.Notifications)
+                .WithOne(a => a.Student)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Student>()
+                .HasMany(s => s.Documents)
+                .WithOne(a => a.Student)
+                .OnDelete(DeleteBehavior.SetNull);
+
             // Supervisor
             modelBuilder.Entity<Supervisor>()
                 .Property(n => n.firstName)
@@ -50,6 +77,21 @@ namespace AIDMS.Entities
             modelBuilder.Entity<Supervisor>()
                 .Property(n => n.lastName)
                 .IsUnicode(true);
+
+            modelBuilder.Entity<Supervisor>()
+            .HasMany(a => a.Applications)
+            .WithOne(s => s.Supervisor)
+            .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Supervisor>()
+            .HasMany(a => a.Notifications)
+            .WithOne(s => s.Supervisor)
+            .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Supervisor>()
+            .HasMany(a => a.Students)
+            .WithOne(s => s.Supervisor)
+            .OnDelete(DeleteBehavior.SetNull);
 
             // Employee
             modelBuilder.Entity<Employee>()
@@ -60,10 +102,44 @@ namespace AIDMS.Entities
                 .Property(n => n.firstName)
                 .IsUnicode(true);
 
+            modelBuilder.Entity<Employee>()
+            .HasOne(a => a.Role)
+            .WithMany(s => s.Employees)
+            .HasForeignKey(a => a.RoleId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Employee>()
+            .HasMany(a => a.Applications)
+            .WithOne(s => s.Employee)
+            .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Employee>()
+            .HasMany(a => a.Notifications)
+            .WithOne(s => s.Employee)
+            .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Employee>()
+            .HasOne(a => a.Role)
+            .WithMany(s => s.Employees)
+            .HasForeignKey(a => a.RoleId)
+            .OnDelete(DeleteBehavior.SetNull);
+
             // Notification
             modelBuilder.Entity<Notification>()
                 .Property(n => n.Message)
                 .IsUnicode(true);
+
+            modelBuilder.Entity<Notification>()
+            .HasOne(a => a.Student)
+            .WithMany(s => s.Notifications)
+            .HasForeignKey(a => a.StudentId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Notification>()
+            .HasOne(a => a.Employee)
+            .WithMany(s => s.Notifications)
+            .HasForeignKey(a => a.EmployeeId)
+            .OnDelete(DeleteBehavior.SetNull);
 
             // Payment
             modelBuilder.Entity<Payment>()
@@ -79,6 +155,19 @@ namespace AIDMS.Entities
                .Property(d => d.FileType)
                .IsUnicode(true);
 
+            modelBuilder.Entity<AIDocument>()
+              .HasOne(a => a.Student)
+              .WithMany(s => s.Documents)
+              .HasForeignKey(a => a.StudentId)
+              .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<AIDocument>()
+              .HasOne(a => a.Application)
+              .WithMany(s => s.Documents)
+              .HasForeignKey(a => a.ApplicationId)
+              .OnDelete(DeleteBehavior.SetNull);
+
+
             // Application
             modelBuilder.Entity<Application>()
                .Property(a => a.Title)
@@ -92,6 +181,27 @@ namespace AIDMS.Entities
                .Property(a => a.Description)
                .IsUnicode(true);
 
+            modelBuilder.Entity<Application>()
+                .HasOne(a => a.Student)
+                .WithMany(s => s.Applications)
+                .HasForeignKey(a => a.StudentId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Application>()
+                .HasOne(a => a.Employee)
+                .WithMany(s => s.Applications)
+                .HasForeignKey(a => a.EmployeeId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Application>()
+               .HasMany(a => a.Documents)
+               .WithOne(s => s.Application)
+               .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Application>()
+            .HasOne(p => p.Payment)
+            .WithOne(a => a.Application) 
+            .HasForeignKey<Application>(a => a.PaymentId); 
         }
     }
 }

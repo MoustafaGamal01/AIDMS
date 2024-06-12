@@ -26,11 +26,11 @@ namespace AIDMS.Entities
 
         // Navigation properties
         [ForeignKey("Student")]
-        public int StudentId { get; set; }
+        public int? StudentId { get; set; }
         public virtual Student? Student { get; set; }
 
         [ForeignKey("Application")]
-        public int ApplicationId { get; set; }
+        public int? ApplicationId { get; set; }
         public virtual Application? Application { get; set; }
     }
 }

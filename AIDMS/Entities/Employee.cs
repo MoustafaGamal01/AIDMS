@@ -43,8 +43,8 @@ namespace AIDMS.Entities
 
         // Nav Prop
         [ForeignKey("Role")]
-        public int RoleId { get; set; }
-        Role Role { get; set; }
+        public int? RoleId { get; set; }
+        public Role Role { get; set; }
         
         public virtual List<Application>? Applications { get; set; }
         public virtual List<Notification>? Notifications { get; set; }

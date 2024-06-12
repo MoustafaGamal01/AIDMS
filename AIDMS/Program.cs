@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using AIDMS.Entities;
 using AIDMS.Repositories;
+using System.Text.Json.Serialization;
 
 namespace AIDMS
 {
@@ -18,10 +19,19 @@ namespace AIDMS
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             // Add Repos
+            builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            });
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
             builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
             builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
+
             // Configure EF Core to use SQL Server with the connection string named "LocalCS"
             builder.Services.AddDbContext<AIDMSContextClass>(options =>
             {

@@ -22,6 +22,11 @@ public class RoleRepository:IRoleRepository {
         await _context.SaveChangesAsync();
     }
 
+    public async Task<List<Employee>> GetEmployeeByRoleIdAsync(int RoleId)
+    {
+        return await _context.Employees.Where(e => e.RoleId == RoleId).ToListAsync();
+    }
+
     public async Task UpdateRoleAsync(int roleId, Role role) {
         var existingRole= await GetRoleByIdAsync(roleId);
         if (existingRole == null) {

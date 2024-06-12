@@ -6,7 +6,7 @@
         public string Name { get; set; }
         public string Manager { get; set; }
 
-        public virtual List<Student> Students { get; set; }
+        public virtual List<Student> ? Students { get; set; }
         public Department() { 
             Students = new List<Student>(); 
         }

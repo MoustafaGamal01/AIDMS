@@ -8,9 +8,11 @@ namespace AIDMS.Repositories
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly AIDMSContextClass context;
+        private readonly IRoleRepository _role;
 
-        public EmployeeRepository(AIDMSContextClass context) {
+        public EmployeeRepository(AIDMSContextClass context, IRoleRepository role) {
             this.context = context;
+            this._role = role;
         }
 
         public async Task AddEmployeeAsync(Employee employee)
@@ -18,6 +20,8 @@ namespace AIDMS.Repositories
             context.Employees.Add(employee);
             await context.SaveChangesAsync();
         }
+
+       
 
         public async Task DeleteEmployeeAsync(int employeeId)
         {
