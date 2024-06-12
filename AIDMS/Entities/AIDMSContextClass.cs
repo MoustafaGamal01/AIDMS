@@ -57,7 +57,7 @@ namespace AIDMS.Entities
                 .IsUnicode(true);
 
             modelBuilder.Entity<Employee>()
-                .Property(n => n.firstName)
+                .Property(n => n.lastName)
                 .IsUnicode(true);
 
             // Notification
