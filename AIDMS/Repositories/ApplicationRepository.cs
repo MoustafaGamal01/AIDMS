@@ -109,5 +109,8 @@ namespace AIDMS.Repositories
         {
             return await _context.Applications.Where(i => i.isArchived == true).ToListAsync();
         }
+
+        
+        
     }
 }

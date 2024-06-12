@@ -76,5 +76,13 @@ namespace AIDMS.Repositories
             context.Documents.Remove(document);
             await context.SaveChangesAsync();
         }
+        
+        public async Task<List<AIDocument>> GetDocumentsByDocumentTypeAndApplicationTypeAsync(string documentType, string applicationType)
+        {
+            return await context.Documents
+                //.Include(d => d.Application)
+                .Where(d => d.FileType == documentType && d.Application.Title == applicationType)
+                .ToListAsync();
+        }
     }
 }

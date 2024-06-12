@@ -31,8 +31,12 @@ namespace AIDMS
             builder.Services.AddScoped<IRoleRepository, RoleRepository>();
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
+            builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 
-            // Configure EF Core to use SQL Server with the connection string named "LocalCS"
+            
+            
             builder.Services.AddDbContext<AIDMSContextClass>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("LocalCS"));
