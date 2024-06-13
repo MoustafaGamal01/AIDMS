@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using AIDMS.Entities;
 using AIDMS.Repositories;
 using System.Text.Json.Serialization;
@@ -13,35 +12,33 @@ namespace AIDMS
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                });
 
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            // Add Repos
-            builder.Services.AddControllers()
-            .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            });
+
+            // Add Repositories
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
             builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
             builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
-            builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+            builder.Services.AddScoped<ISupervisorRepository, SupervisorRepository>();
 
-            
-            
+            // Configure Database Context
             builder.Services.AddDbContext<AIDMSContextClass>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("LocalCS"));
             });
 
+            // Configure CORS
             builder.Services.AddCors(corsOptions =>
             {
                 corsOptions.AddPolicy("MyPolicy", corsPolicyBuilder =>
@@ -49,7 +46,6 @@ namespace AIDMS
                     corsPolicyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
             });
-
 
             var app = builder.Build();
 
@@ -61,13 +57,9 @@ namespace AIDMS
             }
 
             app.UseHttpsRedirection();
-
             app.UseCors("MyPolicy");
-
             app.UseAuthorization();
-
             app.MapControllers();
-
             app.Run();
         }
     }

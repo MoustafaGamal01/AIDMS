@@ -27,4 +27,29 @@ public class SupervisorController : Controller {
         _supervisor = supervisor;
         _role = role;
     }
+    
+    [HttpGet]
+    [Route("settings/{supervisorId:int}")]
+    public async Task<IActionResult> GetSupervisorIdSetting(int supervisorId)
+    {
+        var supervisor = await _supervisor.GetSupervisorByIdAsync(supervisorId);
+        if (supervisor == null)
+        {
+            return NotFound("Supervisor not found");
+        }
+        if (ModelState.IsValid)
+        {
+            UserSettingsDto supervisorSettingsDto = new UserSettingsDto
+            {
+                userName = supervisor.userName,
+                email = supervisor.Email,
+                Phone = supervisor.phoneNumber,
+                password = supervisor.Password,
+                profilePicture = supervisor.supervisorPicture
+            };
+            return Ok(supervisorSettingsDto);
+        }
+        return BadRequest();
+    }
+    
 }

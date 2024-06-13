@@ -65,6 +65,47 @@ namespace AIDMS.Repositories
             return await _context.Applications.Where(i => i.StudentId == studentId && i.Status == "Pending").ToListAsync();
         }
 
+        public async Task<List<Application>> GetAllPendingApplicationsWithStudentRelatedAsync(int empId)
+        {
+            return await _context.Applications.Include(app=>app.Student)
+                .Where(i => i.EmployeeId==empId && i.Status == "Pending").ToListAsync();
+        }
+
+        public async Task<List<Application>> GetAllReviewedApplicationsWithStudentRelatedAsync(int empId)
+        {
+            return await _context.Applications.Include(app=>app.Student)
+                .Where(i => i.EmployeeId==empId && i.Status == "Reviewed").ToListAsync();
+        }
+
+        public async Task<List<Application>> GetAllArchivedApplicationsWithStudentRelatedAsync(int empId)
+        {
+            return await _context.Applications.Include(app => app.Student)
+                .Where(i => i.EmployeeId == empId && i.isArchived == true).ToListAsync();
+        }
+        
+        
+        
+        public async Task<List<Application>> GetAllPendingApplicationsWithSupervisorAsync(int supervisorId)
+        {
+            return await _context.Applications.Include(app=>app.Student)
+                .Where(i => i.SupervisorId==supervisorId && i.Status == "Pending").ToListAsync();
+        }
+
+        public async Task<List<Application>> GetAllReviewedApplicationsWithSupervisorAsync(int supervisorId)
+        {
+            return await _context.Applications.Include(app=>app.Student)
+                .Where(i => i.SupervisorId==supervisorId && i.Status == "Reviewed").ToListAsync();
+        }
+
+        public async Task<List<Application>> GetAllArchivedApplicationsWithSupervisorAsync(int supervisorId)
+        {
+            return await _context.Applications.Include(app => app.Student)
+                .Where(i => i.SupervisorId == supervisorId && i.isArchived == true).ToListAsync();
+        }
+        
+        
+        
+        
         public async Task AddApplicationAsync(Application application)
         {
             _context.Applications.Add(application);

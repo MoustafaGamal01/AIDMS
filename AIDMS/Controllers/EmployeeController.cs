@@ -21,6 +21,7 @@ public class EmployeeController : Controller
     }
     
     [HttpGet]
+    [Route("admin")]
     // [ProducesResponseType(200, Type = typeof(ActionResult<BaseEmployeeDto>))]
     public async Task<ActionResult<IEnumerable<BaseEmployeeDto>>> GetAllEmplyeesBaseInfo()
     {
@@ -34,9 +35,29 @@ public class EmployeeController : Controller
         return Ok(employeesBaseInfo);
     }
 
-    
-    
-    
+    [HttpGet]
+    [Route("settings/{employeeId:int}")]
+    public async Task<IActionResult> GetEmplyeesSetting(int employeeId)
+    {
+        var employee = await _emp.GetEmployeeByIdAsync(employeeId);
+        if (employee == null)
+        {
+            return NotFound("Employee not found");
+        }
+        if (ModelState.IsValid)
+        {
+            UserSettingsDto employeeSettingsDto = new UserSettingsDto
+            {
+                userName = employee.userName,
+                email = employee.Email,
+                Phone = employee.phoneNumber,
+                password = employee.Password,
+                profilePicture = employee.employeePicture
+            };
+            return Ok(employeeSettingsDto);
+        }
+        return BadRequest();
+    }
     
     /////////////////
     // [HttpGet]
@@ -79,7 +100,7 @@ public class EmployeeController : Controller
         else
         {
             return BadRequest( // 400 Bad request.
-                $"Employee {id} was found but failed to delete.");
+                $"failed to delete the employee with id :{id}.");
         }
     }
 

@@ -27,18 +27,12 @@ namespace AIDMS.Repositories
             return null;
         }
 
-//<<<<<<< HEAD
-       
-
-       // public async Task DeleteEmployeeAsync(int employeeId)
-//=======
         public async Task<bool?> DeleteEmployeeAsync(int employeeId)
-//>>>>>>> b6b0fdc82e47552b4d62d29a7c37763d97e67385
         {
             var employee = await GetEmployeeByIdAsync(employeeId);  
             if (employee == null)
             {
-                throw new InvalidOperationException($"Employee with ID {employeeId} not found.");
+                return null;
             }
             context.Employees.Remove(employee);
             int affected = await context.SaveChangesAsync();
@@ -61,6 +55,7 @@ namespace AIDMS.Repositories
         
         public async Task<Employee> GetEmployeeByIdAsync(int employeeId)
         {
+            
             return await context.Employees.FirstOrDefaultAsync(e => e.Id == employeeId);
         }
 
