@@ -26,7 +26,7 @@ public class ApplicationController : Controller {
         var applicationBaseInfo = Applications.Select(app => new ApplicationBaseInfoDto
         {
             Id = app.Id,
-            Tittle = app.Title,
+            Title = app.Title,
             Date = app.SubmittedAt,
             DecisionDate = app.DecisionDate,
             Status = app.Status

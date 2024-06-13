@@ -259,22 +259,6 @@
   },
   {
     "ContainingType": "AIDMS.Controllers.StudentController",
-    "Method": "DeleteStudent",
-    "RelativePath": "api/Student/Delete",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Id",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "AIDMS.Controllers.StudentController",
     "Method": "GetStudentNotifications",
     "RelativePath": "api/Student/notifications/{studentId}",
     "HttpMethod": "GET",
