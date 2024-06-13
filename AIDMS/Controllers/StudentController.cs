@@ -20,9 +20,10 @@ namespace AIDMS.Controllers
         private readonly INotificationRepository _notification;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IRoleRepository _role;
+        private readonly IDocumentRepository _document;
 
         public StudentController(AIDMSContextClass context, IStudentRepository student, IApplicationRepository application,
-            INotificationRepository notification, IWebHostEnvironment hostingEnvironment, IRoleRepository role)
+            INotificationRepository notification, IWebHostEnvironment hostingEnvironment, IRoleRepository role, IDocumentRepository document)
         {
             this._context = context;
             this._student = student;
@@ -30,6 +31,7 @@ namespace AIDMS.Controllers
             this._notification = notification;
             this._hostingEnvironment = hostingEnvironment;
             this._role = role;
+            this._document = document;
         }
 
         [HttpGet]
@@ -51,6 +53,9 @@ namespace AIDMS.Controllers
                 studentDto.firstName = std.firstName;
                 studentDto.lastName = std.lastName;
                 studentDto.studentDepartment = std.Department.Name;
+
+                //var docs = _document.GetAllDocumentsByStudentIdAsync(id);
+
                 studentDto.studentDocuments = std.Documents;
                 studentDto.studentPicture = std.studentPicture;
                 return Ok(studentDto);
@@ -232,8 +237,10 @@ namespace AIDMS.Controllers
             var fileType = GetFileType(applicationDto.StudentDocument);
             var fileExtension = GetFileExtension(fileType);
 
+
             // Generate a unique filename for student's document with extension
-            var studentFileName = GenerateUniqueFileName(applicationDto.StudentId) + fileExtension;
+            var student = await _student.GetStudentPersonalInfoByIdAsync(applicationDto.StudentId);
+            var studentFileName = GenerateUniqueFileName(student.firstName+'_'+student.lastName) + fileExtension; //GenerateUniqueFileName(student.firstName+'_'+student.lastName) + fileExtension;
 
             // Save student's uploaded document (if any) and handle success/failure
             bool documentSaved = false;
@@ -265,7 +272,8 @@ namespace AIDMS.Controllers
                 {
                     FileName = studentFileName, // Use the generated unique filename with extension
                     FileType = fileType, // Get the actual file type
-                    FilePath =FileURL ,
+                    FilePath = FileURL,
+                    UploadedAt = DateTime.Now
                     //StudentId = applicationDto.StudentId,
                 });
             }
@@ -305,94 +313,6 @@ namespace AIDMS.Controllers
 
 
             return CreatedAtRoute("StudentPersonalInfo", new { Id = applicationDto.StudentId }, application);
-        }
-
-
-        //// Finish this => supervisor can approve or reject the application
-        //[HttpPost]
-        //[Route("applications")]
-        //public async Task<IActionResult> RequestAcademicTranscript([FromForm] CreateApplicationDto applicationDto)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    if (applicationDto.StudentDocument?.Length > 1048576*2) // Max size 2 MB in bytes
-        //    {
-        //        return BadRequest("File size cannot exceed 1 MB.");
-        //    }
-
-        //    // Get the file type and extension
-        //    var fileType = GetFileType(applicationDto.StudentDocument);
-        //    var fileExtension = GetFileExtension(fileType);
-
-        //    // Generate a unique filename for student's document with extension
-        //    var studentFileName = GenerateUniqueFileName(applicationDto.StudentId) + fileExtension;
-
-        //    // Save student's uploaded document (if any) and handle success/failure
-        //    bool documentSaved = false;
-        //    if (applicationDto.StudentDocument != null)
-        //    {
-        //        documentSaved = await SaveStudentDocument(applicationDto.StudentDocument, studentFileName);
-        //        if (!documentSaved)
-        //        {
-        //            return BadRequest("Failed to save uploaded document.");
-        //        }
-        //    }
-
-        //    // Create the application entity with details
-        //    var application = new AIDMS.Entities.Application
-        //    {
-        //        Title = applicationDto.Title,
-        //        Description = applicationDto.Description,
-        //        Status = "Pending",
-        //        EmployeeId = 3, // Assign to designated employee
-        //        StudentId = applicationDto.StudentId,
-        //        SubmittedAt = DateTime.Now,
-        //        PaymentId = 1, // Replace with actual payment ID
-        //    };
-
-        //    if (applicationDto.StudentDocument != null)
-        //    {
-        //        application.Documents = new List<AIDocument>();
-        //        application.Documents.Add(new AIDocument
-        //        {
-        //            FileName = studentFileName, // Use the generated unique filename with extension
-        //            FileType = fileType, // Get the actual file type
-        //            FilePath = documentSaved ? Path.Combine(@"C:\Users\AIA\Desktop\TestDocument", studentFileName) : null,
-        //            StudentId = applicationDto.StudentId,
-        //        });
-        //    }
-
-        //    await _application.AddApplicationAsync(application);
-
-        //    // Get the name of the student
-        //    var std = await _student.GetStudentPersonalInfoByIdAsync(applicationDto.StudentId);
-
-        //    // Create notifications for employees about new application
-        //    await _notification.AddNotificationAsync(new Notification
-        //    {
-        //        Message = $"Student: {std.firstName + ' ' + std.lastName} - ID: {applicationDto.StudentId} \n  submitted a new application: {applicationDto.Title}",
-        //        EmployeeId = 4,
-        //        AIDocumentId = application.Documents?.FirstOrDefault()?.Id,
-        //        //StudentId = applicationDto.StudentId,
-        //    });
-
-        //    return CreatedAtRoute("StudentPersonalInfo", new { Id = applicationDto.StudentId }, application);
-        //}
-
-        [HttpDelete]
-        [Route("Delete")]
-        public async Task<IActionResult> DeleteStudent(int Id)
-        {
-            var student = await _student.GetAllStudentDataByIdAsync(Id);
-            if (student == null)
-            {
-                return NotFound("There's no Student with this Id");
-            }
-            await _student.DeleteStudentAsync(Id);
-            return Ok("Student Deleted Successfully");
         }
 
         private string GetFileExtension(string contentType)
@@ -439,9 +359,16 @@ namespace AIDMS.Controllers
             }
         }
 
-        private string GenerateUniqueFileName(int studentId)
+        private string GenerateUniqueFileName(string studentName)
         {
-            return $"{studentId}_{Guid.NewGuid()}";
+            string baseFileName = $"{studentName}_{Guid.NewGuid()}";
+            if (baseFileName.Length > 45)
+            {
+                int allowableStudentNameLength = 45 - Guid.NewGuid().ToString().Length - 1;
+                studentName = studentName.Substring(0, Math.Min(studentName.Length, allowableStudentNameLength));
+                baseFileName = $"{studentName}_{Guid.NewGuid()}";
+            }
+            return baseFileName;
         }
 
         private string GetFileType(IFormFile studentDocument)
@@ -457,6 +384,98 @@ namespace AIDMS.Controllers
             }
         }
 
+        //[HttpPost]
+        //[Route("applications")]
+        //public async Task<IActionResult> MatrialsRegisteration([FromForm] CreateApplicationDto applicationDto)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    if (applicationDto.StudentDocument?.Length > 1048576) // Max size 1 MB in bytes
+        //    {
+        //        return BadRequest("File size cannot exceed 1 MB.");
+        //    }
+
+        //    // Get the file type and extension
+        //    var fileType = GetFileType(applicationDto.StudentDocument);
+        //    var fileExtension = GetFileExtension(fileType);
+
+        //    // Generate a unique filename for student's document with extension
+        //    var studentFileName = GenerateUniqueFileName(applicationDto.StudentId) + fileExtension;
+
+        //    // Save student's uploaded document (if any) and handle success/failure
+        //    bool documentSaved = false;
+        //    if (applicationDto.StudentDocument != null)
+        //    {
+        //        documentSaved = await SaveStudentDocument(applicationDto.StudentDocument, studentFileName);
+        //        if (!documentSaved)
+        //        {
+        //            return BadRequest("Failed to save uploaded document.");
+        //        }
+        //    }
+
+        //    // Create the application entity with details
+        //    var application = new AIDMS.Entities.Application
+        //    {
+        //        Title = applicationDto.Title,
+        //        Description = applicationDto.Description,
+        //        Status = "Pending",
+        //        EmployeeId = 6, // Assign to designated employee
+        //        StudentId = applicationDto.StudentId,
+        //        SubmittedAt = DateTime.Now
+        //    };
+
+        //    string FileURL = documentSaved ? Path.Combine(@"C:\Users\AIA\Desktop\TestDocument", studentFileName) : null;
+        //    if (applicationDto.StudentDocument != null)
+        //    {
+        //        application.Documents = new List<AIDocument>();
+        //        application.Documents.Add(new AIDocument
+        //        {
+        //            FileName = studentFileName, // Use the generated unique filename with extension
+        //            FileType = fileType, // Get the actual file type
+        //            FilePath = FileURL,
+        //            //StudentId = applicationDto.StudentId,
+        //        });
+        //    }
+
+        //    // Save the application entity first
+        //    await _context.Applications.AddAsync(application);
+        //    await _context.SaveChangesAsync();
+
+        //    // Create and save a mock Payment entity linked to the application
+        //    var payment = new Payment
+        //    {
+        //        DocumentURL = FileURL,
+        //        Amount = 100.00m, // Mock amount
+        //        TimeStamp = DateTime.Now,
+        //        //ApplicationId = application.Id // Link the payment to the application
+        //    };
+
+        //    await _context.Payments.AddAsync(payment);
+        //    await _context.SaveChangesAsync();
+
+        //    // Update the application with the PaymentId
+        //    application.PaymentId = payment.Id;
+        //    _context.Applications.Update(application);
+        //    await _context.SaveChangesAsync();
+
+        //    // Get the name of the student
+        //    var std = await _student.GetStudentPersonalInfoByIdAsync(applicationDto.StudentId);
+
+        //    // Create notifications for employees about new application
+
+        //    await _notification.AddNotificationAsync(new Notification
+        //    {
+        //        Message = $"Student: {std.firstName + ' ' + std.lastName} - ID: {applicationDto.StudentId} \n  submitted a new application: {applicationDto.Title}",
+        //        EmployeeId = 4,
+        //        AIDocumentId = application.Documents?.FirstOrDefault()?.Id,
+        //    });
+
+
+        //    return CreatedAtRoute("StudentPersonalInfo", new { Id = applicationDto.StudentId }, application);
+        //}
 
     }
 }

@@ -27,7 +27,10 @@ public class DocumentsController : Controller {
         var Documents = await _doc.GetAllDocumentsAsync();
         var documents = Documents.Select(doc => new DocumentDto
         {
-            FilePath = doc.FilePath
+            FilePath = doc.FilePath,
+            FileName = doc.FileName,
+            FileType = doc.FileType,
+            uploadedAt = doc.UploadedAt
         });
         return documents;
     }
