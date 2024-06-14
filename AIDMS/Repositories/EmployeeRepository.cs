@@ -65,6 +65,11 @@ namespace AIDMS.Repositories
                 .FirstOrDefaultAsync(e => e.firstName.Contains(employeeName) || e.lastName.Contains("employeeName"));
         }
 
+        public async Task<List<Employee>> GetAllSupervisorsAsync()
+        {
+            return await context.Employees.Where(e => e.RoleId == 3).ToListAsync();
+        }
+
         public async Task UpdateEmployeeAsync(int employeeId, Employee employee)
         {
             var existingEmployee = await GetEmployeeByIdAsync(employeeId);

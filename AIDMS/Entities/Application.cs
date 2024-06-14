@@ -16,7 +16,6 @@ namespace AIDMS.Entities
         [Required(ErrorMessage = "Status is required")]
         public string Status { get; set; }
 
-        public bool isArchived { get; set; } = false; 
 
         [StringLength(150, MinimumLength = 2, ErrorMessage = "Description must be between 2 and 150 characters")]
         public string Description { get; set; }
@@ -45,10 +44,6 @@ namespace AIDMS.Entities
         [ForeignKey("Payment")] 
         public int? PaymentId { get; set; }
         public virtual Payment? Payment { get; set; }
-
-        [ForeignKey("Supervisor")]
-        public int? SupervisorId { get; set; }
-        public virtual Supervisor? Supervisor { get; set; }
 
         public virtual List<AIDocument>? Documents { get; set; }
         public Application()
