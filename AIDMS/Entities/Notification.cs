@@ -12,7 +12,9 @@ namespace AIDMS.Entities
         [Required(ErrorMessage = "Message is required")]
         public string Message { get; set; }
 
-        public bool IsRead { get; set; }
+        public bool IsRead { get; set; } = false;
+
+        public bool fromStudent { get; set; } = false;
 
         [Required(ErrorMessage = "Creation date is required")]
         [DataType(DataType.DateTime)]
@@ -26,10 +28,6 @@ namespace AIDMS.Entities
         [ForeignKey("AIDocument")]
         public int? AIDocumentId { get; set; }
         public virtual AIDocument? AIDocument { get; set; }
-
-        [ForeignKey("Supervisor")]
-        public int? SupervisorId { get; set; }
-        public virtual Supervisor? Supervisor { get; set; }
 
         [ForeignKey("Employee")]
         public int? EmployeeId { get; set; }

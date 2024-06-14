@@ -19,7 +19,7 @@ namespace AIDMS.Entities
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Department> Departments { get; set; }
-        public DbSet<Supervisor> Supervisors { get; set; }
+        //public DbSet<Supervisor> Supervisors { get; set; }
 
 
         // Handle "Arabic Language" && "DateOnly prop" && "decimal prop" In Db  
@@ -48,11 +48,6 @@ namespace AIDMS.Entities
                 .HasForeignKey(f => f.DepartmentId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            modelBuilder.Entity<Student>()
-                .HasOne(s => s.Supervisor)
-                .WithMany(a => a.Students)
-                .HasForeignKey(f => f.SupervisorId)
-                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Student>()
                 .HasMany(s => s.Applications)
@@ -68,30 +63,6 @@ namespace AIDMS.Entities
                 .HasMany(s => s.Documents)
                 .WithOne(a => a.Student)
                 .OnDelete(DeleteBehavior.SetNull);
-
-            // Supervisor
-            modelBuilder.Entity<Supervisor>()
-                .Property(n => n.firstName)
-                .IsUnicode(true);
-
-            modelBuilder.Entity<Supervisor>()
-                .Property(n => n.lastName)
-                .IsUnicode(true);
-
-            modelBuilder.Entity<Supervisor>()
-            .HasMany(a => a.Applications)
-            .WithOne(s => s.Supervisor)
-            .OnDelete(DeleteBehavior.SetNull);
-
-            modelBuilder.Entity<Supervisor>()
-            .HasMany(a => a.Notifications)
-            .WithOne(s => s.Supervisor)
-            .OnDelete(DeleteBehavior.SetNull);
-
-            modelBuilder.Entity<Supervisor>()
-            .HasMany(a => a.Students)
-            .WithOne(s => s.Supervisor)
-            .OnDelete(DeleteBehavior.SetNull);
 
             // Employee
             modelBuilder.Entity<Employee>()

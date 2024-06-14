@@ -30,7 +30,6 @@ namespace AIDMS
             builder.Services.AddScoped<IRoleRepository, RoleRepository>();
             builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            builder.Services.AddScoped<ISupervisorRepository, SupervisorRepository>();
 
             // Configure Database Context
             builder.Services.AddDbContext<AIDMSContextClass>(options =>

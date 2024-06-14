@@ -57,10 +57,6 @@ namespace AIDMS.Entities
         public int? DepartmentId { get; set; }
         public virtual Department? Department { get; set; }
 
-        [ForeignKey("Supervisor")]
-        public int? SupervisorId { get; set; }
-        public virtual Supervisor? Supervisor { get; set; }
-
         public virtual List<Application>? Applications { get; set; }
         public virtual List<AIDocument>? Documents { get; set; }
         public virtual List<Notification>? Notifications { get; set; } 
