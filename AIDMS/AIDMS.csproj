@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="StudentUploads\" />
     <Folder Include="TestDocument\" />
   </ItemGroup>
