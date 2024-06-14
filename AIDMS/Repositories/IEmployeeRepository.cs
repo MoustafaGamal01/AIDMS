@@ -12,5 +12,7 @@ namespace AIDMS.Repositories
         Task<bool?> DeleteEmployeeAsync(int employeeId);
         Task<List<Employee>> GetAllEmployeesAndRoleAsync();
         Task<bool?> UpdateEmployeeBaseInfoAsync(int employeeId, UpdateEmployeeDto employee);
+        // Supervisor 
+        Task<List<Employee>> GetAllSupervisorsAsync();
     }
 }

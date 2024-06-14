@@ -103,17 +103,11 @@ namespace AIDMS.Migrations
                     b.Property<DateTime>("SubmittedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("SupervisorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("isArchived")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -124,8 +118,6 @@ namespace AIDMS.Migrations
                         .HasFilter("[PaymentId] IS NOT NULL");
 
                     b.HasIndex("StudentId");
-
-                    b.HasIndex("SupervisorId");
 
                     b.ToTable("Applications");
                 });
@@ -190,6 +182,7 @@ namespace AIDMS.Migrations
                     b.Property<string>("lastName")
                         .IsRequired()
                         .HasMaxLength(50)
+                        .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("phoneNumber")
@@ -238,8 +231,8 @@ namespace AIDMS.Migrations
                     b.Property<int?>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SupervisorId")
-                        .HasColumnType("int");
+                    b.Property<bool>("fromStudent")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -248,8 +241,6 @@ namespace AIDMS.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.HasIndex("StudentId");
-
-                    b.HasIndex("SupervisorId");
 
                     b.ToTable("Notifications");
                 });
@@ -335,9 +326,6 @@ namespace AIDMS.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int?>("SupervisorId")
-                        .HasColumnType("int");
-
                     b.Property<decimal?>("TotalPassedHours")
                         .HasColumnType("decimal(18,2)");
 
@@ -368,63 +356,7 @@ namespace AIDMS.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.HasIndex("SupervisorId");
-
                     b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("AIDMS.Entities.Supervisor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<DateTime>("dateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("firstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(true)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("lastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(true)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("phoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<byte[]>("supervisorPicture")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("userName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Supervisors");
                 });
 
             modelBuilder.Entity("AIDMS.Entities.AIDocument", b =>
@@ -460,18 +392,11 @@ namespace AIDMS.Migrations
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("AIDMS.Entities.Supervisor", "Supervisor")
-                        .WithMany("Applications")
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.Navigation("Employee");
 
                     b.Navigation("Payment");
 
                     b.Navigation("Student");
-
-                    b.Navigation("Supervisor");
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Employee", b =>
@@ -500,18 +425,11 @@ namespace AIDMS.Migrations
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("AIDMS.Entities.Supervisor", "Supervisor")
-                        .WithMany("Notifications")
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.Navigation("AIDocument");
 
                     b.Navigation("Employee");
 
                     b.Navigation("Student");
-
-                    b.Navigation("Supervisor");
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Student", b =>
@@ -521,14 +439,7 @@ namespace AIDMS.Migrations
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("AIDMS.Entities.Supervisor", "Supervisor")
-                        .WithMany("Students")
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.Navigation("Department");
-
-                    b.Navigation("Supervisor");
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Application", b =>
@@ -565,15 +476,6 @@ namespace AIDMS.Migrations
                     b.Navigation("Documents");
 
                     b.Navigation("Notifications");
-                });
-
-            modelBuilder.Entity("AIDMS.Entities.Supervisor", b =>
-                {
-                    b.Navigation("Applications");
-
-                    b.Navigation("Notifications");
-
-                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

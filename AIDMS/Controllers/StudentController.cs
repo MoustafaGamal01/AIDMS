@@ -137,7 +137,7 @@ namespace AIDMS.Controllers
 
             return Ok(applicationsDto);
         }
-
+    
         [HttpGet]
         [Route("applications/{studentId:int}")]
         public async Task<IActionResult> GetAllApplicationsByStudentIdAsync(int studentId)
@@ -148,33 +148,6 @@ namespace AIDMS.Controllers
             }
 
             var applications = await _application.GetAllApplicationsByStudentIdAsync(studentId);
-
-            if (applications == null)
-            {
-                return NotFound();
-            }
-
-            var applicationsDto = applications.Select(n => new StudentApplicationDto
-            {
-                Id = n.Id,
-                documentName = n.Title,
-                status = n.Status,
-                uploadedAt = n.SubmittedAt.ToString("yyyy-MM-dd HH:mm:ss"),
-            }).ToList();
-
-            return Ok(applicationsDto);
-        }
-
-        [HttpGet]
-        [Route("archived/{studentId:int}")]
-        public async Task<IActionResult> GetArchivedApplicationsByStudentIdAsync(int studentId)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var applications = await _application.GetAllArchivedApplicationsByStudentIdAsync(studentId);
 
             if (applications == null)
             {
@@ -307,8 +280,9 @@ namespace AIDMS.Controllers
             await _notification.AddNotificationAsync(new Notification
             {
                 Message = $"Student: {std.firstName + ' ' + std.lastName} - ID: {applicationDto.StudentId} \n  submitted a new application: {applicationDto.Title}",
-                EmployeeId = 4,
+                EmployeeId = 6,
                 AIDocumentId = application.Documents?.FirstOrDefault()?.Id,
+                CreatedAt = DateTime.Now
             });
 
 
