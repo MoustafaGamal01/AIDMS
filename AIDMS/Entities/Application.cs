@@ -16,7 +16,7 @@ namespace AIDMS.Entities
         [Required(ErrorMessage = "Status is required")]
         public string Status { get; set; }
 
-        public bool isAccepted { get; set; } 
+        public bool isAccepted { get; set; }
 
         [StringLength(150, MinimumLength = 2, ErrorMessage = "Description must be between 2 and 150 characters")]
         public string Description { get; set; }

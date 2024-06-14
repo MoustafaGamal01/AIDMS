@@ -83,8 +83,10 @@ namespace AIDMS.Repositories
         public async Task<bool?> UpdateEmployeeBaseInfoAsync(int employeeId, UpdateEmployeeDto employee)
         {
             var existingEmployee = await GetEmployeeByIdAsync(employeeId);
-            if(existingEmployee == null) {
-                throw new InvalidOperationException($"Employee with ID {employeeId} not found.");
+            if(existingEmployee == null)
+            {
+                return null;
+                // throw new InvalidOperationException($"Employee with ID {employeeId} not found.");
             }
 
             existingEmployee.userName = employee.userName;
