@@ -47,10 +47,12 @@ public class DocumentsController : Controller {
 
         var documents = Documents.Select(doc => new DocumentDto
         {
-            FilePath = doc.FilePath
+            FilePath = doc.FilePath,
+            FileName = doc.FileName,
+            FileType = doc.FileType,
+            uploadedAt = doc.UploadedAt
         });
-        return Ok(documents); 
-            
+        return Ok(documents);
     }
     
     // [HttpGet]
