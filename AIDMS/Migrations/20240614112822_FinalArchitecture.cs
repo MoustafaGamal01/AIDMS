@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AIDMS.Migrations
 {
     /// <inheritdoc />
-    public partial class init2 : Migration
+    public partial class FinalArchitecture : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -55,24 +55,34 @@ namespace AIDMS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Supervisors",
+                name: "Students",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    GPA = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    studentPicture = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Age = table.Column<int>(type: "int", nullable: false),
-                    supervisorPicture = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     firstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     lastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     userName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    phoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    dateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    dateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TotalPassedHours = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Level = table.Column<int>(type: "int", nullable: false),
+                    DepartmentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Supervisors", x => x.Id);
+                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Students_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,44 +114,6 @@ namespace AIDMS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Students",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GPA = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    studentPicture = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    firstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    lastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    userName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    dateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TotalPassedHours = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    Level = table.Column<int>(type: "int", nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: true),
-                    SupervisorId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Students", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Students_Departments_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "Departments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
-                    table.ForeignKey(
-                        name: "FK_Students_Supervisors_SupervisorId",
-                        column: x => x.SupervisorId,
-                        principalTable: "Supervisors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Applications",
                 columns: table => new
                 {
@@ -149,15 +121,13 @@ namespace AIDMS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    isArchived = table.Column<bool>(type: "bit", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     SubmittedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DecisionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ReviewDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: true),
                     EmployeeId = table.Column<int>(type: "int", nullable: true),
-                    PaymentId = table.Column<int>(type: "int", nullable: true),
-                    SupervisorId = table.Column<int>(type: "int", nullable: true)
+                    PaymentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -177,12 +147,6 @@ namespace AIDMS.Migrations
                         name: "FK_Applications_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
-                    table.ForeignKey(
-                        name: "FK_Applications_Supervisors_SupervisorId",
-                        column: x => x.SupervisorId,
-                        principalTable: "Supervisors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                 });
@@ -225,10 +189,10 @@ namespace AIDMS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Message = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     IsRead = table.Column<bool>(type: "bit", nullable: false),
+                    fromStudent = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: true),
                     AIDocumentId = table.Column<int>(type: "int", nullable: true),
-                    SupervisorId = table.Column<int>(type: "int", nullable: true),
                     EmployeeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -251,12 +215,6 @@ namespace AIDMS.Migrations
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
-                    table.ForeignKey(
-                        name: "FK_Notifications_Supervisors_SupervisorId",
-                        column: x => x.SupervisorId,
-                        principalTable: "Supervisors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateIndex(
@@ -275,11 +233,6 @@ namespace AIDMS.Migrations
                 name: "IX_Applications_StudentId",
                 table: "Applications",
                 column: "StudentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Applications_SupervisorId",
-                table: "Applications",
-                column: "SupervisorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Documents_ApplicationId",
@@ -312,19 +265,9 @@ namespace AIDMS.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notifications_SupervisorId",
-                table: "Notifications",
-                column: "SupervisorId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Students_DepartmentId",
                 table: "Students",
                 column: "DepartmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Students_SupervisorId",
-                table: "Students",
-                column: "SupervisorId");
         }
 
         /// <inheritdoc />
@@ -353,9 +296,6 @@ namespace AIDMS.Migrations
 
             migrationBuilder.DropTable(
                 name: "Departments");
-
-            migrationBuilder.DropTable(
-                name: "Supervisors");
         }
     }
 }
