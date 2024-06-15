@@ -33,7 +33,7 @@ public class NotificationRepository:INotificationRepository {
         _context.Entry(existingNotification).CurrentValues.SetValues(notification);
         await _context.SaveChangesAsync();
     }
-
+    
     public async Task DeleteNotificationAsync(int notificationId) {
         var notificationToDelete= await GetNotificationByIdAsync(notificationId);
         if (notificationToDelete == null) {
@@ -46,7 +46,7 @@ public class NotificationRepository:INotificationRepository {
 
     public async Task<List<Notification>> GetAllNotificationsByStudentIdAsync(int studentId)
     {
-        return await _context.Notifications.Where(i => i.StudentId == studentId).ToListAsync();
+        return await _context.Notifications.Where(i => i.StudentId == studentId && i.fromStudent == false).ToListAsync();
     }
 
     public async Task<List<Notification>> GetAllNotificationsByEmployeeIdAsync(int empId)

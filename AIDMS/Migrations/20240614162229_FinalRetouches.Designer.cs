@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AIDMS.Migrations
 {
     [DbContext(typeof(AIDMSContextClass))]
-    [Migration("20240614112822_FinalArchitecture")]
-    partial class FinalArchitecture
+    [Migration("20240614162229_FinalRetouches")]
+    partial class FinalRetouches
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,6 +111,9 @@ namespace AIDMS.Migrations
                         .HasMaxLength(50)
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("isAccepted")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

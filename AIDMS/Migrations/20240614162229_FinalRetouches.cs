@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AIDMS.Migrations
 {
     /// <inheritdoc />
-    public partial class FinalArchitecture : Migration
+    public partial class FinalRetouches : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -121,6 +121,7 @@ namespace AIDMS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    isAccepted = table.Column<bool>(type: "bit", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     SubmittedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DecisionDate = table.Column<DateTime>(type: "datetime2", nullable: false),

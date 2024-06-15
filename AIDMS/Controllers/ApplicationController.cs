@@ -62,6 +62,7 @@ public class ApplicationController : Controller {
         return applicationRequestDto;
     }
     
+<<<<<<< HEAD
     [HttpGet]
     [Route("archived/employee")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationArchivedDto>))]
@@ -80,6 +81,25 @@ public class ApplicationController : Controller {
             });
         return applicationArchivedDto;
     }    
+=======
+    //[HttpGet]
+    //[Route("reviewed/employee/{empId:int}")]
+    //[ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
+    //public async Task<IEnumerable<ApplicationRequestDto>> GetReviewedApplicationsExceptMaterial(int empId)
+    //{
+    //    var Applications = await _application.GetAllReviewedApplicationsWithStudentRelatedAsync(empId);
+    //    var applicationRequestDto = Applications
+    //        .Where(application=>application.Title.ToUpper()!="Material".ToUpper())
+    //        .Select(app => new ApplicationRequestDto
+    //        {
+    //            Id = app.Id,
+    //            Name = app.Title,
+    //            Date = app.SubmittedAt,
+    //            From = $"{app.Student.firstName} {app.Student.lastName}"
+    //        });
+    //    return applicationRequestDto;
+    //}
+>>>>>>> feature/APIalmostDone
 #endregion
 
 #region Get Application Request for the employee by search
@@ -95,7 +115,21 @@ public class ApplicationController : Controller {
         return applicationRequestDto;
     }
         
+<<<<<<< HEAD
    
+=======
+    //[HttpGet]
+    //[Route("reviewed/employee/{empId:int}/{studentName}")]
+    //[ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
+    //public async Task<IEnumerable<ApplicationRequestDto>> GetSearchInReviewedApplicationsExceptMaterial(int empId,string studentName)
+    //{
+    //    var Applications = await GetReviewedApplicationsExceptMaterial(empId);
+    //    var applicationRequestDto = Applications
+    //        .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
+    //    return applicationRequestDto;
+            
+    //}
+>>>>>>> feature/APIalmostDone
         
     [HttpGet]
     [Route("archived/employee/{studentName}")]
