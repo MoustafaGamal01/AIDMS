@@ -1,10 +1,13 @@
 ﻿using AIDMS.DTOs;
 using AIDMS.Entities;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Crypto.Generators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BCrypt.Net;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AIDMS.Repositories
 {
@@ -54,17 +57,48 @@ namespace AIDMS.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateStudentAsync(int studentId, Student student)
+        public async Task UpdateStudentAsync(int studentId, UserSettingsDto userSettingsDto)
         {
-            var existingStudent = await GetAllStudentDataByIdAsync(studentId);
+            var existingStudent = await _context.Students.FindAsync(studentId);
             if (existingStudent == null)
             {
-                throw new InvalidOperationException($"Student with ID {studentId} not found.");
+                throw new KeyNotFoundException("Student not found");
             }
-            
-            _context.Entry(existingStudent).CurrentValues.SetValues(student);
+
+            // Update properties if they are provided
+            if (userSettingsDto.profilePicture != null)
+            {
+                //using (var memoryStream = new MemoryStream())
+                //{
+                //    await userSettingsDto.profilePicture.CopyToAsync(memoryStream);
+                //    existingStudent.studentPicture = memoryStream.ToArray();
+                //}
+            }
+            if (!string.IsNullOrEmpty(userSettingsDto.userName))
+            {
+                existingStudent.userName = userSettingsDto.userName;
+            }
+            if (!string.IsNullOrEmpty(userSettingsDto.email))
+            {
+                existingStudent.Email = userSettingsDto.email;
+            }
+            if (!string.IsNullOrEmpty(userSettingsDto.password))
+            {
+                existingStudent.Password = userSettingsDto.password;
+            }
+            if (!string.IsNullOrEmpty(userSettingsDto.Phone))
+            {
+                existingStudent.PhoneNumber = userSettingsDto.Phone;
+            }
+
+            _context.Students.Update(existingStudent);
             await _context.SaveChangesAsync();
         }
+        //private string HashPassword(string password)
+        //{
+            
+        //    return BCrypt.Net.BCrypt.HashString(password);
+        //}
 
         public async Task DeleteStudentAsync(int studentId)
         {

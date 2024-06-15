@@ -109,6 +109,9 @@ namespace AIDMS.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<bool>("isAccepted")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EmployeeId");

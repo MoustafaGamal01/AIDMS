@@ -86,63 +86,6 @@
     ]
   },
   {
-    "ContainingType": "AIDMS.Controllers.ApplicationController",
-    "Method": "GetReviewedApplicationsExceptMaterial",
-    "RelativePath": "api/Application/reviewed/employee/{empId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "empId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.ApplicationRequestDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "AIDMS.Controllers.ApplicationController",
-    "Method": "GetSearchInReviewedApplicationsExceptMaterial",
-    "RelativePath": "api/Application/reviewed/employee/{empId}/{studentName}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "empId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "studentName",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.ApplicationRequestDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
     "ContainingType": "AIDMS.Controllers.DocumentsController",
     "Method": "GetAllDocuments",
     "RelativePath": "api/Documents",
@@ -335,17 +278,44 @@
   },
   {
     "ContainingType": "AIDMS.Controllers.StudentController",
-    "Method": "SubmitApplication",
-    "RelativePath": "api/Student/applications",
-    "HttpMethod": "POST",
+    "Method": "GetAllApplicationsByStudentIdAsync",
+    "RelativePath": "api/Student/applications/{studentId}",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Title",
-        "Type": "System.String",
-        "IsRequired": false
-      },
+        "Name": "studentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.StudentController",
+    "Method": "GetArchivedApplicationsByStudentIdAsync",
+    "RelativePath": "api/Student/archived/{studentId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.StudentController",
+    "Method": "RequestEnrollmentProof",
+    "RelativePath": "api/Student/enrollmentproof",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
         "Name": "Description",
         "Type": "System.String",
@@ -366,16 +336,83 @@
   },
   {
     "ContainingType": "AIDMS.Controllers.StudentController",
-    "Method": "GetAllApplicationsByStudentIdAsync",
-    "RelativePath": "api/Student/applications/{studentId}",
-    "HttpMethod": "GET",
+    "Method": "RequestExpensesPayment",
+    "RelativePath": "api/Student/expenses",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "studentId",
+        "Name": "Description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "StudentId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "StudentDocument",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.StudentController",
+    "Method": "RequestMatrialRegestration",
+    "RelativePath": "api/Student/material/{employeeId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "StudentId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "StudentDocument",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "employeeId",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.StudentController",
+    "Method": "RequestMilitaryEducation",
+    "RelativePath": "api/Student/military",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "StudentId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "StudentDocument",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -414,16 +451,41 @@
   },
   {
     "ContainingType": "AIDMS.Controllers.StudentController",
-    "Method": "GetReviewedApplicationsByStudentIdAsync",
-    "RelativePath": "api/Student/reviewed/{studentId}",
-    "HttpMethod": "GET",
+    "Method": "ChangePersonalInfo",
+    "RelativePath": "api/Student/settings",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "studentId",
         "Type": "System.Int32",
-        "IsRequired": true
+        "IsRequired": false
+      },
+      {
+        "Name": "profilePicture",
+        "Type": "System.Byte[]",
+        "IsRequired": false
+      },
+      {
+        "Name": "userName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "password",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Phone",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -440,6 +502,32 @@
         "Name": "studentId",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.StudentController",
+    "Method": "RequestAcademicTranscript",
+    "RelativePath": "api/Student/trascript",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "StudentId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "StudentDocument",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
