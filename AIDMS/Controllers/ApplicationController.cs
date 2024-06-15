@@ -2,6 +2,7 @@
 using AIDMS.Entities;
 using AIDMS.Repositories;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,11 +13,14 @@ namespace AIDMS.Controllers;
 public class ApplicationController : Controller {
     
     private readonly IApplicationRepository _application;
-    public ApplicationController(IApplicationRepository application)
+    private readonly INotificationRepository _notification;
+    public ApplicationController(IApplicationRepository application,INotificationRepository notification)
     {
         _application = application;
+        _notification = notification;
     }
     
+#region Admin Applications
     
     [HttpGet]
     [Route("admin")]
@@ -33,17 +37,19 @@ public class ApplicationController : Controller {
             Status = app.Status
         });
         return applicationBaseInfo;
-    }
-    
+    }    
+
+#endregion    
+
 
 #region Get Application Request for the employee
 
     [HttpGet]
-    [Route("pending/employee/{empId:int}")]
+    [Route("pending/employee")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
-    public async Task<IEnumerable<ApplicationRequestDto>> GetPendingApplicationsExceptMaterial(int empId)
+    public async Task<IEnumerable<ApplicationRequestDto>> GetPendingApplicationsExceptMaterial()
     {
-        var Applications = await _application.GetAllPendingApplicationsWithStudentRelatedAsync(empId);
+        var Applications = await _application.GetAllPendingApplicationsAsync();
         var applicationRequestDto = Applications
             .Where(application=>application.Title.ToUpper()!="Material".ToUpper())
             .Select(app => new ApplicationRequestDto
@@ -57,148 +63,184 @@ public class ApplicationController : Controller {
     }
     
     [HttpGet]
-    [Route("reviewed/employee/{empId:int}")]
-    [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
-    public async Task<IEnumerable<ApplicationRequestDto>> GetReviewedApplicationsExceptMaterial(int empId)
+    [Route("archived/employee")]
+    [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationArchivedDto>))]
+    public async Task<IEnumerable<ApplicationArchivedDto>> GetArchivedApplicationsExceptMaterial()
     {
-        var Applications = await _application.GetAllReviewedApplicationsWithStudentRelatedAsync(empId);
-        var applicationRequestDto = Applications
+        var Applications = await _application.GetAllArchivedApplicationsWithStudentRelatedAsync();
+        var applicationArchivedDto = Applications
             .Where(application=>application.Title.ToUpper()!="Material".ToUpper())
-            .Select(app => new ApplicationRequestDto
+            .Select(app => new ApplicationArchivedDto
             {
                 Id = app.Id,
                 Name = app.Title,
                 Date = app.SubmittedAt,
-                From = $"{app.Student.firstName} {app.Student.lastName}"
+                From = $"{app.Student.firstName} {app.Student.lastName}",
+                IsAccepted = app.isAccepted
             });
-        return applicationRequestDto;
-    }
+        return applicationArchivedDto;
+    }    
 #endregion
-
 
 #region Get Application Request for the employee by search
+   
     [HttpGet]
-    [Route("pending/employee/{empId:int}/{studentName}")]
+    [Route("pending/employee/{studentName}")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
-    [ProducesResponseType(400)]
-    public async Task<IEnumerable<ApplicationRequestDto>> GetSearchInPendingApplicationsExceptMaterial(int empId,string studentName)
+    public async Task<IEnumerable<ApplicationRequestDto>> GetSearchInPendingApplicationsExceptMaterial(string studentName)
     {
-        // return BadRequest($"{studentName}");
-        var Applications = await GetPendingApplicationsExceptMaterial(empId);
+        var Applications = await GetPendingApplicationsExceptMaterial();
         var applicationRequestDto = Applications
             .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
         return applicationRequestDto;
     }
         
-    [HttpGet]
-    [Route("reviewed/employee/{empId:int}/{studentName}")]
-    [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
-    public async Task<IEnumerable<ApplicationRequestDto>> GetSearchInReviewedApplicationsExceptMaterial(int empId,string studentName)
-    {
-        var Applications = await GetReviewedApplicationsExceptMaterial(empId);
-        var applicationRequestDto = Applications
-            .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
-        return applicationRequestDto;
-            
-    }
+   
         
+    [HttpGet]
+    [Route("archived/employee/{studentName}")]
+    [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationArchivedDto>))]
+    public async Task<IEnumerable<ApplicationArchivedDto>> GetSearchInArchivedApplicationsExceptMaterial(string studentName)
+    {
+        var Applications = await GetArchivedApplicationsExceptMaterial();
+        var applicationArchivedDto = Applications
+            .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
+        return applicationArchivedDto;
+    }
 #endregion
+
+
+    [HttpPut("{empId}/{appId}")]
+    [ProducesResponseType(400)]
+
+    public async Task<IActionResult> UpdateAppStatus( int empId,int appId,[FromBody] bool isAccepted)
+    {
+        var application = await _application.GetApplicationByIdAsync(appId);
+        
+        application.isAccepted = isAccepted;
+        application.Status = "archived";
+        application.EmployeeId = empId;      
+        application.DecisionDate=DateTime.Now;
+        bool? updated = await _application.UpdateApplicationAsync(appId, application);
+        if (updated == null)
+        {
+            return BadRequest("sex");
+        }
+
+        return BadRequest("GEMY");
+        Notification notification;
+        if (isAccepted)
+        {
+            notification = new Notification
+            {
+                Message = $"""
+                           Dear {application.Student},
+
+                           I am pleased to inform you that your recent {application.Title} request has been accepted. 
+                           Please proceed with the necessary steps outlined in our guidelines.
+                           
+                           Thank you for your attention to this matter.
+                           
+                           Best regards,
+
+                           replyed by Ana Baba yalla
+                           """,
+                CreatedAt = DateTime.Now,
+                StudentId=application.StudentId
+            };
+        }
+        else
+        {
+            notification = new Notification
+            {
+                Message = $"""
+                           Dear {application.Student},
+
+                           I apologize for declining your recent {application.Title} request. After careful consideration, 
+                           we are unable to proceed with it at this time.
+                           
+                           Thank you for your understanding.
+
+                           Best regards,
+
+                           replyed by Ana Baba yalla
+                           """,
+                CreatedAt = DateTime.Now,
+                StudentId=application.StudentId
+            };
+        }
+        
+        await _notification.AddNotificationAsync(notification);
+        return Ok();
+    }
 
 #region Get Application Request for the supervisor
     
-    //[HttpGet]
-    //[Route("pending/supervisor/{supervisorId:int}")]
-    //[ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
-    //public async Task<IEnumerable<ApplicationRequestDto>> GetPendingApplicationsWithMaterial(int supervisorId)
-    //{
-    //    var Applications = await _application.GetAllPendingApplicationsWithSupervisorAsync(supervisorId);
-    //    var applicationRequestDto = Applications
-    //        .Where(application=>application.Title.ToUpper()=="Material".ToUpper())
-    //        .Select(app => new ApplicationRequestDto
-    //    {
-    //        Id = app.Id,
-    //        Name = app.Title,
-    //        Date = app.SubmittedAt,
-    //        From = $"{app.Student.firstName} {app.Student.lastName}"
-    //    });
-    //    return applicationRequestDto;
-    //}
+    [HttpGet]
+    [Route("pending/supervisor/{empId:int}")]
+    [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
+    public async Task<IEnumerable<ApplicationRequestDto>> GetPendingApplicationsWithMaterial(int empId)
+    {
+        var Applications = await _application.GetAllPendingApplicationsByEmployeeIdAsync(empId);
+        var applicationRequestDto = Applications
+            .Where(application=>application.Title.ToUpper()=="Material".ToUpper())
+            .Select(app => new ApplicationRequestDto
+        {
+            Id = app.Id,
+            Name = app.Title,
+            Date = app.SubmittedAt,
+            From = $"{app.Student.firstName} {app.Student.lastName}"
+        });
+        return applicationRequestDto;
+    }
     
-    //[HttpGet]
-    //[Route("reviewed/supervisor/{supervisorId:int}")]
-    //[ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
-    //public async Task<IEnumerable<ApplicationRequestDto>> GetReviewedApplicationsWithMaterial(int supervisorId)
-    //{
-    //    var Applications = await _application.GetAllReviewedApplicationsWithSupervisorAsync(supervisorId);
-    //    var applicationRequestDto = Applications
-    //        .Where(application=>application.Title.ToUpper()=="Material".ToUpper())
-    //        .Select(app => new ApplicationRequestDto
-    //        {
-    //            Id = app.Id,
-    //            Name = app.Title,
-    //            Date = app.SubmittedAt,
-    //            From = $"{app.Student.firstName} {app.Student.lastName}"
-    //        });
-    //    return applicationRequestDto;
-    //}
-    
-    //[HttpGet]
-    //[Route("archived/supervisor/{supervisorId:int}")]
-    //[ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationArchivedDto>))]
-    //public async Task<IEnumerable<ApplicationArchivedDto>> GetArchivedApplicationsWithMaterial(int supervisorId)
-    //{
-    //    var Applications = await _application.GetAllArchivedApplicationsWithSupervisorAsync(supervisorId);
-    //    var applicationArchivedDto = Applications
-    //        .Where(application=>application.Title.ToUpper()=="Material".ToUpper())
-    //        .Select(app => new ApplicationArchivedDto
-    //        {
-    //            Id = app.Id,
-    //            Name = app.Title,
-    //            Date = app.SubmittedAt,
-    //            From = $"{app.Student.firstName} {app.Student.lastName}",
-    //            Status = app.Status
-    //        });
-    //    return applicationArchivedDto;
-    //}
+  
+    [HttpGet]
+    [Route("archived/supervisor/{empId:int}")]
+    [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationArchivedDto>))]
+    public async Task<IEnumerable<ApplicationArchivedDto>> GetArchivedApplicationsWithMaterial(int empId)
+    {
+        var Applications = await _application.GetAllArchivedApplicationsByEmployeeIdAsync(empId);
+        var applicationArchivedDto = Applications
+            .Where(application=>application.Title.ToUpper()=="Material".ToUpper())
+            .Select(app => new ApplicationArchivedDto
+            {
+                Id = app.Id,
+                Name = app.Title,
+                Date = app.SubmittedAt,
+                From = $"{app.Student.firstName} {app.Student.lastName}",
+                IsAccepted = app.isAccepted
+            });
+        return applicationArchivedDto;
+    }
 
 #endregion
-
 
 #region Get Application Request for the supervisor by search
 
-    //[HttpGet]
-    //[Route("pending/supervisor/{supervisorId:int}/{studentName}")]
-    //[ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
-    //public async Task<IEnumerable<ApplicationRequestDto>> GetSearchInPendingApplicationsWithMaterial(int supervisorId,string studentName)
-    //{
-    //    var Applications = await GetPendingApplicationsWithMaterial(supervisorId);
-    //    var applicationRequestDto = Applications
-    //        .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
-    //    return applicationRequestDto;
-    //}
+    [HttpGet]
+    [Route("pending/supervisor/{empId:int}/{studentName}")]
+    [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
+    public async Task<IEnumerable<ApplicationRequestDto>> GetSearchInPendingApplicationsWithMaterial(int empId,string studentName)
+    {
+        var Applications = await GetPendingApplicationsWithMaterial(empId);
+        var applicationRequestDto = Applications
+            .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
+        return applicationRequestDto;
+    }
+    
         
-    //[HttpGet]
-    //[Route("reviewed/supervisor/{supervisorId:int}/{studentName}")]
-    //[ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
-    //public async Task<IEnumerable<ApplicationRequestDto>> GetSearchReviewedApplicationsWithMaterial(int supervisorId,string studentName)
-    //{
-    //    var Applications = await GetReviewedApplicationsWithMaterial(supervisorId);
-    //    var applicationRequestDto = Applications
-    //        .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
-    //    return applicationRequestDto;
-    //}
-        
-    //[HttpGet]
-    //[Route("archived/supervisor/{supervisorId:int}/{studentName}")]
-    //[ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationArchivedDto>))]
-    //public async Task<IEnumerable<ApplicationArchivedDto>> GetSearchArchivedApplicationsWithMaterial(int supervisorId,string studentName)
-    //{
-    //    var Applications = await GetArchivedApplicationsWithMaterial(supervisorId);
-    //    var applicationArchivedDto = Applications
-    //        .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
-    //    return applicationArchivedDto;
-    //}
+    [HttpGet]
+    [Route("archived/supervisor/{empId:int}/{studentName}")]
+    [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationArchivedDto>))]
+    public async Task<IEnumerable<ApplicationArchivedDto>> GetSearchArchivedApplicationsWithMaterial(int empId,string studentName)
+    {
+        var Applications = await GetArchivedApplicationsWithMaterial(empId);
+        var applicationArchivedDto = Applications
+            .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
+        return applicationArchivedDto;
+    }
 
 #endregion
-    
+
 }

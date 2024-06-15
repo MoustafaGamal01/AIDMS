@@ -49,7 +49,13 @@ namespace AIDMS.Repositories
         {
             return await context.Documents.ToListAsync();
         }
-
+        public async Task<List<AIDocument>> GetDocumentsByAppIdAndAsync(int appId)
+        {
+            return await context.Documents
+                .Where(doc=>doc.ApplicationId==appId).ToListAsync();
+        }
+        
+        
         public async Task<AIDocument> GetDocumentByIdAsync(int documentId)
         {
             return await context.Documents.FirstOrDefaultAsync(d => d.Id == documentId);

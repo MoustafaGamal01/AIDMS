@@ -55,13 +55,17 @@ namespace AIDMS.Repositories
             return await _context.Applications.Where(i => i.StudentId == studentId && i.Status == "Reviewed").ToListAsync();
         }
 
+        // public async Task<List<Application>> GetAllArchivedApplicationsByStudentIdAsync(int studentId)
+        // {
+        //     return await _context.Applications.Where(i => i.StudentId == studentId && i.isArchived == true).ToListAsync();
+        // }
 
         public async Task<List<Application>> GetAllPendingApplicationsByStudentIdAsync(int studentId)
         {
             return await _context.Applications.Where(i => i.StudentId == studentId && i.Status == "Pending").ToListAsync();
         }
 
-        public async Task<List<Application>> GetAllPendingApplicationsWithStudentRelatedAsync(int empId)
+        public async Task<List<Application>> GetAllPendingApplicationsByEmployeeIdAsync(int empId)
         {
             return await _context.Applications.Include(app=>app.Student)
                 .Where(i => i.EmployeeId==empId && i.Status == "Pending").ToListAsync();
@@ -72,6 +76,37 @@ namespace AIDMS.Repositories
             return await _context.Applications.Include(app=>app.Student)
                 .Where(i => i.EmployeeId==empId && i.Status == "Reviewed").ToListAsync();
         }
+
+        public async Task<List<Application>> GetAllArchivedApplicationsWithStudentRelatedAsync()
+        {
+            return await _context.Applications.Include(app => app.Student)
+                .Where(i => i.Status == "Archived").ToListAsync();
+        }
+        
+        
+        
+        // public async Task<List<Application>> GetAllPendingApplicationsWithSupervisorAsync(int supervisorId)
+        // {
+        //     return await _context.Applications.Include(app=>app.Student)
+        //         .Where(i => i.SupervisorId==supervisorId && i.Status == "Pending").ToListAsync();
+        // }
+        //
+        // public async Task<List<Application>> GetAllReviewedApplicationsWithSupervisorAsync(int supervisorId)
+        // {
+        //     return await _context.Applications.Include(app=>app.Student)
+        //         .Where(i => i.SupervisorId==supervisorId && i.Status == "Reviewed").ToListAsync();
+        // }
+        //
+        
+        public async Task<List<Application>> GetAllArchivedApplicationsByEmployeeIdAsync(int empId)
+        {
+            return await _context.Applications.Include(app => app.Student)
+                .Where(i => i.EmployeeId == empId && i.Status.ToUpper() == "Archived")
+                .ToListAsync();
+        }
+        
+        
+        
         
         public async Task AddApplicationAsync(Application application)
         {
@@ -79,16 +114,22 @@ namespace AIDMS.Repositories
             await _context.SaveChangesAsync();
         }
         
-        public async Task UpdateApplicationAsync(int applicationId, Application application)
+        public async Task<bool?> UpdateApplicationAsync(int applicationId, Application application)
         {
             var existingApplication = await GetApplicationByIdAsync(applicationId);
             if (existingApplication == null)
             {
-                throw new InvalidOperationException($"Application with ID {applicationId} not found.");
+                return null;
+                // throw new InvalidOperationException($"Application with ID {applicationId} not found.");
+            }
+            _context.Entry(existingApplication).CurrentValues.SetValues(application);
+            int affected = await _context.SaveChangesAsync();
+            if (affected == 1)
+            {
+                return true;
             }
 
-            _context.Entry(existingApplication).CurrentValues.SetValues(application);
-            await _context.SaveChangesAsync();
+            return null;
         }
         
         public async Task DeleteApplicationAsync(int applicationId)
@@ -112,6 +153,13 @@ namespace AIDMS.Repositories
         {
             return await _context.Applications.Where(i => i.Status == "Pending").ToListAsync();
         }
+
+        // public async Task<List<Application>> GetAllArchivedApplicationsAsync()
+        // {
+        //     return await _context.Applications.Where(i => i.isArchived == true).ToListAsync();
+        // }
+
+        
         
     }
 }

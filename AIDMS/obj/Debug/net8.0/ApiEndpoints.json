@@ -1,6 +1,42 @@
 [
   {
     "ContainingType": "AIDMS.Controllers.ApplicationController",
+    "Method": "UpdateAppStatus",
+    "RelativePath": "api/Application/{empId}/{appId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "empId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "appId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "isAccepted",
+        "Type": "System.Boolean",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      }
+    ]
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.ApplicationController",
     "Method": "GetAllApplicationsBaseInfo",
     "RelativePath": "api/Application/admin",
     "HttpMethod": "GET",
@@ -21,8 +57,54 @@
   },
   {
     "ContainingType": "AIDMS.Controllers.ApplicationController",
-    "Method": "GetPendingApplicationsExceptMaterial",
-    "RelativePath": "api/Application/pending/employee/{empId}",
+    "Method": "GetArchivedApplicationsExceptMaterial",
+    "RelativePath": "api/Application/archived/employee",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.ApplicationArchivedDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.ApplicationController",
+    "Method": "GetSearchInArchivedApplicationsExceptMaterial",
+    "RelativePath": "api/Application/archived/employee/{studentName}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.ApplicationArchivedDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.ApplicationController",
+    "Method": "GetArchivedApplicationsWithMaterial",
+    "RelativePath": "api/Application/archived/supervisor/{empId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -35,7 +117,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.ApplicationRequestDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.ApplicationArchivedDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -47,8 +129,8 @@
   },
   {
     "ContainingType": "AIDMS.Controllers.ApplicationController",
-    "Method": "GetSearchInPendingApplicationsExceptMaterial",
-    "RelativePath": "api/Application/pending/employee/{empId}/{studentName}",
+    "Method": "GetSearchArchivedApplicationsWithMaterial",
+    "RelativePath": "api/Application/archived/supervisor/{empId}/{studentName}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -66,6 +148,26 @@
     ],
     "ReturnTypes": [
       {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.ApplicationArchivedDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.ApplicationController",
+    "Method": "GetPendingApplicationsExceptMaterial",
+    "RelativePath": "api/Application/pending/employee",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.ApplicationRequestDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
@@ -73,22 +175,39 @@
           "text/json"
         ],
         "StatusCode": 200
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 400
       }
     ]
   },
   {
     "ContainingType": "AIDMS.Controllers.ApplicationController",
-    "Method": "GetReviewedApplicationsExceptMaterial",
-    "RelativePath": "api/Application/reviewed/employee/{empId}",
+    "Method": "GetSearchInPendingApplicationsExceptMaterial",
+    "RelativePath": "api/Application/pending/employee/{studentName}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.ApplicationRequestDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.ApplicationController",
+    "Method": "GetPendingApplicationsWithMaterial",
+    "RelativePath": "api/Application/pending/supervisor/{empId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -113,8 +232,8 @@
   },
   {
     "ContainingType": "AIDMS.Controllers.ApplicationController",
-    "Method": "GetSearchInReviewedApplicationsExceptMaterial",
-    "RelativePath": "api/Application/reviewed/employee/{empId}/{studentName}",
+    "Method": "GetSearchInPendingApplicationsWithMaterial",
+    "RelativePath": "api/Application/pending/supervisor/{empId}/{studentName}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -150,6 +269,32 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.DocumentDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.DocumentsController",
+    "Method": "GetDocumentsByApplicationId",
+    "RelativePath": "api/Documents/{appId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "appId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.DocumentDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
