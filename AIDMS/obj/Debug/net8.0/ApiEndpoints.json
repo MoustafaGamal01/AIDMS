@@ -1,8 +1,8 @@
 [
   {
     "ContainingType": "AIDMS.Controllers.ApplicationController",
-    "Method": "UpdateAppStatus",
-    "RelativePath": "api/Application/{empId}/{appId}",
+    "Method": "UpdateAcceptAppStatus",
+    "RelativePath": "api/Application/accept/{empId}/{appId}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -15,11 +15,6 @@
       {
         "Name": "appId",
         "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "isAccepted",
-        "Type": "System.Boolean",
         "IsRequired": true
       }
     ],
@@ -103,6 +98,26 @@
   },
   {
     "ContainingType": "AIDMS.Controllers.ApplicationController",
+    "Method": "GetArchivedRegisteration",
+    "RelativePath": "api/Application/archived/registeration",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.RegisterationDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.ApplicationController",
     "Method": "GetArchivedApplicationsWithMaterial",
     "RelativePath": "api/Application/archived/supervisor/{empId}",
     "HttpMethod": "GET",
@@ -160,6 +175,63 @@
   },
   {
     "ContainingType": "AIDMS.Controllers.ApplicationController",
+    "Method": "UpdateDeclineAppStatus",
+    "RelativePath": "api/Application/decline/{empId}/{appId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "empId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "appId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      }
+    ]
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.ApplicationController",
+    "Method": "deleteRegisterationApplicationStatus",
+    "RelativePath": "api/Application/decline/registeration/{appId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "appId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      }
+    ]
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.ApplicationController",
     "Method": "GetPendingApplicationsExceptMaterial",
     "RelativePath": "api/Application/pending/employee",
     "HttpMethod": "GET",
@@ -175,6 +247,15 @@
           "text/json"
         ],
         "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
       }
     ]
   },
@@ -195,6 +276,26 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.ApplicationRequestDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.ApplicationController",
+    "Method": "GetPendingRegisteration",
+    "RelativePath": "api/Application/pending/registeration",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.RegisterationDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

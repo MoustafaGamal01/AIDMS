@@ -38,6 +38,8 @@ namespace AIDMS.Entities
         [StringLength(20, ErrorMessage = "Phone number must not exceed 20 characters")]
         public string phoneNumber { get; set; }
 
+        public bool IsMale { get; set; } = true;
+
         [DataType(DataType.Date)]
         public DateTime dateOfBirth { get; set; }
 

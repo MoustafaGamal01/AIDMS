@@ -22,9 +22,15 @@ public class NotificationRepository:INotificationRepository {
         return await _context.Notifications.ToListAsync();
     }
 
-    public async Task AddNotificationAsync(Notification notification) {
+    public async Task<bool?> AddNotificationAsync(Notification notification) {
         _context.Notifications.Add(notification);
-        await _context.SaveChangesAsync();
+        
+        int affected = await _context.SaveChangesAsync();
+        if (affected == 1)
+        {
+            return true;
+        }
+        return null;
     }
 
     public async Task UpdateNotificationAsync(int notificationId, Notification notification) {

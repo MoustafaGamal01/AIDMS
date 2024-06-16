@@ -136,7 +136,6 @@ public class ApplicationController : Controller {
     }
 #endregion
 
-
     [HttpPut("{empId}/{appId}")]
     [ProducesResponseType(400)]
 
