@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\AIA\\Desktop\\AIDMS\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\controllers\\applicationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\applicationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\entities\\aidmscontextclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\entities\\aidmscontextclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|c:\\users\\aia\\desktop\\aidms\\aidms\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,40 +19,8 @@
       "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|c:\\users\\aia\\desktop\\aidms\\aidms\\repositories\\googlecloudvisionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\repositories\\googlecloudvisionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\repositories\\igooglecloudvisionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\repositories\\igooglecloudvisionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\controllers\\visioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\visioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|c:\\users\\aia\\desktop\\aidms\\aidms\\controllers\\applicationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\applicationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\entities\\fileuploadoperationfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\entities\\fileuploadoperationfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\entities\\aidmscontextclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\entities\\aidmscontextclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\dtos\\usernotificationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\dtos\\usernotificationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\dtos\\getallsupervisorsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\dtos\\getallsupervisorsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,11 +30,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
               "Title": "AIDMSContextClass.cs",
               "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Entities\\AIDMSContextClass.cs",
               "RelativeDocumentMoniker": "AIDMS\\Entities\\AIDMSContextClass.cs",
@@ -67,32 +43,7 @@
               "ViewState": "AQIAAAwAAAAAAAAAAAAAABcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-12T11:48:56.776Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "GoogleCloudVisionService.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Repositories\\GoogleCloudVisionService.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Repositories\\GoogleCloudVisionService.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Repositories\\GoogleCloudVisionService.cs",
-              "RelativeToolTip": "AIDMS\\Repositories\\GoogleCloudVisionService.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAABkAAABCAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-16T21:47:20.09Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "StudentController.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\StudentController.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Controllers\\StudentController.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\StudentController.cs",
-              "RelativeToolTip": "AIDMS\\Controllers\\StudentController.cs",
-              "ViewState": "AQIAACYBAAAAAAAAAAAAAE4CAAAiAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-16T21:46:31.572Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
@@ -101,13 +52,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
+              "Title": "StudentController.cs",
+              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\StudentController.cs",
+              "RelativeDocumentMoniker": "AIDMS\\Controllers\\StudentController.cs",
+              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\StudentController.cs",
+              "RelativeToolTip": "AIDMS\\Controllers\\StudentController.cs",
+              "ViewState": "AQIAAMAAAAAAAAAAAAAAwOkBAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-16T21:46:31.572Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "ApplicationController.cs",
               "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\ApplicationController.cs",
               "RelativeDocumentMoniker": "AIDMS\\Controllers\\ApplicationController.cs",
               "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\ApplicationController.cs",
               "RelativeToolTip": "AIDMS\\Controllers\\ApplicationController.cs",
-              "ViewState": "AQIAAKEAAAAAAAAAAAAcwLcAAAAbAAAA",
+              "ViewState": "AQIAAIEAAAAAAAAAAAAwwIgAAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-16T14:59:11.038Z",
               "EditorCaption": ""
@@ -115,19 +79,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "VisionController.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\VisionController.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Controllers\\VisionController.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\VisionController.cs",
-              "RelativeToolTip": "AIDMS\\Controllers\\VisionController.cs",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAAAB0AAABEAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-16T14:41:42.204Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Program.cs",
               "RelativeDocumentMoniker": "AIDMS\\Program.cs",
@@ -140,31 +91,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "IGoogleCloudVisionService.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Repositories\\IGoogleCloudVisionService.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Repositories\\IGoogleCloudVisionService.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Repositories\\IGoogleCloudVisionService.cs",
-              "RelativeToolTip": "AIDMS\\Repositories\\IGoogleCloudVisionService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-16T14:32:42.75Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "UserNotificationDto.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\UserNotificationDto.cs",
-              "RelativeDocumentMoniker": "AIDMS\\DTOs\\UserNotificationDto.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\UserNotificationDto.cs",
-              "RelativeToolTip": "AIDMS\\DTOs\\UserNotificationDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-15T20:10:25.475Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "EmployeeController.cs",
               "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\EmployeeController.cs",
               "RelativeDocumentMoniker": "AIDMS\\Controllers\\EmployeeController.cs",
@@ -172,32 +98,7 @@
               "RelativeToolTip": "AIDMS\\Controllers\\EmployeeController.cs",
               "ViewState": "AQIAAJwAAAAAAAAAAAASwEsAAAA+AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-15T19:55:58.106Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "FileUploadOperationFilter.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Entities\\FileUploadOperationFilter.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Entities\\FileUploadOperationFilter.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Entities\\FileUploadOperationFilter.cs",
-              "RelativeToolTip": "AIDMS\\Entities\\FileUploadOperationFilter.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACUAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-16T14:49:23.447Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "GetAllSupervisorsDto.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\GetAllSupervisorsDto.cs",
-              "RelativeDocumentMoniker": "AIDMS\\DTOs\\GetAllSupervisorsDto.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\GetAllSupervisorsDto.cs",
-              "RelativeToolTip": "AIDMS\\DTOs\\GetAllSupervisorsDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAjAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-15T19:57:24.008Z"
+              "WhenOpened": "2024-06-15T19:55:58.106Z"
             }
           ]
         }
