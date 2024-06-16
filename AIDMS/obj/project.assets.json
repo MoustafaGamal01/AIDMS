@@ -6099,31 +6099,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\AIA\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\youss\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\AIDMS.csproj",
+      "projectUniqueName": "D:\\AIDMS\\AIDMS\\AIDMS.csproj",
       "projectName": "AIDMS",
-      "projectPath": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\AIDMS.csproj",
-      "packagesPath": "C:\\Users\\AIA\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\obj\\",
+      "projectPath": "D:\\AIDMS\\AIDMS\\AIDMS.csproj",
+      "packagesPath": "C:\\Users\\youss\\.nuget\\packages\\",
+      "outputPath": "D:\\AIDMS\\AIDMS\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\AIA\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\youss\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -6136,11 +6129,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -6213,7 +6201,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.301/PortableRuntimeIdentifierGraph.json"
       }
     }
   },

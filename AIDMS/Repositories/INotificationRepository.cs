@@ -7,7 +7,7 @@ namespace AIDMS.Repositories
         Task<Notification> GetNotificationByIdAsync(int notificationId);
         Task<List<Notification>> GetAllNotificationsByStudentIdAsync(int studentId);
         Task<List<Notification>> GetAllNotificationsByEmployeeIdAsync(int empId);
-        Task AddNotificationAsync(Notification notification);
+        Task<bool?> AddNotificationAsync(Notification notification);
         Task UpdateNotificationAsync(int notificationId, Notification notification);
         Task DeleteNotificationAsync(int notificationId);
     }
