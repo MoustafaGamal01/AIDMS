@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AIDMS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+20fe79a503bd8f1d551de307b7425b0803c51cd7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+77041c11295f13fa0c2fde3cd65e30f799e4353a")]
 [assembly: System.Reflection.AssemblyProductAttribute("AIDMS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AIDMS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
