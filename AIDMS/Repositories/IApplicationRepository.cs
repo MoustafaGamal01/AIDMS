@@ -14,6 +14,13 @@ namespace AIDMS.Repositories
         Task<List<Application>> GetAllPendingApplicationsByStudentIdAsync(int studentId);
         Task<List<Application>> GetAllPendingApplicationsByEmployeeIdAsync(int empId);
         
+<<<<<<< HEAD
+        // Task<List<Application>> GetAllArchivedApplicationsAsync();
+        // Task<List<Application>> GetAllArchivedApplicationsByStudentIdAsync();
+        //Task<List<Application>> GetAllReviewedApplicationsWithStudentRelatedAsync(int empId);
+        Task<List<Application>> GetAllArchivedApplicationsWithStudentRelatedAsync();
+=======
+>>>>>>> main
         Task<List<Application>> GetAllArchivedApplicationsByEmployeeIdAsync(int empId);
         
         Task<List<Application>> GetAllArchivedApplicationsAsync();
