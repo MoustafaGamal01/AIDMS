@@ -62,7 +62,6 @@ public class ApplicationController : Controller {
         return applicationRequestDto;
     }
     
-<<<<<<< HEAD
     [HttpGet]
     [Route("archived/employee")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationArchivedDto>))]
@@ -81,7 +80,7 @@ public class ApplicationController : Controller {
             });
         return applicationArchivedDto;
     }    
-=======
+
     //[HttpGet]
     //[Route("reviewed/employee/{empId:int}")]
     //[ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
@@ -99,7 +98,6 @@ public class ApplicationController : Controller {
     //        });
     //    return applicationRequestDto;
     //}
->>>>>>> feature/APIalmostDone
 #endregion
 
 #region Get Application Request for the employee by search
@@ -114,10 +112,6 @@ public class ApplicationController : Controller {
             .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
         return applicationRequestDto;
     }
-        
-<<<<<<< HEAD
-   
-=======
     //[HttpGet]
     //[Route("reviewed/employee/{empId:int}/{studentName}")]
     //[ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
@@ -129,7 +123,6 @@ public class ApplicationController : Controller {
     //    return applicationRequestDto;
             
     //}
->>>>>>> feature/APIalmostDone
         
     [HttpGet]
     [Route("archived/employee/{studentName}")]
@@ -147,21 +140,21 @@ public class ApplicationController : Controller {
     [HttpPut("{empId}/{appId}")]
     [ProducesResponseType(400)]
 
-    public async Task<IActionResult> UpdateAppStatus( int empId,int appId,[FromBody] bool isAccepted)
+    public async Task<IActionResult> UpdateAppStatus(int empId, int appId,[FromBody] bool isAccepted)
     {
         var application = await _application.GetApplicationByIdAsync(appId);
         
         application.isAccepted = isAccepted;
-        application.Status = "archived";
+        application.Status = "Archived";
         application.EmployeeId = empId;      
         application.DecisionDate=DateTime.Now;
         bool? updated = await _application.UpdateApplicationAsync(appId, application);
         if (updated == null)
         {
-            return BadRequest("sex");
+            return BadRequest("");
         }
 
-        return BadRequest("GEMY");
+        return BadRequest("");
         Notification notification;
         if (isAccepted)
         {
@@ -197,13 +190,13 @@ public class ApplicationController : Controller {
 
                            Best regards,
 
-                           replyed by Ana Baba yalla
+                           replyed by AnaBabayalla
                            """,
                 CreatedAt = DateTime.Now,
                 StudentId=application.StudentId
             };
         }
-        
+         
         await _notification.AddNotificationAsync(notification);
         return Ok();
     }

@@ -179,7 +179,6 @@
     ]
   },
   {
-<<<<<<< HEAD
     "ContainingType": "AIDMS.Controllers.ApplicationController",
     "Method": "GetSearchInPendingApplicationsExceptMaterial",
     "RelativePath": "api/Application/pending/employee/{studentName}",
@@ -263,8 +262,6 @@
     ]
   },
   {
-=======
->>>>>>> feature/APIalmostDone
     "ContainingType": "AIDMS.Controllers.DocumentsController",
     "Method": "GetAllDocuments",
     "RelativePath": "api/Documents",
@@ -451,6 +448,32 @@
   },
   {
     "ContainingType": "AIDMS.Controllers.EmployeeController",
+    "Method": "GetAllNotificationsByEmployeeId",
+    "RelativePath": "api/Employee/notifications/{empId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "empId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.Entities.Notification, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.EmployeeController",
     "Method": "GetEmplyeesSetting",
     "RelativePath": "api/Employee/settings/{employeeId}",
     "HttpMethod": "GET",
@@ -464,6 +487,26 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.EmployeeController",
+    "Method": "GetAllSupervisors",
+    "RelativePath": "api/Employee/supervisors",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.GetAllSupervisorsDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "AIDMS.Controllers.StudentController",
@@ -656,8 +699,24 @@
   },
   {
     "ContainingType": "AIDMS.Controllers.StudentController",
+    "Method": "GetStudentSettings",
+    "RelativePath": "api/Student/settings/{studentId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.StudentController",
     "Method": "ChangePersonalInfo",
-    "RelativePath": "api/Student/settings",
+    "RelativePath": "api/Student/settings/{studentId}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -665,7 +724,7 @@
       {
         "Name": "studentId",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       },
       {
         "Name": "profilePicture",
@@ -697,22 +756,6 @@
   },
   {
     "ContainingType": "AIDMS.Controllers.StudentController",
-    "Method": "GetStudentSettings",
-    "RelativePath": "api/Student/settings/{studentId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "studentId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "AIDMS.Controllers.StudentController",
     "Method": "RequestAcademicTranscript",
     "RelativePath": "api/Student/trascript",
     "HttpMethod": "POST",
@@ -732,6 +775,47 @@
       {
         "Name": "StudentDocument",
         "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.VisionController",
+    "Method": "AnalyzeDocument",
+    "RelativePath": "api/Vision/analyze",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ContentType",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ContentDisposition",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Headers",
+        "Type": "Microsoft.AspNetCore.Http.IHeaderDictionary",
+        "IsRequired": false
+      },
+      {
+        "Name": "Length",
+        "Type": "System.Int64",
+        "IsRequired": false
+      },
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "FileName",
+        "Type": "System.String",
         "IsRequired": false
       }
     ],

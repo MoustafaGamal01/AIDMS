@@ -22,7 +22,7 @@ namespace AIDMS.Entities
         //public DbSet<Supervisor> Supervisors { get; set; }
 
 
-        // Handle "Arabic Language" && "DateOnly prop" && "decimal prop" In Db  
+        // Handle "Arabic Language" && "DateOnly prop" && "decimal props" && Nulls(for deleted props) In Db  
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Student
@@ -174,5 +174,6 @@ namespace AIDMS.Entities
             .WithOne(a => a.Application) 
             .HasForeignKey<Application>(a => a.PaymentId); 
         }
+
     }
 }

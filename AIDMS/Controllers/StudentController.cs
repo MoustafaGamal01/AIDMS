@@ -60,7 +60,6 @@ namespace AIDMS.Controllers
             return BadRequest();
         }
 
-        
         [HttpGet]
         [Route("notifications/{studentId:int}")]
         public async Task<IActionResult> GetStudentNotifications(int studentId)
@@ -77,8 +76,11 @@ namespace AIDMS.Controllers
                 return NotFound();
             }
 
-            var notificationsListDto = notifications.Select(n => new StudentNotificationDto
+            var notificationsListDto = notifications.Select(n => new UserNotificationDto
             {
+                userPicture = n.Employee.employeePicture,
+                userFirstName = n.Employee.firstName,
+                userLastName = n.Employee.lastName,
                 Message = n.Message,
                 CreatedAt = n.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss"),
             }).ToList();
@@ -98,7 +100,7 @@ namespace AIDMS.Controllers
             if (ModelState.IsValid)
             {
                 UserSettingsDto userSettingsDto = new UserSettingsDto();
-                userSettingsDto.userName = student.userName;
+                userSettingsDto.userName = student.userName; 
                 userSettingsDto.email = student.Email;
                 userSettingsDto.Phone = student.PhoneNumber;
                 userSettingsDto.password = student.Password;
@@ -134,7 +136,7 @@ namespace AIDMS.Controllers
 
             return Ok(applicationsDto);
         }
-    
+
         [HttpGet]
         [Route("applications/{studentId:int}")]
         public async Task<IActionResult> GetAllApplicationsByStudentIdAsync(int studentId)
@@ -210,7 +212,7 @@ namespace AIDMS.Controllers
 
             // Generate a unique filename for student's document with extension
             var student = await _student.GetStudentPersonalInfoByIdAsync(applicationDto.StudentId);
-            var studentFileName = GenerateUniqueFileName(student.firstName+'_'+student.lastName) + fileExtension; //GenerateUniqueFileName(student.firstName+'_'+student.lastName) + fileExtension;
+            var studentFileName = GenerateUniqueFileName(student.firstName + '_' + student.lastName) + fileExtension; //GenerateUniqueFileName(student.firstName+'_'+student.lastName) + fileExtension;
 
             // Save student's uploaded document (if any) and handle success/failure
             bool documentSaved = false;
@@ -485,7 +487,7 @@ namespace AIDMS.Controllers
 
             return CreatedAtRoute("StudentPersonalInfo", new { Id = applicationDto.StudentId }, application);
         }
-
+        // MoustafaIsHere
         [HttpPost]
         [Route("trascript")]
         public async Task<IActionResult> RequestAcademicTranscript([FromForm] CreateApplicationDto applicationDto)
@@ -685,7 +687,7 @@ namespace AIDMS.Controllers
         }
 
         [HttpPut]
-        [Route("settings")]
+        [Route("settings/{studentId}")]
         public async Task<IActionResult>ChangePersonalInfo(int studentId, [FromForm] UserSettingsDto studentDto)
         {
             Student std = _context.Students.FirstOrDefault(s => s.Id == studentId);  
@@ -700,16 +702,15 @@ namespace AIDMS.Controllers
             try
             {
                 await _student.UpdateStudentAsync(studentId, studentDto);
-                return NoContent(); // 204 No Content
+                return NoContent();
             }
             catch (KeyNotFoundException)
             {
-                return NotFound(); // 404 Not Found
+                return NotFound();
             }
             catch (Exception ex)
             {
-                // Log the exception (not shown here)
-                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while updating the student.");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 

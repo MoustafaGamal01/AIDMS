@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using AIDMS.Entities;
 using AIDMS.Repositories;
 using System.Text.Json.Serialization;
+using Microsoft.OpenApi.Models;
 
 namespace AIDMS
 {
@@ -30,6 +31,18 @@ namespace AIDMS
             builder.Services.AddScoped<IRoleRepository, RoleRepository>();
             builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+
+            // Google Vision
+            builder.Services.Configure<GoogleCloudVisionOptions>(builder.Configuration.GetSection("GoogleCloudVision"));
+            builder.Services.AddSingleton<IGoogleCloudVisionService, GoogleCloudVisionService>();
+
+            // swagger
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AIDMS API", Version = "v1" });
+                c.OperationFilter<FileUploadOperationFilter>();
+            });
 
             // Configure Database Context
             builder.Services.AddDbContext<AIDMSContextClass>(options =>

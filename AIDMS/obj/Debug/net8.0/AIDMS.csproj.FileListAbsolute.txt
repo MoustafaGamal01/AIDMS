@@ -137,7 +137,6 @@ C:\Users\AIA\Desktop\AIDMS\AIDMS\obj\Debug\net8.0\refint\AIDMS.dll
 C:\Users\AIA\Desktop\AIDMS\AIDMS\obj\Debug\net8.0\AIDMS.pdb
 C:\Users\AIA\Desktop\AIDMS\AIDMS\obj\Debug\net8.0\AIDMS.genruntimeconfig.cache
 C:\Users\AIA\Desktop\AIDMS\AIDMS\obj\Debug\net8.0\ref\AIDMS.dll
-C:\Users\AIA\Desktop\AIDMS\AIDMS\bin\Debug\net8.0\BCrypt.Net.dll
 C:\Users\AIA\Desktop\AIDMS\AIDMS\bin\Debug\net8.0\Google.Api.CommonProtos.dll
 C:\Users\AIA\Desktop\AIDMS\AIDMS\bin\Debug\net8.0\Google.Api.Gax.dll
 C:\Users\AIA\Desktop\AIDMS\AIDMS\bin\Debug\net8.0\Google.Api.Gax.Grpc.dll
@@ -154,3 +153,4 @@ C:\Users\AIA\Desktop\AIDMS\AIDMS\bin\Debug\net8.0\Grpc.Net.Common.dll
 C:\Users\AIA\Desktop\AIDMS\AIDMS\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\AIA\Desktop\AIDMS\AIDMS\bin\Debug\net8.0\System.Management.dll
 C:\Users\AIA\Desktop\AIDMS\AIDMS\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Management.dll
+C:\Users\AIA\Desktop\AIDMS\AIDMS\bin\Debug\net8.0\BCrypt.Net-Core.dll

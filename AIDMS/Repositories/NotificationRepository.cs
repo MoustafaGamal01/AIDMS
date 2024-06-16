@@ -13,9 +13,11 @@ public class NotificationRepository:INotificationRepository {
     public NotificationRepository(AIDMSContextClass context) {
         _context = context;
     }
+
     public async Task<Notification> GetNotificationByIdAsync(int notificationId) {
         return await _context.Notifications.FirstOrDefaultAsync(i => i.Id == notificationId);
     }
+
     public async Task<List<Notification>> GetAllNotificationsAsync() {
         return await _context.Notifications.ToListAsync();
     }
@@ -46,11 +48,11 @@ public class NotificationRepository:INotificationRepository {
 
     public async Task<List<Notification>> GetAllNotificationsByStudentIdAsync(int studentId)
     {
-        return await _context.Notifications.Where(i => i.StudentId == studentId && i.fromStudent == false).ToListAsync();
+        return await _context.Notifications.Where(i => i.StudentId == studentId && i.fromStudent == false).Include(n=>n.Employee).ToListAsync();
     }
 
     public async Task<List<Notification>> GetAllNotificationsByEmployeeIdAsync(int empId)
     {
-        return await _context.Notifications.Where(i => i.EmployeeId == empId).ToListAsync();
+        return await _context.Notifications.Where(i => i.EmployeeId == empId && i.fromStudent == true).Include(n=>n.Student).ToListAsync();
     }
 }

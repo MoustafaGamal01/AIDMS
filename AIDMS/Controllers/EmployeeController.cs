@@ -1,6 +1,7 @@
 ﻿using AIDMS.DTOs;
 using AIDMS.Entities;
 using AIDMS.Repositories;
+using Google.Api;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,11 +14,13 @@ public class EmployeeController : Controller
 {
     private readonly IEmployeeRepository _emp;
     private readonly IRoleRepository _role;
+    private readonly INotificationRepository _notification;
 
-    public EmployeeController(IEmployeeRepository emp, IRoleRepository role)
+    public EmployeeController(IEmployeeRepository emp, IRoleRepository role, INotificationRepository notification)
     {
         _emp = emp;
         _role = role;
+        this._notification = notification;
     }
     
     [HttpGet]
@@ -33,6 +36,49 @@ public class EmployeeController : Controller
             roleName = e.Role != null ? e.Role.Name : ""
         });
         return Ok(employeesBaseInfo);
+    }
+
+    [HttpGet]
+    [Route("notifications/{empId:int}")]
+    public async Task<ActionResult<IEnumerable<Notification>>> GetAllNotificationsByEmployeeId(int empId)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var notifications = await _notification.GetAllNotificationsByEmployeeIdAsync(empId);
+
+
+        if (notifications == null)
+        {
+            return NotFound();
+        }
+
+        var EmpNotificationDto = notifications.Select(n => new UserNotificationDto
+        {
+            userPicture = n.Student.studentPicture,
+            userFirstName = n.Student.firstName,
+            userLastName = n.Student.lastName,
+            Message = n.Message,
+            CreatedAt = n.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")
+        });
+
+
+        return Ok(EmpNotificationDto);
+    }
+
+    [HttpGet]
+    [Route("supervisors")]
+    public async Task<ActionResult<IEnumerable<GetAllSupervisorsDto>>> GetAllSupervisors()
+    {
+        var supervisors = await _emp.GetAllSupervisorsAsync();
+        var supervisorsDto = supervisors.Select(e => new GetAllSupervisorsDto
+        {
+            Id = e.Id,
+            Name = $"{e.firstName} {e.lastName}",
+        });
+        return Ok(supervisorsDto);
     }
 
     [HttpGet]

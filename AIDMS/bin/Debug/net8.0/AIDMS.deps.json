@@ -8,7 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "AIDMS/1.0.0": {
         "dependencies": {
-          "BCrypt.Net": "0.1.0",
+          "BCrypt.Net-Core": "1.6.0",
           "Google.Cloud.Vision.V1": "3.7.0",
           "Microsoft.AspNetCore.Hosting": "2.2.7",
           "Microsoft.EntityFrameworkCore": "8.0.3",
@@ -58,11 +58,11 @@
           }
         }
       },
-      "BCrypt.Net/0.1.0": {
+      "BCrypt.Net-Core/1.6.0": {
         "runtime": {
-          "lib/net35/BCrypt.Net.dll": {
-            "assemblyVersion": "0.1.4141.31969",
-            "fileVersion": "0.1.0.0"
+          "lib/netstandard2.0/BCrypt.Net-Core.dll": {
+            "assemblyVersion": "1.6.0.0",
+            "fileVersion": "1.6.0.0"
           }
         }
       },
@@ -1265,12 +1265,12 @@
       "path": "azure.identity/1.10.3",
       "hashPath": "azure.identity.1.10.3.nupkg.sha512"
     },
-    "BCrypt.Net/0.1.0": {
+    "BCrypt.Net-Core/1.6.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-sST2w361Dxt9GGMfpOTiK50wXGV64Ybb1hiX3xjEWnhVYZNF43NuySGwADJa7X1R+bA53NsFR+tuDxcYiJeIOA==",
-      "path": "bcrypt.net/0.1.0",
-      "hashPath": "bcrypt.net.0.1.0.nupkg.sha512"
+      "sha512": "sha512-hsKiHGjrnlDW05MzuzzlD9gNP8YOW2KbZ+FbvISrilsKJJ76tXKhWey6psZX5sd7DczNpSU2U6ldjPoblk8BLw==",
+      "path": "bcrypt.net-core/1.6.0",
+      "hashPath": "bcrypt.net-core.1.6.0.nupkg.sha512"
     },
     "BouncyCastle.Cryptography/2.3.1": {
       "type": "package",

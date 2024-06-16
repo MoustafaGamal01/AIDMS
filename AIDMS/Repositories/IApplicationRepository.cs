@@ -17,9 +17,6 @@ namespace AIDMS.Repositories
         //Task<List<Application>> GetAllReviewedApplicationsAsync();
         //Task<List<Application>> GetAllReviewedApplicationsByStudentIdAsync(int studentId);
         
-        
-        
-
         // Task<List<Application>> GetAllArchivedApplicationsAsync();
         // Task<List<Application>> GetAllArchivedApplicationsByStudentIdAsync();
         //Task<List<Application>> GetAllReviewedApplicationsWithStudentRelatedAsync(int empId);
