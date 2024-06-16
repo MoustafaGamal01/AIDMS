@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\applicationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\entities\\aidmscontextclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\entities\\aidmscontextclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|c:\\users\\aia\\desktop\\aidms\\aidms\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -17,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\entities\\aidmscontextclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\entities\\aidmscontextclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +34,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "AIDMSContextClass.cs",
               "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Entities\\AIDMSContextClass.cs",
               "RelativeDocumentMoniker": "AIDMS\\Entities\\AIDMSContextClass.cs",
@@ -43,7 +43,8 @@
               "ViewState": "AQIAAAwAAAAAAAAAAAAAABcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-12T11:48:56.776Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
@@ -51,7 +52,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "StudentController.cs",
               "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\StudentController.cs",
               "RelativeDocumentMoniker": "AIDMS\\Controllers\\StudentController.cs",
@@ -70,14 +71,14 @@
               "RelativeDocumentMoniker": "AIDMS\\Controllers\\ApplicationController.cs",
               "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\ApplicationController.cs*",
               "RelativeToolTip": "AIDMS\\Controllers\\ApplicationController.cs*",
-              "ViewState": "AQIAAHEAAAAAAAAAAAAewHwAAAAHAAAA",
+              "ViewState": "AQIAAHoAAAAAAAAAAAAwwIUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-16T14:59:11.038Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Program.cs",
               "RelativeDocumentMoniker": "AIDMS\\Program.cs",
@@ -89,7 +90,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "EmployeeController.cs",
               "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\EmployeeController.cs",
               "RelativeDocumentMoniker": "AIDMS\\Controllers\\EmployeeController.cs",
