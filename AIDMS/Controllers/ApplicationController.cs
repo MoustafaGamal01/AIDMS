@@ -62,7 +62,6 @@ public class ApplicationController : Controller {
         return applicationRequestDto;
     }
     
-<<<<<<< HEAD
     [HttpGet]
     [Route("archived/employee")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationArchivedDto>))]
@@ -81,7 +80,6 @@ public class ApplicationController : Controller {
             });
         return applicationArchivedDto;
     }    
-=======
     //[HttpGet]
     //[Route("reviewed/employee/{empId:int}")]
     //[ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
@@ -99,7 +97,7 @@ public class ApplicationController : Controller {
     //        });
     //    return applicationRequestDto;
     //}
->>>>>>> feature/APIalmostDone
+
 #endregion
 
 #region Get Application Request for the employee by search
@@ -114,10 +112,6 @@ public class ApplicationController : Controller {
             .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
         return applicationRequestDto;
     }
-        
-<<<<<<< HEAD
-   
-=======
     //[HttpGet]
     //[Route("reviewed/employee/{empId:int}/{studentName}")]
     //[ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
@@ -129,7 +123,6 @@ public class ApplicationController : Controller {
     //    return applicationRequestDto;
             
     //}
->>>>>>> feature/APIalmostDone
         
     [HttpGet]
     [Route("archived/employee/{studentName}")]

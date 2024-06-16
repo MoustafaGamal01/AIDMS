@@ -179,7 +179,6 @@
     ]
   },
   {
-<<<<<<< HEAD
     "ContainingType": "AIDMS.Controllers.ApplicationController",
     "Method": "GetSearchInPendingApplicationsExceptMaterial",
     "RelativePath": "api/Application/pending/employee/{studentName}",
@@ -263,8 +262,6 @@
     ]
   },
   {
-=======
->>>>>>> feature/APIalmostDone
     "ContainingType": "AIDMS.Controllers.DocumentsController",
     "Method": "GetAllDocuments",
     "RelativePath": "api/Documents",
