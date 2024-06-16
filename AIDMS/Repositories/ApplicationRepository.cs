@@ -124,16 +124,5 @@ namespace AIDMS.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<Application>> GetAllPendingRegisterationAsync()
-        {
-            return await _context.Applications
-                .Where(i => i.Status.ToUpper() == "Pending".ToUpper())
-                .ToListAsync();
-        }
-        public async Task<List<Application>> GetAllArchivedRegisteraionAsync()
-        {
-            return await _context.Applications.Where(i => i.Status != "Pending").ToListAsync();
-        }
-        
     }
 }

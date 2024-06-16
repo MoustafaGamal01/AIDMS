@@ -14,10 +14,13 @@ public class ApplicationController : Controller {
     
     private readonly IApplicationRepository _application;
     private readonly INotificationRepository _notification;
-    public ApplicationController(IApplicationRepository application,INotificationRepository notification)
+    private readonly IStudentRepository _student;
+    public ApplicationController(IApplicationRepository application,INotificationRepository notification
+    ,IStudentRepository student)
     {
         _application = application;
         _notification = notification;
+        _student = student;
     }
     
 #region Admin Applications
@@ -40,7 +43,6 @@ public class ApplicationController : Controller {
     }    
 
 #endregion    
-
 
 #region Get Application Request for the employee
 
@@ -119,7 +121,6 @@ public class ApplicationController : Controller {
     
 #endregion
 
-
 #region Registeration
 
     [HttpGet]
@@ -127,13 +128,14 @@ public class ApplicationController : Controller {
     [ProducesResponseType(200, Type = typeof(IEnumerable<RegisterationDto>))]
     public async Task<IEnumerable<RegisterationDto>> GetPendingRegisteration()
     {
-        var Applications = await _application.GetAllPendingRegisterationAsync();
+        var Applications = await _application.GetAllPendingApplicationsAsync();
         var registerationDto = Applications
             .Where(application=>application.Title.ToUpper() == "registeration".ToUpper())
             .Select(app => new RegisterationDto
             {
                 Id = app.Id,
                 Date = app.SubmittedAt,
+                Name = $"{app.Student.firstName} {app.Student.lastName}",
             });
         return registerationDto;
     }
@@ -141,22 +143,37 @@ public class ApplicationController : Controller {
         
     [HttpGet]
     [Route("archived/registeration")]
-    [ProducesResponseType(200, Type = typeof(IEnumerable<RegisterationArchivedDto>))]
-    public async Task<IEnumerable<RegisterationArchivedDto>> GetArchivedRegisteration()
+    [ProducesResponseType(200, Type = typeof(IEnumerable<RegisterationDto>))]
+    public async Task<IEnumerable<RegisterationDto>> GetArchivedRegisteration()
     {
-        var Applications = await _application.GetAllArchivedRegisteraionAsync();
+        var Applications = await _application.GetAllArchivedApplicationsAsync();
         var registerationArchivedDto = Applications
-            .Where(application=>application.Title.ToUpper()!="registeration".ToUpper())
-            .Select(app => new RegisterationArchivedDto
+            .Where(application=>application.Title.ToUpper() != "registeration".ToUpper())
+            .Select(app => new RegisterationDto
             {
                 Id = app.Id,
                 Date = app.SubmittedAt,
-                IsAccepted = app.isAccepted
+                Name = $"{app.Student.firstName} {app.Student.lastName}",
             });
         return registerationArchivedDto;
     }  
 
 
+#endregion
+
+#region Accept & Decline Registeration
+    [HttpDelete("decline/registeration/{appId}")]
+    [ProducesResponseType(400)]
+    public async Task<IActionResult> deleteRegisterationApplicationStatus(int appId)
+    {
+        var application = await _application.GetApplicationByIdAsync(appId);
+        int studentId = (int)application.StudentId;
+        
+        _application.DeleteApplicationAsync(appId);
+        var student = _student.DeleteStudentAsync(studentId);
+        return Ok();
+    }
+    
 #endregion
 
 #region Accept & Decline

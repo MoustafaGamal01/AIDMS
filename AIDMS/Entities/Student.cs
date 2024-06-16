@@ -24,6 +24,11 @@ namespace AIDMS.Entities
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Last name must be between 3 and 50 characters")]
         public string lastName { get; set; }
 
+        [Required(ErrorMessage = "required")]
+        [StringLength(14, MinimumLength = 14, ErrorMessage = "SID should be 14 digit")]
+        public string SID { get; set; }
+
+        
         [Required(ErrorMessage = "Username is required")]
         [StringLength(50, MinimumLength = 6, ErrorMessage = "Username must be between 6 and 50 characters")]
         public string userName { get; set; }
@@ -42,6 +47,8 @@ namespace AIDMS.Entities
         [Phone(ErrorMessage = "Invalid phone number")]
         [StringLength(20, ErrorMessage = "Phone number must not exceed 20 characters")]
         public string PhoneNumber { get; set; }
+
+        public bool IsMale { get; set; } = true;
 
         [DataType(DataType.Date)]
         public DateTime dateOfBirth { get; set; }

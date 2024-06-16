@@ -111,6 +111,7 @@ namespace AIDMS.Repositories
             _context.Students.Remove(studentToDelete);
             await _context.SaveChangesAsync();
         }
+        
 
     }
 }
