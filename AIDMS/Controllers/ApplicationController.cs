@@ -143,9 +143,6 @@ public class ApplicationController : Controller {
         return applicationArchivedDto;
     }
     
-    
-    
-    
 #endregion
 
 #region Registeration
