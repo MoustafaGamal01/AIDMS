@@ -1,4 +1,4 @@
-﻿using AIDMS.DTOs;
+using AIDMS.DTOs;
 using AIDMS.Entities;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Crypto.Generators;
@@ -169,7 +169,7 @@ namespace AIDMS.Repositories
 
         #endregion
 
-        public async Task DeleteStudentAsync(int studentId)
+        public async Task<bool?> DeleteStudentAsync(int studentId)
         {
             var studentToDelete = await GetAllStudentDataByIdAsync(studentId);
             if (studentToDelete == null)
@@ -178,7 +178,13 @@ namespace AIDMS.Repositories
             }
 
             _context.Students.Remove(studentToDelete);
-            await _context.SaveChangesAsync();
+            int affected = await _context.SaveChangesAsync();
+            if (affected == 1)
+            {
+                return true;
+            }
+
+            return null;
         }
         
 
