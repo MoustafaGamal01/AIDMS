@@ -24,12 +24,13 @@ public class EmployeeController : Controller
     }
     
     [HttpGet]
-    [Route("admin")]
+    [Route("admin/{adminId:int}")]
     // [ProducesResponseType(200, Type = typeof(ActionResult<BaseEmployeeDto>))]
-    public async Task<ActionResult<IEnumerable<BaseEmployeeDto>>> GetAllEmplyeesBaseInfo()
+    public async Task<ActionResult<IEnumerable<BaseEmployeeDto>>> GetAllEmplyeesBaseInfo(int adminId)
     {
         var Employees = await _emp.GetAllEmployeesAndRoleAsync();
-        var employeesBaseInfo = Employees.Select(e => new BaseEmployeeDto
+        var employeesBaseInfo = Employees
+            .Where(em=>em.Id!=adminId).Select(e => new BaseEmployeeDto
         {
             Id = e.Id,
             Name = $"{e.firstName} {e.lastName}",
