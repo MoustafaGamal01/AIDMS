@@ -1,4 +1,4 @@
-﻿using AIDMS.Entities;
+using AIDMS.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -96,16 +96,22 @@ namespace AIDMS.Repositories
             return null;
         }
 
-        public async Task DeleteApplicationAsync(int applicationId)
+        public async Task<bool?> DeleteApplicationAsync(int applicationId)
         {
             var applicationToDelete = await GetApplicationByIdAsync(applicationId);
             if (applicationToDelete == null)
             {
-                throw new InvalidOperationException($"Application with ID {applicationId} not found.");
+                return null;
             }
 
             _context.Applications.Remove(applicationToDelete);
-            await _context.SaveChangesAsync();
+            int affected = await _context.SaveChangesAsync();
+            if (affected == 1)
+            {
+                return true;
+            }
+
+            return null;
         }
 
         public async Task<List<Application>> GetAllArchivedApplicationsAsync()
