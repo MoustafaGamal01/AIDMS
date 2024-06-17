@@ -1,4 +1,4 @@
-﻿using AIDMS.DTOs;
+using AIDMS.DTOs;
 using AIDMS.Entities;
 using AIDMS.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -14,10 +14,13 @@ public class ApplicationController : Controller {
     
     private readonly IApplicationRepository _application;
     private readonly INotificationRepository _notification;
-    public ApplicationController(IApplicationRepository application,INotificationRepository notification)
+    private readonly IStudentRepository _student;
+    public ApplicationController(IApplicationRepository application,INotificationRepository notification
+    ,IStudentRepository student)
     {
         _application = application;
         _notification = notification;
+        _student = student;
     }
     
 #region Admin Applications
@@ -41,17 +44,19 @@ public class ApplicationController : Controller {
 
 #endregion    
 
-
 #region Get Application Request for the employee
 
     [HttpGet]
     [Route("pending/employee")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
+    [ProducesResponseType(400)]
     public async Task<IEnumerable<ApplicationRequestDto>> GetPendingApplicationsExceptMaterial()
     {
+        
         var Applications = await _application.GetAllPendingApplicationsAsync();
         var applicationRequestDto = Applications
-            .Where(application=>application.Title.ToUpper()!="Material".ToUpper())
+            .Where(application=>application.Title.ToUpper()!="material".ToUpper()&&
+                                application.Title.ToUpper()!="registeration".ToUpper())
             .Select(app => new ApplicationRequestDto
         {
             Id = app.Id,
@@ -59,17 +64,20 @@ public class ApplicationController : Controller {
             Date = app.SubmittedAt,
             From = $"{app.Student.firstName} {app.Student.lastName}"
         });
+        
         return applicationRequestDto;
     }
     
+
     [HttpGet]
     [Route("archived/employee")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationArchivedDto>))]
     public async Task<IEnumerable<ApplicationArchivedDto>> GetArchivedApplicationsExceptMaterial()
     {
-        var Applications = await _application.GetAllArchivedApplicationsWithStudentRelatedAsync();
+        var Applications = await _application.GetAllArchivedApplicationsAsync();
         var applicationArchivedDto = Applications
-            .Where(application=>application.Title.ToUpper()!="Material".ToUpper())
+            .Where(application=>application.Title.ToUpper()!="Material".ToUpper()&&
+                                application.Title.ToUpper()!="registeration".ToUpper())
             .Select(app => new ApplicationArchivedDto
             {
                 Id = app.Id,
@@ -81,23 +89,7 @@ public class ApplicationController : Controller {
         return applicationArchivedDto;
     }    
 
-    //[HttpGet]
-    //[Route("reviewed/employee/{empId:int}")]
-    //[ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
-    //public async Task<IEnumerable<ApplicationRequestDto>> GetReviewedApplicationsExceptMaterial(int empId)
-    //{
-    //    var Applications = await _application.GetAllReviewedApplicationsWithStudentRelatedAsync(empId);
-    //    var applicationRequestDto = Applications
-    //        .Where(application=>application.Title.ToUpper()!="Material".ToUpper())
-    //        .Select(app => new ApplicationRequestDto
-    //        {
-    //            Id = app.Id,
-    //            Name = app.Title,
-    //            Date = app.SubmittedAt,
-    //            From = $"{app.Student.firstName} {app.Student.lastName}"
-    //        });
-    //    return applicationRequestDto;
-    //}
+    
 #endregion
 
 #region Get Application Request for the employee by search
@@ -112,17 +104,6 @@ public class ApplicationController : Controller {
             .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
         return applicationRequestDto;
     }
-    //[HttpGet]
-    //[Route("reviewed/employee/{empId:int}/{studentName}")]
-    //[ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
-    //public async Task<IEnumerable<ApplicationRequestDto>> GetSearchInReviewedApplicationsExceptMaterial(int empId,string studentName)
-    //{
-    //    var Applications = await GetReviewedApplicationsExceptMaterial(empId);
-    //    var applicationRequestDto = Applications
-    //        .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
-    //    return applicationRequestDto;
-            
-    //}
         
     [HttpGet]
     [Route("archived/employee/{studentName}")]
@@ -134,72 +115,161 @@ public class ApplicationController : Controller {
             .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
         return applicationArchivedDto;
     }
+    
+    
+    
+    
 #endregion
 
-    [HttpPut("{empId}/{appId}")]
+#region Registeration
+
+    [HttpGet]
+    [Route("pending/registeration")]
+    [ProducesResponseType(200, Type = typeof(IEnumerable<RegisterationDto>))]
+    public async Task<IEnumerable<RegisterationDto>> GetPendingRegisteration()
+    {
+        var Applications = await _application.GetAllPendingApplicationsAsync();
+        var registerationDto = Applications
+            .Where(application=>application.Title.ToUpper() == "registeration".ToUpper())
+            .Select(app => new RegisterationDto
+            {
+                Id = app.Id,
+                Date = app.SubmittedAt,
+                Name = $"{app.Student.firstName} {app.Student.lastName}",
+            });
+        return registerationDto;
+    }
+        
+        
+    [HttpGet]
+    [Route("archived/registeration")]
+    [ProducesResponseType(200, Type = typeof(IEnumerable<RegisterationDto>))]
+    public async Task<IEnumerable<RegisterationDto>> GetArchivedRegisteration()
+    {
+        var Applications = await _application.GetAllArchivedApplicationsAsync();
+        var registerationArchivedDto = Applications
+            .Where(application=>application.Title.ToUpper() != "registeration".ToUpper())
+            .Select(app => new RegisterationDto
+            {
+                Id = app.Id,
+                Date = app.SubmittedAt,
+                Name = $"{app.Student.firstName} {app.Student.lastName}",
+            });
+        return registerationArchivedDto;
+    }  
+
+
+#endregion
+
+#region Accept & Decline Registeration
+    [HttpDelete("decline/registeration/{appId}")]
+    [ProducesResponseType(400)]
+    public async Task<IActionResult> deleteRegisterationApplicationStatus(int appId)
+    {
+        var application = await _application.GetApplicationByIdAsync(appId);
+        int studentId = (int)application.StudentId;
+        
+        bool? affected = await _application.DeleteApplicationAsync(appId);
+        if (affected == null)
+        {
+            return BadRequest();
+        }
+        affected = await _student.DeleteStudentAsync(studentId);
+        if (affected == null)
+        {
+            return BadRequest();
+        }
+        
+        return Ok();
+    }
+    
+#endregion
+
+#region Accept & Decline
+
+    [HttpPut("accept/{empId}/{appId}")]
     [ProducesResponseType(400)]
 
-    public async Task<IActionResult> UpdateAppStatus(int empId, int appId,[FromBody] bool isAccepted)
+    public async Task<IActionResult> UpdateAcceptAppStatus( int empId,int appId)
     {
         var application = await _application.GetApplicationByIdAsync(appId);
         
-        application.isAccepted = isAccepted;
-        application.Status = "Archived";
+        application.isAccepted = true;
+        application.Status = "archived";
         application.EmployeeId = empId;      
         application.DecisionDate=DateTime.Now;
         bool? updated = await _application.UpdateApplicationAsync(appId, application);
         if (updated == null)
         {
-            return BadRequest("");
+            return BadRequest();
         }
-
-        return BadRequest("");
-        Notification notification;
-        if (isAccepted)
+        
+        var added = await _notification.AddNotificationAsync(new Notification
         {
-            notification = new Notification
-            {
-                Message = $"""
-                           Dear {application.Student},
-
-                           I am pleased to inform you that your recent {application.Title} request has been accepted. 
-                           Please proceed with the necessary steps outlined in our guidelines.
-                           
-                           Thank you for your attention to this matter.
-                           
-                           Best regards,
-
-                           replyed by Ana Baba yalla
-                           """,
-                CreatedAt = DateTime.Now,
-                StudentId=application.StudentId
-            };
-        }
-        else
+            Message = $"""
+                       Dear {application.Student},
+                       I am pleased to inform you that your recent {application.Title} request has been accepted. 
+                       Thank you for your attention to this matter.
+                       Best regards,
+                       """,
+            CreatedAt = DateTime.Now,
+            StudentId=application.StudentId,
+            AIDocumentId = application.Documents?.FirstOrDefault()?.Id,
+            EmployeeId = empId,
+            fromStudent = false
+        });
+        
+        if (added == true)
         {
-            notification = new Notification
-            {
-                Message = $"""
-                           Dear {application.Student},
-
-                           I apologize for declining your recent {application.Title} request. After careful consideration, 
-                           we are unable to proceed with it at this time.
-                           
-                           Thank you for your understanding.
-
-                           Best regards,
-
-                           replyed by AnaBabayalla
-                           """,
-                CreatedAt = DateTime.Now,
-                StudentId=application.StudentId
-            };
+            return Ok();
         }
-         
-        await _notification.AddNotificationAsync(notification);
-        return Ok();
+        
+        return BadRequest();
+    }
+    
+    [HttpPut("decline/{empId}/{appId}")]
+    [ProducesResponseType(400)]
+
+    public async Task<IActionResult> UpdateDeclineAppStatus( int empId,int appId)
+    {
+        var application = await _application.GetApplicationByIdAsync(appId);
+        
+        application.isAccepted = false;
+        application.Status = "archived";
+        application.EmployeeId = empId;      
+        application.DecisionDate=DateTime.Now;
+        bool? updated = await _application.UpdateApplicationAsync(appId, application);
+        if (updated == null)
+        {
+            return BadRequest();
+        }
+        
+        var added = await _notification.AddNotificationAsync(new Notification
+        {
+            Message = $"""
+                       Dear {application.Student},
+                       I apologize for declining your recent {application.Title} request.
+                       Thank you for your attention to this matter.
+                       Best regards,
+                       """,
+            CreatedAt = DateTime.Now,
+            StudentId=application.StudentId,
+            AIDocumentId = application.Documents?.FirstOrDefault()?.Id,
+            EmployeeId = empId,
+            fromStudent = false
+        });
+        
+        if (added == true)
+        {
+            return Ok();
+        }
+        
+        return BadRequest();
     }
 
+
+#endregion
+    
 #region Get Application Request for the supervisor
     
     [HttpGet]
