@@ -1,4 +1,4 @@
-﻿using AIDMS.DTOs;
+using AIDMS.DTOs;
 using AIDMS.Entities;
 
 namespace AIDMS.Repositories
@@ -11,7 +11,7 @@ namespace AIDMS.Repositories
         Task<List<Student>> GetAllStudentsPersonalInfoAsync();
         Task AddStudentAsync(Student studnet);
         Task UpdateStudentAsync(int studentId, UserSettingsDto student);
-        Task DeleteStudentAsync(int studentId);
+        Task<bool?> DeleteStudentAsync(int studentId);
         Task<Student> GetStudentPersonalInfoByIdAsync(int studentId);
     }
 
