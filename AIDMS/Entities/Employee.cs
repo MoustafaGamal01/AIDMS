@@ -47,7 +47,7 @@ namespace AIDMS.Entities
         [ForeignKey("Role")]
 
         public int? RoleId { get; set; }
-        public Role Role { get; set; }
+        public Role? Role { get; set; }
         
         public virtual List<Application>? Applications { get; set; }
         public virtual List<Notification>? Notifications { get; set; }

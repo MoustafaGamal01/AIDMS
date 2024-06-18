@@ -53,6 +53,10 @@
               "target": "Package",
               "version": "[1.6.0, )"
             },
+            "Google.Cloud.Storage.V1": {
+              "target": "Package",
+              "version": "[4.10.0, )"
+            },
             "Google.Cloud.Vision.V1": {
               "target": "Package",
               "version": "[3.7.0, )"

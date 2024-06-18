@@ -3,6 +3,9 @@ using AIDMS.Entities;
 using AIDMS.Repositories;
 using System.Text.Json.Serialization;
 using Microsoft.OpenApi.Models;
+using Google.Api;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace AIDMS
 {
@@ -33,9 +36,18 @@ namespace AIDMS
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
-            // Google Vision
+            // Google Vision Configuration.
             builder.Services.Configure<GoogleCloudVisionOptions>(builder.Configuration.GetSection("GoogleCloudVision"));
-            builder.Services.AddSingleton<IGoogleCloudVisionService, GoogleCloudVisionService>();
+            builder.Services.AddSingleton<IGoogleCloudVisionRepository, GoogleCloudVisionRepository>();
+
+            // Google Cloud Configuration.
+            builder.Services.Configure<GoogleCloudStorageOptions>(builder.Configuration.GetSection("GoogleCloudStorage"));
+
+            builder.Services.AddScoped<IGoogleCloudStorageRepository>(sp =>
+            {
+                var options = sp.GetRequiredService<IOptions<GoogleCloudStorageOptions>>().Value;
+                return new GoogleCloudStorageRepository(options.BucketName);
+            });
 
             // swagger
             builder.Services.AddSwaggerGen(c =>

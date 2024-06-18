@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using MimeKit;
 using static System.Net.Mime.MediaTypeNames;
+using Google.Apis.Auth.OAuth2.Requests;
 
 namespace AIDMS.Controllers
 {
@@ -21,9 +22,12 @@ namespace AIDMS.Controllers
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IRoleRepository _role;
         private readonly IDocumentRepository _document;
+        private readonly IGoogleCloudStorageRepository _googleCloud;
+        private readonly IPaymentRepository _payment;
 
         public StudentController(AIDMSContextClass context, IStudentRepository student, IApplicationRepository application,
-            INotificationRepository notification, IWebHostEnvironment hostingEnvironment, IRoleRepository role, IDocumentRepository document)
+            INotificationRepository notification, IWebHostEnvironment hostingEnvironment, IRoleRepository role, IDocumentRepository document,
+            IGoogleCloudStorageRepository googleCloud, IPaymentRepository payment)
         {
             this._context = context;
             this._student = student;
@@ -32,6 +36,8 @@ namespace AIDMS.Controllers
             this._hostingEnvironment = hostingEnvironment;
             this._role = role;
             this._document = document;
+            this._googleCloud = googleCloud;
+            this._payment = payment;
         }
 
         [HttpGet]
@@ -209,77 +215,78 @@ namespace AIDMS.Controllers
             var fileType = GetFileType(applicationDto.StudentDocument);
             var fileExtension = GetFileExtension(fileType);
 
-
             // Generate a unique filename for student's document with extension
             var student = await _student.GetStudentPersonalInfoByIdAsync(applicationDto.StudentId);
-            var studentFileName = GenerateUniqueFileName(student.firstName + '_' + student.lastName) + fileExtension; //GenerateUniqueFileName(student.firstName+'_'+student.lastName) + fileExtension;
+            var studentFileName = GenerateUniqueFileName(student.firstName + '_' + student.lastName) + fileExtension;
 
-            // Save student's uploaded document (if any) and handle success/failure
-            bool documentSaved = false;
+            // Save student's uploaded document to Google Cloud Storage (if any) and handle success/failure
+            string fileUrl = null;
             if (applicationDto.StudentDocument != null)
             {
-                documentSaved = await SaveStudentDocument(applicationDto.StudentDocument, studentFileName);
-                if (!documentSaved)
+                try
                 {
-                    return BadRequest("Failed to save uploaded document.");
+                    fileUrl = await _googleCloud.UploadFileAsync(applicationDto.StudentDocument);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest($"Failed to upload document: {ex.Message}");
                 }
             }
 
             // Create the application entity with details
             var application = new AIDMS.Entities.Application
             {
-                Title = "Material Registration",
+                Title = "Matrial Regestration",
                 Description = applicationDto.Description,
                 Status = "Pending",
-                EmployeeId = employeeId, // Assign to designated employee
                 StudentId = applicationDto.StudentId,
                 SubmittedAt = DateTime.Now,
-                isAccepted = false
+                isAccepted = false,
+                EmployeeId = employeeId
             };
 
-            string FileURL = documentSaved ? Path.Combine(@"C:\Users\AIA\Desktop\TestDocument", studentFileName) : null;
             if (applicationDto.StudentDocument != null)
             {
-                application.Documents = new List<AIDocument>();
-                application.Documents.Add(new AIDocument
+                application.Documents = new List<AIDocument>
                 {
-                    FileName = studentFileName, // Use the generated unique filename with extension
-                    FileType = fileType, // Get the actual file type
-                    FilePath = FileURL,
-                    UploadedAt = DateTime.Now,
-                    StudentId = applicationDto.StudentId,
-                });
+                    new AIDocument
+                    {
+                        FileName = studentFileName, // Use the generated unique filename with extension
+                        FileType = fileType, // Get the actual file type
+                        FilePath = fileUrl, // Use the URL from Google Cloud Storage
+                        UploadedAt = DateTime.Now,
+                        StudentId = applicationDto.StudentId,
+                    }
+                };
             }
 
             // Save the application entity first
-            await _context.Applications.AddAsync(application);
-            await _context.SaveChangesAsync();
+            await _application.AddApplicationAsync(application);
 
             // Create and save a mock Payment entity linked to the application
             var payment = new Payment
             {
-                DocumentURL = FileURL,
+                DocumentURL = fileUrl,
                 Amount = 100.00m, // Mock amount
                 TimeStamp = DateTime.Now,
                 //ApplicationId = application.Id // Link the payment to the application
             };
 
-            await _context.Payments.AddAsync(payment);
-            await _context.SaveChangesAsync();
+            await _payment.AddPaymentAsync(payment);
 
             // Update the application with the PaymentId
             application.PaymentId = payment.Id;
-            _context.Applications.Update(application);
-            await _context.SaveChangesAsync();
+            var applicationEntity = await _application.GetApplicationByIdAsync(application.Id);
+            await _application.UpdateApplicationAsync(applicationEntity.Id, application);
+
 
             // Get the name of the student
             var std = await _student.GetStudentPersonalInfoByIdAsync(applicationDto.StudentId);
 
             // Create notifications for employees about new application
-
             await _notification.AddNotificationAsync(new Notification
             {
-                Message = $"Student: {std.firstName + ' ' + std.lastName} - ID: {applicationDto.StudentId} \n Reqauested: Material Regestration",
+                Message = $"Student: {std.firstName} {std.lastName} - ID: {applicationDto.StudentId} \n Requested a new application: Matrial Regestration",
                 EmployeeId = employeeId,
                 AIDocumentId = application.Documents?.FirstOrDefault()?.Id,
                 CreatedAt = DateTime.Now,
@@ -308,19 +315,21 @@ namespace AIDMS.Controllers
             var fileType = GetFileType(applicationDto.StudentDocument);
             var fileExtension = GetFileExtension(fileType);
 
-
             // Generate a unique filename for student's document with extension
             var student = await _student.GetStudentPersonalInfoByIdAsync(applicationDto.StudentId);
-            var studentFileName = GenerateUniqueFileName(student.firstName + '_' + student.lastName) + fileExtension; //GenerateUniqueFileName(student.firstName+'_'+student.lastName) + fileExtension;
+            var studentFileName = GenerateUniqueFileName(student.firstName + '_' + student.lastName) + fileExtension;
 
-            // Save student's uploaded document (if any) and handle success/failure
-            bool documentSaved = false;
+            // Save student's uploaded document to Google Cloud Storage (if any) and handle success/failure
+            string fileUrl = null;
             if (applicationDto.StudentDocument != null)
             {
-                documentSaved = await SaveStudentDocument(applicationDto.StudentDocument, studentFileName);
-                if (!documentSaved)
+                try
                 {
-                    return BadRequest("Failed to save uploaded document.");
+                    fileUrl = await _googleCloud.UploadFileAsync(applicationDto.StudentDocument);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest($"Failed to upload document: {ex.Message}");
                 }
             }
 
@@ -330,55 +339,53 @@ namespace AIDMS.Controllers
                 Title = "Expenses Payment",
                 Description = applicationDto.Description,
                 Status = "Pending",
-                //EmployeeId = 6, // Assign to designated employee
                 StudentId = applicationDto.StudentId,
                 SubmittedAt = DateTime.Now,
                 isAccepted = false
             };
 
-            string FileURL = documentSaved ? Path.Combine(@"C:\Users\AIA\Desktop\TestDocument", studentFileName) : null;
             if (applicationDto.StudentDocument != null)
             {
-                application.Documents = new List<AIDocument>();
-                application.Documents.Add(new AIDocument
+                application.Documents = new List<AIDocument>
                 {
-                    FileName = studentFileName, // Use the generated unique filename with extension
-                    FileType = fileType, // Get the actual file type
-                    FilePath = FileURL,
-                    UploadedAt = DateTime.Now,
-                    StudentId = applicationDto.StudentId,
-                });
+                    new AIDocument
+                    {
+                        FileName = studentFileName, // Use the generated unique filename with extension
+                        FileType = fileType, // Get the actual file type
+                        FilePath = fileUrl, // Use the URL from Google Cloud Storage
+                        UploadedAt = DateTime.Now,
+                        StudentId = applicationDto.StudentId,
+                    }
+                };
             }
 
             // Save the application entity first
-            await _context.Applications.AddAsync(application);
-            await _context.SaveChangesAsync();
+            await _application.AddApplicationAsync(application);
 
             // Create and save a mock Payment entity linked to the application
             var payment = new Payment
             {
-                DocumentURL = FileURL,
+                DocumentURL = fileUrl,
                 Amount = 100.00m, // Mock amount
                 TimeStamp = DateTime.Now,
                 //ApplicationId = application.Id // Link the payment to the application
             };
 
-            await _context.Payments.AddAsync(payment);
-            await _context.SaveChangesAsync();
-
+            await _payment.AddPaymentAsync(payment);
+            
             // Update the application with the PaymentId
             application.PaymentId = payment.Id;
-            _context.Applications.Update(application);
-            await _context.SaveChangesAsync();
+            var applicationEntity = await _application.GetApplicationByIdAsync(application.Id);
+            await _application.UpdateApplicationAsync(applicationEntity.Id, application);
+
 
             // Get the name of the student
             var std = await _student.GetStudentPersonalInfoByIdAsync(applicationDto.StudentId);
 
             // Create notifications for employees about new application
-
             await _notification.AddNotificationAsync(new Notification
             {
-                Message = $"Student: {std.firstName + ' ' + std.lastName} - ID: {applicationDto.StudentId} \n  submitted a new application: Expenses Payment",
+                Message = $"Student: {std.firstName} {std.lastName} - ID: {applicationDto.StudentId} \n submitted a new application: Expenses Payment",
                 //EmployeeId = 6,
                 AIDocumentId = application.Documents?.FirstOrDefault()?.Id,
                 CreatedAt = DateTime.Now,
@@ -407,19 +414,21 @@ namespace AIDMS.Controllers
             var fileType = GetFileType(applicationDto.StudentDocument);
             var fileExtension = GetFileExtension(fileType);
 
-
             // Generate a unique filename for student's document with extension
             var student = await _student.GetStudentPersonalInfoByIdAsync(applicationDto.StudentId);
-            var studentFileName = GenerateUniqueFileName(student.firstName + '_' + student.lastName) + fileExtension; //GenerateUniqueFileName(student.firstName+'_'+student.lastName) + fileExtension;
+            var studentFileName = GenerateUniqueFileName(student.firstName + '_' + student.lastName) + fileExtension;
 
-            // Save student's uploaded document (if any) and handle success/failure
-            bool documentSaved = false;
+            // Save student's uploaded document to Google Cloud Storage (if any) and handle success/failure
+            string fileUrl = null;
             if (applicationDto.StudentDocument != null)
             {
-                documentSaved = await SaveStudentDocument(applicationDto.StudentDocument, studentFileName);
-                if (!documentSaved)
+                try
                 {
-                    return BadRequest("Failed to save uploaded document.");
+                    fileUrl = await _googleCloud.UploadFileAsync(applicationDto.StudentDocument);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest($"Failed to upload document: {ex.Message}");
                 }
             }
 
@@ -429,55 +438,53 @@ namespace AIDMS.Controllers
                 Title = "Military Education",
                 Description = applicationDto.Description,
                 Status = "Pending",
-                //EmployeeId = 6, // Assign to designated employee
                 StudentId = applicationDto.StudentId,
                 SubmittedAt = DateTime.Now,
                 isAccepted = false
             };
 
-            string FileURL = documentSaved ? Path.Combine(@"C:\Users\AIA\Desktop\TestDocument", studentFileName) : null;
             if (applicationDto.StudentDocument != null)
             {
-                application.Documents = new List<AIDocument>();
-                application.Documents.Add(new AIDocument
+                application.Documents = new List<AIDocument>
                 {
-                    FileName = studentFileName, // Use the generated unique filename with extension
-                    FileType = fileType, // Get the actual file type
-                    FilePath = FileURL,
-                    UploadedAt = DateTime.Now,
-                    StudentId = applicationDto.StudentId,
-                });
+                    new AIDocument
+                    {
+                        FileName = studentFileName, // Use the generated unique filename with extension
+                        FileType = fileType, // Get the actual file type
+                        FilePath = fileUrl, // Use the URL from Google Cloud Storage
+                        UploadedAt = DateTime.Now,
+                        StudentId = applicationDto.StudentId,
+                    }
+                };
             }
 
             // Save the application entity first
-            await _context.Applications.AddAsync(application);
-            await _context.SaveChangesAsync();
+            await _application.AddApplicationAsync(application);
 
             // Create and save a mock Payment entity linked to the application
             var payment = new Payment
             {
-                DocumentURL = FileURL,
+                DocumentURL = fileUrl,
                 Amount = 100.00m, // Mock amount
                 TimeStamp = DateTime.Now,
                 //ApplicationId = application.Id // Link the payment to the application
             };
 
-            await _context.Payments.AddAsync(payment);
-            await _context.SaveChangesAsync();
+            await _payment.AddPaymentAsync(payment);
 
             // Update the application with the PaymentId
             application.PaymentId = payment.Id;
-            _context.Applications.Update(application);
-            await _context.SaveChangesAsync();
+            var applicationEntity = await _application.GetApplicationByIdAsync(application.Id);
+            await _application.UpdateApplicationAsync(applicationEntity.Id, application);
+
 
             // Get the name of the student
             var std = await _student.GetStudentPersonalInfoByIdAsync(applicationDto.StudentId);
 
             // Create notifications for employees about new application
-
             await _notification.AddNotificationAsync(new Notification
             {
-                Message = $"Student: {std.firstName + ' ' + std.lastName} - ID: {applicationDto.StudentId} \n  submitted a new application: Military Education",
+                Message = $"Student: {std.firstName} {std.lastName} - ID: {applicationDto.StudentId} \n submitted a new application: Military Education",
                 //EmployeeId = 6,
                 AIDocumentId = application.Documents?.FirstOrDefault()?.Id,
                 CreatedAt = DateTime.Now,
@@ -487,7 +494,7 @@ namespace AIDMS.Controllers
 
             return CreatedAtRoute("StudentPersonalInfo", new { Id = applicationDto.StudentId }, application);
         }
-        // MoustafaIsHere
+
         [HttpPost]
         [Route("trascript")]
         public async Task<IActionResult> RequestAcademicTranscript([FromForm] CreateApplicationDto applicationDto)
@@ -506,19 +513,21 @@ namespace AIDMS.Controllers
             var fileType = GetFileType(applicationDto.StudentDocument);
             var fileExtension = GetFileExtension(fileType);
 
-
             // Generate a unique filename for student's document with extension
             var student = await _student.GetStudentPersonalInfoByIdAsync(applicationDto.StudentId);
-            var studentFileName = GenerateUniqueFileName(student.firstName + '_' + student.lastName) + fileExtension; //GenerateUniqueFileName(student.firstName+'_'+student.lastName) + fileExtension;
+            var studentFileName = GenerateUniqueFileName(student.firstName + '_' + student.lastName) + fileExtension;
 
-            // Save student's uploaded document (if any) and handle success/failure
-            bool documentSaved = false;
+            // Save student's uploaded document to Google Cloud Storage (if any) and handle success/failure
+            string fileUrl = null;
             if (applicationDto.StudentDocument != null)
             {
-                documentSaved = await SaveStudentDocument(applicationDto.StudentDocument, studentFileName);
-                if (!documentSaved)
+                try
                 {
-                    return BadRequest("Failed to save uploaded document.");
+                    fileUrl = await _googleCloud.UploadFileAsync(applicationDto.StudentDocument);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest($"Failed to upload document: {ex.Message}");
                 }
             }
 
@@ -528,55 +537,53 @@ namespace AIDMS.Controllers
                 Title = "Academic Transcript",
                 Description = applicationDto.Description,
                 Status = "Pending",
-                //EmployeeId = 6, // Assign to designated employee
                 StudentId = applicationDto.StudentId,
                 SubmittedAt = DateTime.Now,
                 isAccepted = false
             };
 
-            string FileURL = documentSaved ? Path.Combine(@"C:\Users\AIA\Desktop\TestDocument", studentFileName) : null;
             if (applicationDto.StudentDocument != null)
             {
-                application.Documents = new List<AIDocument>();
-                application.Documents.Add(new AIDocument
+                application.Documents = new List<AIDocument>
                 {
-                    FileName = studentFileName, // Use the generated unique filename with extension
-                    FileType = fileType, // Get the actual file type
-                    FilePath = FileURL,
-                    UploadedAt = DateTime.Now,
-                    StudentId = applicationDto.StudentId,
-                });
+                    new AIDocument
+                    {
+                        FileName = studentFileName, // Use the generated unique filename with extension
+                        FileType = fileType, // Get the actual file type
+                        FilePath = fileUrl, // Use the URL from Google Cloud Storage
+                        UploadedAt = DateTime.Now,
+                        StudentId = applicationDto.StudentId,
+                    }
+                };
             }
 
             // Save the application entity first
-            await _context.Applications.AddAsync(application);
-            await _context.SaveChangesAsync();
+            await _application.AddApplicationAsync(application);
 
             // Create and save a mock Payment entity linked to the application
             var payment = new Payment
             {
-                DocumentURL = FileURL,
+                DocumentURL = fileUrl,
                 Amount = 100.00m, // Mock amount
                 TimeStamp = DateTime.Now,
                 //ApplicationId = application.Id // Link the payment to the application
             };
 
-            await _context.Payments.AddAsync(payment);
-            await _context.SaveChangesAsync();
+            await _payment.AddPaymentAsync(payment);
 
             // Update the application with the PaymentId
             application.PaymentId = payment.Id;
-            _context.Applications.Update(application);
-            await _context.SaveChangesAsync();
+            var applicationEntity = await _application.GetApplicationByIdAsync(application.Id);
+            await _application.UpdateApplicationAsync(applicationEntity.Id, application);
+
 
             // Get the name of the student
             var std = await _student.GetStudentPersonalInfoByIdAsync(applicationDto.StudentId);
 
             // Create notifications for employees about new application
-
             await _notification.AddNotificationAsync(new Notification
             {
-                Message = $"Student: {std.firstName + ' ' + std.lastName} - ID: {applicationDto.StudentId} \n  submitted a new Request: Academic Transcript",
+                Message = $"Student: {std.firstName} {std.lastName} - ID: {applicationDto.StudentId} \n Requested a new application: Academic Transcript",
                 //EmployeeId = 6,
                 AIDocumentId = application.Documents?.FirstOrDefault()?.Id,
                 CreatedAt = DateTime.Now,
@@ -605,19 +612,21 @@ namespace AIDMS.Controllers
             var fileType = GetFileType(applicationDto.StudentDocument);
             var fileExtension = GetFileExtension(fileType);
 
-
             // Generate a unique filename for student's document with extension
             var student = await _student.GetStudentPersonalInfoByIdAsync(applicationDto.StudentId);
-            var studentFileName = GenerateUniqueFileName(student.firstName + '_' + student.lastName) + fileExtension; //GenerateUniqueFileName(student.firstName+'_'+student.lastName) + fileExtension;
+            var studentFileName = GenerateUniqueFileName(student.firstName + '_' + student.lastName) + fileExtension;
 
-            // Save student's uploaded document (if any) and handle success/failure
-            bool documentSaved = false;
+            // Save student's uploaded document to Google Cloud Storage (if any) and handle success/failure
+            string fileUrl = null;
             if (applicationDto.StudentDocument != null)
             {
-                documentSaved = await SaveStudentDocument(applicationDto.StudentDocument, studentFileName);
-                if (!documentSaved)
+                try
                 {
-                    return BadRequest("Failed to save uploaded document.");
+                    fileUrl = await _googleCloud.UploadFileAsync(applicationDto.StudentDocument);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest($"Failed to upload document: {ex.Message}");
                 }
             }
 
@@ -627,55 +636,53 @@ namespace AIDMS.Controllers
                 Title = "Enrollment Proof",
                 Description = applicationDto.Description,
                 Status = "Pending",
-                //EmployeeId = 6, // Assign to designated employee
                 StudentId = applicationDto.StudentId,
                 SubmittedAt = DateTime.Now,
                 isAccepted = false
             };
 
-            string FileURL = documentSaved ? Path.Combine(@"C:\Users\AIA\Desktop\TestDocument", studentFileName) : null;
             if (applicationDto.StudentDocument != null)
             {
-                application.Documents = new List<AIDocument>();
-                application.Documents.Add(new AIDocument
+                application.Documents = new List<AIDocument>
                 {
-                    FileName = studentFileName, // Use the generated unique filename with extension
-                    FileType = fileType, // Get the actual file type
-                    FilePath = FileURL,
-                    UploadedAt = DateTime.Now,
-                    StudentId = applicationDto.StudentId,
-                });
+                    new AIDocument
+                    {
+                        FileName = studentFileName, // Use the generated unique filename with extension
+                        FileType = fileType, // Get the actual file type
+                        FilePath = fileUrl, // Use the URL from Google Cloud Storage
+                        UploadedAt = DateTime.Now,
+                        StudentId = applicationDto.StudentId,
+                    }
+                };
             }
 
             // Save the application entity first
-            await _context.Applications.AddAsync(application);
-            await _context.SaveChangesAsync();
+            await _application.AddApplicationAsync(application);
 
             // Create and save a mock Payment entity linked to the application
             var payment = new Payment
             {
-                DocumentURL = FileURL,
+                DocumentURL = fileUrl,
                 Amount = 100.00m, // Mock amount
                 TimeStamp = DateTime.Now,
                 //ApplicationId = application.Id // Link the payment to the application
             };
 
-            await _context.Payments.AddAsync(payment);
-            await _context.SaveChangesAsync();
+            await _payment.AddPaymentAsync(payment);
 
             // Update the application with the PaymentId
             application.PaymentId = payment.Id;
-            _context.Applications.Update(application);
-            await _context.SaveChangesAsync();
+            var applicationEntity = await _application.GetApplicationByIdAsync(application.Id);
+            await _application.UpdateApplicationAsync(applicationEntity.Id, application);
+
 
             // Get the name of the student
             var std = await _student.GetStudentPersonalInfoByIdAsync(applicationDto.StudentId);
 
             // Create notifications for employees about new application
-
             await _notification.AddNotificationAsync(new Notification
             {
-                Message = $"Student: {std.firstName + ' ' + std.lastName} - ID: {applicationDto.StudentId} \n  submitted a new Request: Enrollment Proof",
+                Message = $"Student: {std.firstName} {std.lastName} - ID: {applicationDto.StudentId} \n Requested a new application: Enrollment Proof",
                 //EmployeeId = 6,
                 AIDocumentId = application.Documents?.FirstOrDefault()?.Id,
                 CreatedAt = DateTime.Now,
