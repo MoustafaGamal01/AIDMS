@@ -530,11 +530,17 @@
   {
     "ContainingType": "AIDMS.Controllers.EmployeeController",
     "Method": "GetAllEmplyeesBaseInfo",
-    "RelativePath": "api/Employee/admin",
+    "RelativePath": "api/Employee/admin/{adminId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "adminId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.BaseEmployeeDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
