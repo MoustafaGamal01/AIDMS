@@ -734,36 +734,36 @@ namespace AIDMS.Controllers
             };
         }
 
-        private async Task<bool> SaveStudentDocument(IFormFile studentDocument, string fileName)
-        {
-            var folderPath = Path.Combine(@"C:\Users\AIA\Desktop\TestDocument", fileName);
-            if (!Directory.Exists(Path.GetDirectoryName(folderPath)))
-            {
-                try
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(folderPath));
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error creating directory: {ex.Message}");
-                    return false;
-                }
-            }
+        //private async Task<bool> SaveStudentDocument(IFormFile studentDocument, string fileName)
+        //{
+        //    var folderPath = Path.Combine(@"C:\Users\AIA\Desktop\TestDocument", fileName);
+        //    if (!Directory.Exists(Path.GetDirectoryName(folderPath)))
+        //    {
+        //        try
+        //        {
+        //            Directory.CreateDirectory(Path.GetDirectoryName(folderPath));
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine($"Error creating directory: {ex.Message}");
+        //            return false;
+        //        }
+        //    }
 
-            try
-            {
-                using (var stream = new FileStream(folderPath, FileMode.Create))
-                {
-                    await studentDocument.CopyToAsync(stream);
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error saving document: {ex.Message}");
-                return false;
-            }
-        }
+        //    try
+        //    {
+        //        using (var stream = new FileStream(folderPath, FileMode.Create))
+        //        {
+        //            await studentDocument.CopyToAsync(stream);
+        //        }
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"Error saving document: {ex.Message}");
+        //        return false;
+        //    }
+        //}
 
         private string GenerateUniqueFileName(string studentName)
         {
@@ -790,98 +790,6 @@ namespace AIDMS.Controllers
             }
         }
 
-        //[HttpPost]
-        //[Route("applications")]
-        //public async Task<IActionResult> MatrialsRegisteration([FromForm] CreateApplicationDto applicationDto)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    if (applicationDto.StudentDocument?.Length > 1048576) // Max size 1 MB in bytes
-        //    {
-        //        return BadRequest("File size cannot exceed 1 MB.");
-        //    }
-
-        //    // Get the file type and extension
-        //    var fileType = GetFileType(applicationDto.StudentDocument);
-        //    var fileExtension = GetFileExtension(fileType);
-
-        //    // Generate a unique filename for student's document with extension
-        //    var studentFileName = GenerateUniqueFileName(applicationDto.StudentId) + fileExtension;
-
-        //    // Save student's uploaded document (if any) and handle success/failure
-        //    bool documentSaved = false;
-        //    if (applicationDto.StudentDocument != null)
-        //    {
-        //        documentSaved = await SaveStudentDocument(applicationDto.StudentDocument, studentFileName);
-        //        if (!documentSaved)
-        //        {
-        //            return BadRequest("Failed to save uploaded document.");
-        //        }
-        //    }
-
-        //    // Create the application entity with details
-        //    var application = new AIDMS.Entities.Application
-        //    {
-        //        Title = applicationDto.Title,
-        //        Description = applicationDto.Description,
-        //        Status = "Pending",
-        //        EmployeeId = 6, // Assign to designated employee
-        //        StudentId = applicationDto.StudentId,
-        //        SubmittedAt = DateTime.Now
-        //    };
-
-        //    string FileURL = documentSaved ? Path.Combine(@"C:\Users\AIA\Desktop\TestDocument", studentFileName) : null;
-        //    if (applicationDto.StudentDocument != null)
-        //    {
-        //        application.Documents = new List<AIDocument>();
-        //        application.Documents.Add(new AIDocument
-        //        {
-        //            FileName = studentFileName, // Use the generated unique filename with extension
-        //            FileType = fileType, // Get the actual file type
-        //            FilePath = FileURL,
-        //            //StudentId = applicationDto.StudentId,
-        //        });
-        //    }
-
-        //    // Save the application entity first
-        //    await _context.Applications.AddAsync(application);
-        //    await _context.SaveChangesAsync();
-
-        //    // Create and save a mock Payment entity linked to the application
-        //    var payment = new Payment
-        //    {
-        //        DocumentURL = FileURL,
-        //        Amount = 100.00m, // Mock amount
-        //        TimeStamp = DateTime.Now,
-        //        //ApplicationId = application.Id // Link the payment to the application
-        //    };
-
-        //    await _context.Payments.AddAsync(payment);
-        //    await _context.SaveChangesAsync();
-
-        //    // Update the application with the PaymentId
-        //    application.PaymentId = payment.Id;
-        //    _context.Applications.Update(application);
-        //    await _context.SaveChangesAsync();
-
-        //    // Get the name of the student
-        //    var std = await _student.GetStudentPersonalInfoByIdAsync(applicationDto.StudentId);
-
-        //    // Create notifications for employees about new application
-
-        //    await _notification.AddNotificationAsync(new Notification
-        //    {
-        //        Message = $"Student: {std.firstName + ' ' + std.lastName} - ID: {applicationDto.StudentId} \n  submitted a new application: {applicationDto.Title}",
-        //        EmployeeId = 4,
-        //        AIDocumentId = application.Documents?.FirstOrDefault()?.Id,
-        //    });
-
-
-        //    return CreatedAtRoute("StudentPersonalInfo", new { Id = applicationDto.StudentId }, application);
-        //}
-
+       
     }
 }

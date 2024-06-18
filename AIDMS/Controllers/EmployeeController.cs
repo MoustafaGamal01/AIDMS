@@ -29,8 +29,8 @@ public class EmployeeController : Controller
     public async Task<ActionResult<IEnumerable<BaseEmployeeDto>>> GetAllEmplyeesBaseInfo(int adminId)
     {
         var Employees = await _emp.GetAllEmployeesAndRoleAsync();
-        var employeesBaseInfo = Employees
-            .Where(em=>em.Id!=adminId).Select(e => new BaseEmployeeDto
+        var employeesBaseInfo = Employe
+        .Where(em => em.Id != adminId).Select(e => new BaseEmployeeDto
         {
             Id = e.Id,
             Name = $"{e.firstName} {e.lastName}",
