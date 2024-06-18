@@ -43,10 +43,15 @@ namespace AIDMS.Entities
                 .IsUnicode(true);
 
             modelBuilder.Entity<Student>()
+                .Property(n => n.SID)
+                .IsUnicode(true);
+
+            modelBuilder.Entity<Student>()
                 .HasOne(s => s.Department)
                 .WithMany(a => a.Students)
                 .HasForeignKey(f => f.DepartmentId)
                 .OnDelete(DeleteBehavior.SetNull);
+
 
 
             modelBuilder.Entity<Student>()

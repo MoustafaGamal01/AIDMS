@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "YJoA0L/oZljIL1/eZ8255pHMFeG+pXGEExiTcfxxsNTSAaE/NrU4NAkn6t5pGv9lb9SRH9RTTe0TiMtFFayrMA==",
+  "dgSpecHash": "oJyymd1fYFLRM8tU+MtHOmmRjvLGdO7+Y6M4/qlQWStHpbL9tf4kFBdLqKbAvyRf77URRWk/2qIWp0YOLAFclg==",
   "success": true,
   "projectFilePath": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\AIDMS.csproj",
   "expectedPackageFiles": [
@@ -11,9 +11,12 @@
     "C:\\Users\\AIA\\.nuget\\packages\\google.api.commonprotos\\2.15.0\\google.api.commonprotos.2.15.0.nupkg.sha512",
     "C:\\Users\\AIA\\.nuget\\packages\\google.api.gax\\4.8.0\\google.api.gax.4.8.0.nupkg.sha512",
     "C:\\Users\\AIA\\.nuget\\packages\\google.api.gax.grpc\\4.8.0\\google.api.gax.grpc.4.8.0.nupkg.sha512",
+    "C:\\Users\\AIA\\.nuget\\packages\\google.api.gax.rest\\4.8.0\\google.api.gax.rest.4.8.0.nupkg.sha512",
     "C:\\Users\\AIA\\.nuget\\packages\\google.apis\\1.67.0\\google.apis.1.67.0.nupkg.sha512",
     "C:\\Users\\AIA\\.nuget\\packages\\google.apis.auth\\1.67.0\\google.apis.auth.1.67.0.nupkg.sha512",
     "C:\\Users\\AIA\\.nuget\\packages\\google.apis.core\\1.67.0\\google.apis.core.1.67.0.nupkg.sha512",
+    "C:\\Users\\AIA\\.nuget\\packages\\google.apis.storage.v1\\1.67.0.3365\\google.apis.storage.v1.1.67.0.3365.nupkg.sha512",
+    "C:\\Users\\AIA\\.nuget\\packages\\google.cloud.storage.v1\\4.10.0\\google.cloud.storage.v1.4.10.0.nupkg.sha512",
     "C:\\Users\\AIA\\.nuget\\packages\\google.cloud.vision.v1\\3.7.0\\google.cloud.vision.v1.3.7.0.nupkg.sha512",
     "C:\\Users\\AIA\\.nuget\\packages\\google.longrunning\\3.2.0\\google.longrunning.3.2.0.nupkg.sha512",
     "C:\\Users\\AIA\\.nuget\\packages\\google.protobuf\\3.25.0\\google.protobuf.3.25.0.nupkg.sha512",

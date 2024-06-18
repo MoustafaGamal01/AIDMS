@@ -363,6 +363,22 @@
     ]
   },
   {
+    "ContainingType": "AIDMS.Controllers.CloudStorageController",
+    "Method": "UploadFile",
+    "RelativePath": "api/CloudStorage/upload",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "AIDMS.Controllers.DocumentsController",
     "Method": "GetAllDocuments",
     "RelativePath": "api/Documents",
@@ -916,6 +932,54 @@
       },
       {
         "Name": "FileName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.VisionController",
+    "Method": "ValidateBirthCertificate",
+    "RelativePath": "api/Vision/BirthCertificate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "imagePath",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.VisionController",
+    "Method": "ValidateNationalId",
+    "RelativePath": "api/Vision/NationalId",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "imagePath",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.VisionController",
+    "Method": "ValidateSecondaryCertificate",
+    "RelativePath": "api/Vision/SecondaryCertificate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "imagePath",
         "Type": "System.String",
         "IsRequired": false
       }

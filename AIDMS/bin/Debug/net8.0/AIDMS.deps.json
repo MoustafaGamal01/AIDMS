@@ -9,6 +9,7 @@
       "AIDMS/1.0.0": {
         "dependencies": {
           "BCrypt.Net-Core": "1.6.0",
+          "Google.Cloud.Storage.V1": "4.10.0",
           "Google.Cloud.Vision.V1": "3.7.0",
           "Microsoft.AspNetCore.Hosting": "2.2.7",
           "Microsoft.EntityFrameworkCore": "8.0.3",
@@ -114,6 +115,19 @@
           }
         }
       },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "1.67.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "assemblyVersion": "4.8.0.0",
+            "fileVersion": "4.8.0.0"
+          }
+        }
+      },
       "Google.Apis/1.67.0": {
         "dependencies": {
           "Google.Apis.Core": "1.67.0"
@@ -146,6 +160,30 @@
           "lib/net6.0/Google.Apis.Core.dll": {
             "assemblyVersion": "1.67.0.0",
             "fileVersion": "1.67.0.0"
+          }
+        }
+      },
+      "Google.Apis.Storage.v1/1.67.0.3365": {
+        "dependencies": {
+          "Google.Apis": "1.67.0",
+          "Google.Apis.Auth": "1.67.0"
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Storage.v1.dll": {
+            "assemblyVersion": "1.67.0.3365",
+            "fileVersion": "1.67.0.3365"
+          }
+        }
+      },
+      "Google.Cloud.Storage.V1/4.10.0": {
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Storage.v1": "1.67.0.3365"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Cloud.Storage.V1.dll": {
+            "assemblyVersion": "4.10.0.0",
+            "fileVersion": "4.10.0.0"
           }
         }
       },
@@ -1300,6 +1338,13 @@
       "path": "google.api.gax.grpc/4.8.0",
       "hashPath": "google.api.gax.grpc.4.8.0.nupkg.sha512"
     },
+    "Google.Api.Gax.Rest/4.8.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zaA5LZ2VvGj/wwIzRB68swr7khi2kWNgqWvsB0fYtScIAl3kGkGtqiBcx63H1YLeKr5xau1866bFjTeReH6FSQ==",
+      "path": "google.api.gax.rest/4.8.0",
+      "hashPath": "google.api.gax.rest.4.8.0.nupkg.sha512"
+    },
     "Google.Apis/1.67.0": {
       "type": "package",
       "serviceable": true,
@@ -1320,6 +1365,20 @@
       "sha512": "sha512-IPq0I3B01NYZraPoMl8muELFLg4Vr2sbfyZp4PR2Xe3MAhHkZCiKyV28Yh1L14zIKUb0X0snol1sR5/mx4S6Iw==",
       "path": "google.apis.core/1.67.0",
       "hashPath": "google.apis.core.1.67.0.nupkg.sha512"
+    },
+    "Google.Apis.Storage.v1/1.67.0.3365": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-N9Rp8aRUV8Fsjl6uojZeJnzZ/zwtImB+crkPz/HsUtIKcC8rx/ZhNdizNJ5YcNFKiVlvGC60p0K7M+Ywk2xTPQ==",
+      "path": "google.apis.storage.v1/1.67.0.3365",
+      "hashPath": "google.apis.storage.v1.1.67.0.3365.nupkg.sha512"
+    },
+    "Google.Cloud.Storage.V1/4.10.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-a4hHQzDkzR/5Fm2gvfKnvuajYwgTJAZ944+8S3gO7S3qxXkXI+rasx8Jz8ldflyq1zHO5MWTyFiHc7+dfmwYhg==",
+      "path": "google.cloud.storage.v1/4.10.0",
+      "hashPath": "google.cloud.storage.v1.4.10.0.nupkg.sha512"
     },
     "Google.Cloud.Vision.V1/3.7.0": {
       "type": "package",
