@@ -23,8 +23,9 @@ public class EmployeeController : Controller
         this._notification = notification;
     }
     
+    //Admin
     [HttpGet]
-    [Route("admin/{adminId:int}")]
+    [Route("{empId:int}")]
     // [ProducesResponseType(200, Type = typeof(ActionResult<BaseEmployeeDto>))]
     public async Task<ActionResult<IEnumerable<BaseEmployeeDto>>> GetAllEmplyeesBaseInfo(int adminId)
     {

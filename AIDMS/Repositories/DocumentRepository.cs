@@ -85,10 +85,32 @@ namespace AIDMS.Repositories
         
         public async Task<List<AIDocument>> GetDocumentsByDocumentTypeAndApplicationTypeAsync(string documentType, string applicationType)
         {
-            return await context.Documents
-                //.Include(d => d.Application)
-                .Where(d => d.FileType == documentType && d.Application.Title == applicationType)
-                .ToListAsync();
+
+            if (applicationType == "any" && documentType == "any")
+            {
+                return await context.Documents.ToListAsync();   
+            }
+            else if (applicationType == "any")
+            {
+                return await context.Documents
+                    .Include(d => d.Application)
+                    .Where(d => d.FileType == documentType)
+                    .ToListAsync();
+            }
+            else if (documentType == "any")
+            {
+                return await context.Documents
+                    .Include(d => d.Application)
+                    .Where(d => d.Application.Title == applicationType)
+                    .ToListAsync();
+            }
+            else
+            {
+                return await context.Documents
+                    .Include(d => d.Application)
+                    .Where(d => d.FileType == documentType && d.Application.Title == applicationType)
+                    .ToListAsync();
+            }
         }
     }
 }
