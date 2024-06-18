@@ -118,20 +118,6 @@ namespace AIDMS.Repositories
             _context.Students.Update(existingStudent);
             await _context.SaveChangesAsync();
         }
-
-        public async Task UpdateStudentMilitaryAsync(int studentId)
-        {
-            var existingStudent = await _context.Students.FindAsync(studentId);
-            if (existingStudent == null)
-            {
-                throw new KeyNotFoundException("Student not found");
-            }
-
-            existingStudent.militaryEducated = true; 
-            
-            _context.Students.Update(existingStudent);
-            await _context.SaveChangesAsync();
-        }
         
         #region Validations
 

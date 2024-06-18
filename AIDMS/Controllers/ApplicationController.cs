@@ -205,11 +205,6 @@ public class ApplicationController : Controller {
         {
             return BadRequest();
         }
-
-        if (application.Title == "Military Education")
-        {
-            await _student.UpdateStudentMilitaryAsync((int)application.StudentId);
-        }
         
         var added = await _notification.AddNotificationAsync(new Notification
         {
