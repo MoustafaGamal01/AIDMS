@@ -62,7 +62,7 @@ namespace AIDMS.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Documents");
+                    b.ToTable("Documents", (string)null);
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Application", b =>
@@ -122,7 +122,7 @@ namespace AIDMS.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Applications");
+                    b.ToTable("Applications", (string)null);
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Department", b =>
@@ -143,7 +143,7 @@ namespace AIDMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Employee", b =>
@@ -161,6 +161,9 @@ namespace AIDMS.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsMale")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -202,7 +205,7 @@ namespace AIDMS.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Notification", b =>
@@ -245,7 +248,7 @@ namespace AIDMS.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Payment", b =>
@@ -268,7 +271,7 @@ namespace AIDMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Role", b =>
@@ -291,7 +294,7 @@ namespace AIDMS.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("AIDMS.Entities.Student", b =>
@@ -316,6 +319,9 @@ namespace AIDMS.Migrations
                     b.Property<decimal?>("GPA")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<bool>("IsMale")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Level")
                         .HasColumnType("int");
 
@@ -328,6 +334,11 @@ namespace AIDMS.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("SID")
+                        .IsRequired()
+                        .HasMaxLength(14)
+                        .HasColumnType("nvarchar(14)");
 
                     b.Property<decimal?>("TotalPassedHours")
                         .HasColumnType("decimal(18,2)");
@@ -359,7 +370,7 @@ namespace AIDMS.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("AIDMS.Entities.AIDocument", b =>

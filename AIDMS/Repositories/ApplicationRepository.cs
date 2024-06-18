@@ -1,4 +1,5 @@
 using AIDMS.Entities;
+using Google.Api;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -130,5 +131,15 @@ namespace AIDMS.Repositories
                 .ToListAsync();
         }
 
+        public async Task<bool?> AddApplicationAsync(Application application)
+        {
+            _context.Applications.Add(application);
+            int affected = await _context.SaveChangesAsync();
+            if (affected == 1)
+            {
+                return true;
+            }
+            return null;
+        }
     }
 }

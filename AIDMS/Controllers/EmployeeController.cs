@@ -30,7 +30,7 @@ public class EmployeeController : Controller
     {
         var Employees = await _emp.GetAllEmployeesAndRoleAsync();
         var employeesBaseInfo = Employees
-            .Where(em=>em.Id!=adminId).Select(e => new BaseEmployeeDto
+        .Where(em => em.Id != adminId).Select(e => new BaseEmployeeDto
         {
             Id = e.Id,
             Name = $"{e.firstName} {e.lastName}",

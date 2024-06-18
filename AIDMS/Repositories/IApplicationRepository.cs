@@ -4,6 +4,7 @@ namespace AIDMS.Repositories
 {
     public interface IApplicationRepository
     {
+        Task<bool?> AddApplicationAsync(Application application);
         Task<Application> GetApplicationByIdAsync(int applicationId);
         Task<List<Application>> GetAllApplicationsAsync();
         Task<bool?> UpdateApplicationAsync(int applicationId, Application application);
