@@ -379,7 +379,7 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
             new Feature { Type = Feature.Types.Type.FaceDetection }
         };
 
-        try       // https:\storage.googleapis.com\testing - bohaa\card1.jpg
+        try    
         {
             var response = await GetResponseAsync(imagePath, featureList);
 
