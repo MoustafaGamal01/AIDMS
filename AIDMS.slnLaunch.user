@@ -1,0 +1,11 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Name": "AIDMS\\AIDMS.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
