@@ -186,10 +186,11 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
 >>>>>>> 041ae4d36e0124c09cc1b50a555cc568ec7e523c
         string[] checks =
         {
-            "جمهورية", "مصر", "العربية", "وزارة", "الداخلية", "قطاع", "مصلحة", "الاحوال",
-            "المدنية", "صورة", "قيد", "الميلاد", "بيانات", "المولود", "محل", "تاريخ",
-            "الديانه", "النوع", "الأب", "مسلم", "الجنسية", "بيانات", "الأم", "توقيع",
-            "تأكد", "من", "وجود", "طابع", "الأمومة", "والطفولة", "فئة", "جنيه",
+            "مصر", "العربية", "وزارة", "الداخلية", "قطاع", "مصلحة", "الاحوال",
+                        "المدنية", "صورة", "قيد", "الميلاد", "المولود", "محل", "تاريخ",
+                        "الديانه", "النوع", "الأب", "الجنسية", "بيانات", "الأم", "توقيع",
+                        "تأكد", "وجود", "طابع", "الطفولة", "فئة", "جنيه",
+                        "العلامة", "المائية", "نسر", "شعار", "الجمهورية", "ثيقة", "أحوال", "مدنية"
             "والعلامة", "المائية،", "نسر", "شعار", "الجمهورية", "وثيقة", "أحوال", "مدنية"
         };
         try
@@ -266,6 +267,47 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
         }
     }
 
+    public async Task<double> CheckNominationValidationAsync(string imagePath)
+    {
+        List<Feature> featureList = new List<Feature>
+        {
+            new Feature { Type = Feature.Types.Type.TextDetection }
+        };
+
+        string[] checks = {
+            "نتيجة", "عام", "وزارة", "التعليم", "العالي", "مكتب", "تنسيق", "القبول",
+                "بالجامعات", "والمعاهد", "إخطار", "مبدني", "بالترشيح", "برنامج", "تقليل",
+                "الاغتراب", "بإخطاركم", "بأنه", "قد", "ترشيحكم", "ترتيب",
+                "الرغبة", "رقم", "الجلوس", "الإيصال", "مجموع", "الدرجات", "الشهادة", "تاريخ",
+                "اعلان", "ملحوظات", "هامة", "الثانوية", "العامة", "الكلية", "المعهد",
+                "أعلاه", "بناء", "المقدمة", "ويتم", "إلغاء", "واتخاذ", "الإجراءات",
+                "اذا", "وجد", "خطأ", "أو", "تعديل", "ثبوت", "يخالف", "ورد",
+                "بالاوراق", "المسلمة", "استنفاذ", "سيتم", "فتح", "التقديم", "المراحل", "التالية" };
+
+        try       // https:\storage.googleapis.com\testing - bohaa\card1.jpg
+        {
+            var response = await GetResponseAsync(imagePath, featureList);
+
+            // checking student name in the document.
+            string studentName = "";
+            double nameAuthorizationScore = CheckDocumentAuthorizationAsync(response, studentName);
+            if (nameAuthorizationScore < 50) return 0.0;
+
+            string text = response.Responses[0].FullTextAnnotation.Text;
+            int calculatedPoints = CalculateTextPoints(text, checks);
+
+            int overAllPoints = checks.Length;
+
+            double validationScore = ((double)calculatedPoints / (overAllPoints)) * 100;
+
+            return validationScore;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"An error occurred: {e.Message}");
+            return 0.0;
+        }
+    }
 
     private int CalculateTextPoints(string text, string[] checks)
     {
@@ -329,8 +371,13 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
     }
 
 
-    public async Task<bool> CheckPersonalPhotoAsync(List<Feature> featureList, string imagePath)
+    public async Task<bool> CheckPersonalPhotoAsync(string imagePath)
     {
+        List<Feature> featureList = new List<Feature>
+        {
+            new Feature { Type = Feature.Types.Type.TextDetection },
+            new Feature { Type = Feature.Types.Type.FaceDetection }
+        };
 
         try       // https:\storage.googleapis.com\testing - bohaa\card1.jpg
         {
