@@ -101,7 +101,8 @@ public class ApplicationController : Controller {
     {
         var Applications = await GetPendingApplicationsExceptMaterial();
         var applicationRequestDto = Applications
-            .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
+            .Where(app => (app.From.Replace(" ", "").ToUpper())
+                .Contains(studentName.Replace(" ", "").ToUpper()));
         return applicationRequestDto;
     }
         
@@ -112,7 +113,8 @@ public class ApplicationController : Controller {
     {
         var Applications = await GetArchivedApplicationsExceptMaterial();
         var applicationArchivedDto = Applications
-            .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
+                .Where(app => (app.From.Replace(" ", "").ToUpper())
+                    .Contains(studentName.Replace(" ", "").ToUpper()));
         return applicationArchivedDto;
     }
     
@@ -321,7 +323,8 @@ public class ApplicationController : Controller {
     {
         var Applications = await GetPendingApplicationsWithMaterial(empId);
         var applicationRequestDto = Applications
-            .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
+                .Where(app => (app.From.Replace(" ", "").ToUpper())
+                    .Contains(studentName.Replace(" ", "").ToUpper()));
         return applicationRequestDto;
     }
     
@@ -333,7 +336,8 @@ public class ApplicationController : Controller {
     {
         var Applications = await GetArchivedApplicationsWithMaterial(empId);
         var applicationArchivedDto = Applications
-            .Where(app => app.From.Replace(" ","").ToUpper() == studentName.Replace(" ","").ToUpper());
+                .Where(app => (app.From.Replace(" ", "").ToUpper())
+                    .Contains(studentName.Replace(" ", "").ToUpper()));
         return applicationArchivedDto;
     }
 

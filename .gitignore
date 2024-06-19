@@ -1,4 +1,8 @@
-// Ana Ta3baaan
 // you may add them manually in ur project
+/bin/
+/obj/
+*.dll
+*.exe
+*.pdb
 FileContentIndex
 appsettings.json
