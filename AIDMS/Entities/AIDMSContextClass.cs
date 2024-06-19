@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace AIDMS.Entities
 {
-    public class AIDMSContextClass:DbContext
+    public class AIDMSContextClass : DbContext // (DbContextOptions<AIDMSContextClass> options) : IdentityDbContext<IdentityUser>(options)
     {
         public AIDMSContextClass()
         { }
@@ -19,10 +21,10 @@ namespace AIDMS.Entities
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Department> Departments { get; set; }
-        //public DbSet<Supervisor> Supervisors { get; set; }
-
-
-        // Handle "Arabic Language" && "DateOnly prop" && "decimal props" && Nulls(for deleted props) In Db  
+        public DbSet<UniversityListNIds> UniversityListNIds { get; set; }
+        // DbSet and additional entities if needed
+        DbSet<IdentityRole> Roless { get; set; }
+        //Handle "Arabic Language" && "DateOnly prop" && "decimal props" && Nulls(for deleted props) In Db  
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Student
@@ -37,7 +39,7 @@ namespace AIDMS.Entities
             modelBuilder.Entity<Student>()
                 .Property(n => n.firstName)
                 .IsUnicode(true);
-            
+
             modelBuilder.Entity<Student>()
                 .Property(n => n.lastName)
                 .IsUnicode(true);
@@ -176,8 +178,10 @@ namespace AIDMS.Entities
 
             modelBuilder.Entity<Application>()
             .HasOne(p => p.Payment)
-            .WithOne(a => a.Application) 
-            .HasForeignKey<Application>(a => a.PaymentId); 
+            .WithOne(a => a.Application)
+            .HasForeignKey<Application>(a => a.PaymentId);
+
+            //base.OnModelCreating(modelBuilder);
         }
 
     }

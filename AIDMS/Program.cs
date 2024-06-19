@@ -3,9 +3,11 @@ using AIDMS.Entities;
 using AIDMS.Repositories;
 using System.Text.Json.Serialization;
 using Microsoft.OpenApi.Models;
-using Google.Api;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Components.Authorization;
+using Google.Api;
 
 namespace AIDMS
 {
@@ -35,25 +37,19 @@ namespace AIDMS
             builder.Services.AddScoped<IDocumentRepository, DocumentRepository>();
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+            builder.Services.AddScoped<IUniversityListNIdsRepository, UniversityListNIdsRepository>();  
+            builder.Services.AddScoped<IPDFManagementRepository, PDFManagementRepository>();
 
             // Google Vision Configuration.
             builder.Services.Configure<GoogleCloudVisionOptions>(builder.Configuration.GetSection("GoogleCloudVision"));
             builder.Services.AddSingleton<IGoogleCloudVisionRepository, GoogleCloudVisionRepository>();
 
             // Google Cloud Configuration.
-            builder.Services.Configure<GoogleCloudStorageOptions>(builder.Configuration.GetSection("GoogleCloudStorage"));
-
+            builder.Services.Configure<GoogleCloudStorageOptions>(builder.Configuration.GetSection("TempGoogleCloudStorage"));
             builder.Services.AddScoped<IGoogleCloudStorageRepository>(sp =>
             {
                 var options = sp.GetRequiredService<IOptions<GoogleCloudStorageOptions>>().Value;
                 return new GoogleCloudStorageRepository(options.BucketName);
-            });
-
-            // swagger
-            builder.Services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AIDMS API", Version = "v1" });
-                c.OperationFilter<FileUploadOperationFilter>();
             });
 
             // Configure Database Context
@@ -62,6 +58,10 @@ namespace AIDMS
                 options.UseSqlServer(builder.Configuration.GetConnectionString("LocalCS"));
             });
 
+            // Configure Identity
+            builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+                .AddEntityFrameworkStores<AIDMSContextClass>();
+
             // Configure CORS
             builder.Services.AddCors(corsOptions =>
             {
@@ -69,6 +69,13 @@ namespace AIDMS
                 {
                     corsPolicyBuilder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
+            });
+
+            // Configure Swagger
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AIDMS API", Version = "v1" });
+                c.OperationFilter<FileUploadOperationFilter>();
             });
 
             var app = builder.Build();
@@ -82,6 +89,7 @@ namespace AIDMS
 
             app.UseHttpsRedirection();
             app.UseCors("MyPolicy");
+            app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
             app.Run();

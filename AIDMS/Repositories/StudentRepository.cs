@@ -54,10 +54,11 @@ namespace AIDMS.Repositories
             return await _context.Students.Include("Department").ToListAsync();
         }
 
-        public async Task AddStudentAsync(Student student)
+        public async Task<bool?> AddStudentAsync(Student student)
         {
             _context.Students.Add(student);
-            await _context.SaveChangesAsync();
+            int affected = await _context.SaveChangesAsync();
+            return (affected >= 1);
         }
 
 

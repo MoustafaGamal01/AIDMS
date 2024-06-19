@@ -62,12 +62,8 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
     public async Task<BatchAnnotateImagesResponse> GetResponseAsync(string imageUrl, List<Feature> featureList)
     {
         BatchAnnotateImagesResponse response = null;
-
         try
         {
-            // Set up credentials from a JSON file
-            //Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "path_to_your_credentials.json");
-
             // Create an instance of ImageAnnotatorClient asynchronously
             var visionClient = await ImageAnnotatorClient.CreateAsync();
 
@@ -94,10 +90,16 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
 
         return response;
     }
-
-
-    public async Task<double> CheckSecondaryCertificateValidationAsync(List<Feature> featureList, string imagePath)
+    public async Task<double> CheckSecondaryCertificateValidationAsync(string imagePath)
     {
+        var featureList = new List<Feature>
+        {
+            new Feature { Type = Feature.Types.Type.TextDetection },
+            new Feature { Type = Feature.Types.Type.FaceDetection },
+            new Feature { Type = Feature.Types.Type.LabelDetection }
+        };
+
+
         string[] checks =
         {
             "الإدارة", "العامة", "للامتحانات",
@@ -163,8 +165,15 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
         }
     }
 
-    public async Task<double> CheckBirthDateCertificateValidationAsync(List<Feature> featureList, string imagePath)
+    public async Task<double> CheckBirthDateCertificateValidationAsync(string imagePath)
     {
+        var featureList = new List<Feature>
+        {
+            new Feature { Type = Feature.Types.Type.TextDetection },
+            new Feature { Type = Feature.Types.Type.FaceDetection },
+            new Feature { Type = Feature.Types.Type.LabelDetection }
+        };
+
         string[] checks =
         {
             "جمهورية", "مصر", "العربية", "وزارة", "الداخلية", "قطاع", "مصلحة", "الاحوال",
@@ -178,8 +187,6 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
             var response = await GetResponseAsync(imagePath, featureList);
             string text = response.Responses[0].FullTextAnnotation.Text;
             int calculatedPoints = CalculateTextPoints(text, checks);
-
-
 
             RepeatedField<EntityAnnotation> labels = response.Responses[0].LabelAnnotations;
             HashSet<string> labelsSet = new HashSet<string> { "Paper", "Font" };
@@ -204,8 +211,14 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
         }
     }
 
-    public async Task<double> CheckNationalIdValidationAsync(List<Feature> featureList, string imagePath)
+    public async Task<double> CheckNationalIdValidationAsync(string imagePath)
     {
+        List<Feature> featureList = new List<Feature>
+        {
+            new Feature { Type = Feature.Types.Type.TextDetection },
+            new Feature { Type = Feature.Types.Type.FaceDetection }
+        };
+
         string[] checks = { "جمهورية", "مصر", "العربية", "بطاقة", "تحقيق", "الشخصية" };
 
         try       // https:\storage.googleapis.com\testing - bohaa\card1.jpg

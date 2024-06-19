@@ -192,6 +192,8 @@ namespace AIDMS.Controllers
                 documentName = n.Title,
                 status = n.Status,
                 uploadedAt = n.SubmittedAt.ToString("yyyy-MM-dd HH:mm:ss"),
+                isAccepted = n.isAccepted    
+                
             }).ToList();
 
             return Ok(applicationsDto);
@@ -790,6 +792,6 @@ namespace AIDMS.Controllers
             }
         }
 
-       
+
     }
 }

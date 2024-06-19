@@ -9,7 +9,7 @@ namespace AIDMS.Repositories
         Task<Student> GetAllStudentDataByNameAsync(string studentName);
         Task<List<Student>> GetAllStudentsDataAsync();
         Task<List<Student>> GetAllStudentsPersonalInfoAsync();
-        Task AddStudentAsync(Student studnet);
+        Task<bool?> AddStudentAsync(Student studnet);
         Task UpdateStudentAsync(int studentId, UserSettingsDto student);
         Task<bool?> DeleteStudentAsync(int studentId);
         Task<Student> GetStudentPersonalInfoByIdAsync(int studentId);
