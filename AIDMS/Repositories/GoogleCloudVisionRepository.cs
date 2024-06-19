@@ -132,6 +132,12 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
         try
         {
             var response = await GetResponseAsync(imagePath, featureList);
+
+            // checking student name in the document.
+            string studentName = "";
+            double nameAuthorizationScore = CheckDocumentAuthorizationAsync(response, studentName);
+            if (nameAuthorizationScore < 50) return 0.0;
+
             string text = response.Responses[0].FullTextAnnotation.Text;
             int calculatedPoints = CalculateTextPoints(text, checks);
 
@@ -167,6 +173,9 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
 
     public async Task<double> CheckBirthDateCertificateValidationAsync(string imagePath)
     {
+<<<<<<< HEAD
+
+=======
         var featureList = new List<Feature>
         {
             new Feature { Type = Feature.Types.Type.TextDetection },
@@ -174,6 +183,7 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
             new Feature { Type = Feature.Types.Type.LabelDetection }
         };
 
+>>>>>>> 041ae4d36e0124c09cc1b50a555cc568ec7e523c
         string[] checks =
         {
             "جمهورية", "مصر", "العربية", "وزارة", "الداخلية", "قطاع", "مصلحة", "الاحوال",
@@ -185,6 +195,11 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
         try
         {
             var response = await GetResponseAsync(imagePath, featureList);
+            // checking student name in the document.
+            string studentName = "";
+            double nameAuthorizationScore = CheckDocumentAuthorizationAsync(response, studentName);
+            if (nameAuthorizationScore < 50) return 0.0;
+
             string text = response.Responses[0].FullTextAnnotation.Text;
             int calculatedPoints = CalculateTextPoints(text, checks);
 
@@ -224,6 +239,12 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
         try       // https:\storage.googleapis.com\testing - bohaa\card1.jpg
         {
             var response = await GetResponseAsync(imagePath, featureList);
+
+            // checking student name in the document.
+            string studentName = "";
+            double nameAuthorizationScore = CheckDocumentAuthorizationAsync(response, studentName);
+            if (nameAuthorizationScore < 50) return 0.0;
+
             string text = response.Responses[0].FullTextAnnotation.Text;
             int calculatedPoints = CalculateTextPoints(text, checks);
 
@@ -256,7 +277,7 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
             foreach (var check in checks)
             {
                 int abs = Math.Abs(word.Length - check.Length);
-                if (check.Contains(word) || word.Contains(check) && abs > 3)
+                if ((check.Contains(word) || word.Contains(check)) && abs < 3)
                 {
                     points++;
                     break;
@@ -267,4 +288,66 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
 
         return points;
     }
+
+
+    // new method - bahaa ---------------------------
+
+    public async Task<double> CheckDocumentAuthorizationAsync(BatchAnnotateImagesResponse response, string studentName)
+    {
+
+        try
+        {
+            string text = response.Responses[0].FullTextAnnotation.Text;
+            int calculatedPoints = 0;
+            string[] lines = text.Split('\n');
+            foreach (string line in lines)
+            {
+                string[] words = line.Split(' ');
+                foreach (string word in words)
+                {
+                    foreach (string check in checks)
+                    {
+                        int abs = Math.Abs(word.Length - check.Length);
+                        if ((check.Contains(word) || word.Contains(check)) && abs < 3)
+                        {
+                            calculatedPoints++;
+                            break;
+                        }
+                    }
+                }
+            }
+            int overAllPoints = checks.Length;
+
+            double validationScore = ((double)calculatedPoints / (overAllPoints)) * 100;
+
+            return validationScore;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"An error occurred: {e.Message}");
+            return 0.0;
+        }
+    }
+    //---------------------------------
+
+
+    // new method - bahaa ----------------------
+    public async Task<bool> CheckPersonalPhotoAsync(List<Feature> featureList, string imagePath)
+    {
+
+        try       // https:\storage.googleapis.com\testing - bohaa\card1.jpg
+        {
+            var response = await GetResponseAsync(imagePath, featureList);
+
+            return response.Responses[0].FaceAnnotations.Count == 1;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"An error occurred: {e.Message}");
+            return 0.0;
+        }
+    }
+    //----------------------------------
+
+
 }
