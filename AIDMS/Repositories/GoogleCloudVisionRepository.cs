@@ -290,7 +290,6 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
     }
 
 
-    // new method - bahaa ---------------------------
 
     public async Task<double> CheckDocumentAuthorizationAsync(BatchAnnotateImagesResponse response, string studentName)
     {
@@ -328,10 +327,8 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
             return 0.0;
         }
     }
-    //---------------------------------
 
 
-    // new method - bahaa ----------------------
     public async Task<bool> CheckPersonalPhotoAsync(List<Feature> featureList, string imagePath)
     {
 
@@ -347,7 +344,6 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
             return 0.0;
         }
     }
-    //----------------------------------
 
 
 }
