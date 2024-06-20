@@ -82,17 +82,17 @@ namespace AIDMS.Controllers
             {
                 if (uploadDocumentDto.file == null || uploadDocumentDto.file.Length == 0)
                     return BadRequest("Invalid file");
-
+        
                 var student = await _studentRepository.GetAllStudentDataByIdAsync(uploadDocumentDto.studentId); 
                 if (student == null)
                     return NotFound("Student not found");
-
-
+        
+        
                 // Step 4: Upload to (TempBucket) Google Cloud Storage
                 var fileUrl = await _storageRepository.UploadFileAsync(uploadDocumentDto.file);
-
+        
                 var validationScore = 0.0;
-
+        
                 if (uploadDocumentDto.step == 3)
                 {
                     validationScore = await _visionRepository.CheckNationalIdValidationAsync(fileUrl);
@@ -105,7 +105,7 @@ namespace AIDMS.Controllers
                 {
                     validationScore = await _visionRepository.CheckSecondaryCertificateValidationAsync(fileUrl);
                 }
-
+        
                 if (validationScore < 70) // assuming 70% is the threshold
                     return BadRequest($"Sorry, Document validation failed!");
                 
@@ -118,13 +118,13 @@ namespace AIDMS.Controllers
                     UploadedAt = DateTime.UtcNow,
                     StudentId = student.Id
                 };
-
+        
                 if (!_tempDocumentStorage.ContainsKey(uploadDocumentDto.studentId))
                 {
                     _tempDocumentStorage[uploadDocumentDto.studentId] = new List<AIDocument>();
                 }
                 _tempDocumentStorage[uploadDocumentDto.studentId].Add(document);
-
+        
                 return Ok(new { Message = "Document uploaded and validated successfully", DocumentUrl = fileUrl });
             }
         }

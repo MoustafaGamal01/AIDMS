@@ -187,7 +187,20 @@ namespace AIDMS.Repositories
 
             return null;
         }
-        
+
+        public async Task<bool?> UpdateStudentMilitaryAsync(string PID)
+        {
+            var student = await _context.Students.FirstOrDefaultAsync(stu => stu.SID == PID);
+            student.militaryStatus = true;
+            _context.Students.Update(student);
+            int affected = await _context.SaveChangesAsync();
+            if (affected == 1)
+            {
+                return true;
+            }
+
+            return null;
+        }
 
     }
 }

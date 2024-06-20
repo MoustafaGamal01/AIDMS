@@ -1,9 +1,11 @@
-﻿using AIDMS.DTOs;
+﻿using System.Text;
+using AIDMS.DTOs;
 using AIDMS.Entities;
 using AIDMS.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Crypto.Digests;
 
 namespace AIDMS.Controllers;
 
@@ -13,11 +15,14 @@ public class DocumentsController : Controller {
     
     private readonly IApplicationRepository _application;
     private readonly IDocumentRepository _doc;
+    private readonly IStudentRepository _student;
+
     
-    public DocumentsController(IApplicationRepository application,IDocumentRepository doc)
+    public DocumentsController(IApplicationRepository application,IDocumentRepository doc,IStudentRepository student)
     {
         _application = application;
         _doc = doc;
+        _student = student;
     }
     
     [HttpGet]
@@ -72,6 +77,33 @@ public class DocumentsController : Controller {
             uploadedAt = doc.UploadedAt
         });
         return Ok(documents);
+    }
+    
+    [HttpPost("{empId}")]
+    public async Task<ActionResult<IEnumerable<string>>> MilitaryServiceDocument(int empId,[FromBody] IFormFile file)
+    {
+        //you should put the document here
+        string document = "";
+        string PID = "";
+        List<string> notUpdated = new List<string>(); 
+        for (int i = 0; i < document.Length; i++)
+        {
+            if (Char.IsDigit(document[i]))
+            {
+                PID += document[i];
+                if (PID.Length == 14)
+                {
+                    bool? affected = await _student.UpdateStudentMilitaryAsync(PID);
+                    if (affected == null)
+                    {
+                        notUpdated.Add(PID);
+                    }
+                    PID = "";
+                }
+            }
+        }
+
+        return notUpdated;
     }
     
 }
