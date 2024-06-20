@@ -267,7 +267,7 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
         }
     }
 
-    public async Task<double> CheckNominationValidationAsync(string imagePath)
+    public async Task<double> CheckNominationValidationAsync(string filePath)
     {
         List<Feature> featureList = new List<Feature>
         {
@@ -340,16 +340,16 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
         {
             string text = response.Responses[0].FullTextAnnotation.Text;
             int calculatedPoints = 0;
-            string[] lines = text.Split('\n');
-            foreach (string line in lines)
+            string[] checks = personName.Split(' ');
+
+            foreach (string s in text.Split('\n'))
             {
-                string[] words = line.Split(' ');
-                foreach (string word in words)
+                foreach (string ss in s.Split(' '))
                 {
                     foreach (string check in checks)
                     {
-                        int abs = Math.Abs(word.Length - check.Length);
-                        if ((check.Contains(word) || word.Contains(check)) && abs < 3)
+                        int abs = Math.Abs(ss.Length - check.Length);
+                        if ((check.Contains(ss) || ss.Contains(check)) && abs < 3)
                         {
                             calculatedPoints++;
                             break;
@@ -357,9 +357,7 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
                     }
                 }
             }
-            int overAllPoints = checks.Length;
-
-            double validationScore = ((double)calculatedPoints / (overAllPoints)) * 100;
+            double validationScore = ((double)calculatedPoints / checks.Length) * 100;
 
             return validationScore;
         }
