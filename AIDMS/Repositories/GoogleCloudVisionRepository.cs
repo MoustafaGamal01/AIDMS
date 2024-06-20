@@ -263,9 +263,8 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
             return 0.0;
         }
     }
-
-
-    public async Task<double> CheckNominationValidationAsync(string imagePath)
+    
+    public async Task<double> CheckNominationValidationAsync(string filePath)
     {
         List<Feature> featureList = new List<Feature>
         {
@@ -284,7 +283,7 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
     
         try       // https:\storage.googleapis.com\testing - bohaa\card1.jpg
         {
-            var response = await GetResponseAsync(imagePath, featureList);
+            var response = await GetResponseAsync(filePath, featureList);
     
             // checking student name in the document.
             string studentName = "";
@@ -339,6 +338,7 @@ public class GoogleCloudVisionRepository : IGoogleCloudVisionRepository
             string text = response.Responses[0].FullTextAnnotation.Text;
             int calculatedPoints = 0;
             string[] checks = studentName.Split(' ');
+
 
             foreach (string s in text.Split('\n'))
             {
