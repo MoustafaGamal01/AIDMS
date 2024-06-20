@@ -60,6 +60,7 @@ namespace AIDMS.Entities
         public int Level { get; set; }
 
         public bool? militaryStatus { get; set; } = false;
+        public bool? RegisterationStatus { get; set; } = null;
         // Nav Prop
         [ForeignKey("Department")]
         public int? DepartmentId { get; set; }
