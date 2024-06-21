@@ -27,21 +27,10 @@ namespace AIDMS.Entities
         [Required(ErrorMessage = "required")]
         [StringLength(14, MinimumLength = 14, ErrorMessage = "SID should be 14 digit")]
         public string SID { get; set; }
-
         
         [Required(ErrorMessage = "Username is required")]
         [StringLength(50, MinimumLength = 6, ErrorMessage = "Username must be between 6 and 50 characters")]
         public string userName { get; set; }
-
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Invalid email address")]
-        [StringLength(50, ErrorMessage = "Email must not exceed 50 characters")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "Password is required")]
-        [DataType(DataType.Password)]
-        [StringLength(20, MinimumLength = 8, ErrorMessage = "Password must be between 8 and 20 characters")]
-        public string Password { get; set; }
 
         [Required(ErrorMessage = "Phone number is required")]
         [Phone(ErrorMessage = "Invalid phone number")]
@@ -59,8 +48,9 @@ namespace AIDMS.Entities
         [Range(0.0, 4.0, ErrorMessage = "Level must be between 1 and 4")]
         public int Level { get; set; }
 
-        public bool? militaryStatus { get; set; } = false;
-        public bool? RegisterationStatus { get; set; } = null;
+        public bool? militaryEducation { get; set; } = false;
+        public bool? regestrationStatus { get; set; } = null;
+
         // Nav Prop
         [ForeignKey("Department")]
         public int? DepartmentId { get; set; }

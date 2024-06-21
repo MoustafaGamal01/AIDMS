@@ -363,19 +363,39 @@
     ]
   },
   {
-    "ContainingType": "AIDMS.Controllers.CloudStorageController",
-    "Method": "UploadFile",
-    "RelativePath": "api/CloudStorage/upload",
+    "ContainingType": "AIDMS.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth/login",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "file",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
+        "Name": "model",
+        "Type": "AIDMS.Security_Entities.LoginModel",
+        "IsRequired": true
       }
     ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.AuthController",
+    "Method": "Logout",
+    "RelativePath": "api/Auth/logout",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -464,8 +484,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "em",
-        "Type": "AIDMS.Entities.Employee",
+        "Name": "model",
+        "Type": "AIDMS.DTOs.EmployeeRegestrationDto",
         "IsRequired": true
       }
     ],
@@ -478,37 +498,6 @@
           "text/json"
         ],
         "StatusCode": 400
-      }
-    ]
-  },
-  {
-    "ContainingType": "AIDMS.Controllers.EmployeeController",
-    "Method": "GetAllEmplyeesBaseInfo",
-    "RelativePath": "api/Employee/{empId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "adminId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "empId",
-        "Type": "",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.BaseEmployeeDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
       }
     ]
   },
@@ -558,7 +547,7 @@
       },
       {
         "Name": "updateEmp",
-        "Type": "AIDMS.DTOs.UpdateEmployeeDto",
+        "Type": "UpdateEmployeeDto",
         "IsRequired": true
       }
     ],
@@ -573,6 +562,26 @@
         "StatusCode": 400
       }
     ]
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.EmployeeController",
+    "Method": "GetAllSupervisors",
+    "RelativePath": "api/Employee/GetAllSupervisors",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.EmployeeController",
+    "Method": "GetAllUsersWithRoles",
+    "RelativePath": "api/Employee/GetAllUsersWithRoles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "AIDMS.Controllers.EmployeeController",
@@ -617,26 +626,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AIDMS.Controllers.EmployeeController",
-    "Method": "GetAllSupervisors",
-    "RelativePath": "api/Employee/supervisors",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.GetAllSupervisorsDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
     "ContainingType": "AIDMS.Controllers.RegestrationController",
     "Method": "Register",
     "RelativePath": "api/Regestration/register",
@@ -646,7 +635,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "RegisterDto",
+        "Type": "StudentRegisterationDto",
         "IsRequired": true
       }
     ],
@@ -697,7 +686,7 @@
   {
     "ContainingType": "AIDMS.Controllers.RegestrationController",
     "Method": "ValidateNationalID",
-    "RelativePath": "api/Regestration/validate-national-id/{NationalId}",
+    "RelativePath": "api/Regestration/validate-national-id",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -705,9 +694,35 @@
       {
         "Name": "NationalId",
         "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.RolesController",
+    "Method": "CreateRole",
+    "RelativePath": "api/Roles/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "role",
+        "Type": "AIDMS.DTOs.AddRoleDto",
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.RolesController",
+    "Method": "GetAllRoles",
+    "RelativePath": "api/Roles/GetAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -929,29 +944,9 @@
         "IsRequired": true
       },
       {
-        "Name": "profilePicture",
-        "Type": "System.Byte[]",
-        "IsRequired": false
-      },
-      {
-        "Name": "userName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "email",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "password",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Phone",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "studentDto",
+        "Type": "AIDMS.DTOs.UserSettingsDto",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -983,19 +978,43 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AIDMS.Controllers.VisionController",
-    "Method": "AnalyzeDocument",
-    "RelativePath": "api/Vision/analyze",
-    "HttpMethod": "POST",
+    "ContainingType": "AIDMS.Controllers.Test",
+    "Method": "Test2",
+    "RelativePath": "api/Test/Admin",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "file",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.Test",
+    "Method": "Test3",
+    "RelativePath": "api/Test/Affairs-Officer",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.Test",
+    "Method": "Test1",
+    "RelativePath": "api/Test/Student",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.Test",
+    "Method": "Test4",
+    "RelativePath": "api/Test/Supervisor",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   }
 ]

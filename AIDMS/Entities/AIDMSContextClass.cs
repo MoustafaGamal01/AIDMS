@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AIDMS.Security_Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AIDMS.Entities
 {
-    public class AIDMSContextClass : DbContext // (DbContextOptions<AIDMSContextClass> options) : IdentityDbContext<IdentityUser>(options)
+    public class AIDMSContextClass : IdentityDbContext<ApplicationUser>
     {
         public AIDMSContextClass()
         { }
@@ -19,11 +20,10 @@ namespace AIDMS.Entities
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<AIDocument> Documents { get; set; }
         public DbSet<Payment> Payments { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<UniversityListNIds> UniversityListNIds { get; set; }
         // DbSet and additional entities if needed
-        DbSet<IdentityRole> Roless { get; set; }
+        //DbSet<IdentityRole> Roless { get; set; }
         //Handle "Arabic Language" && "DateOnly prop" && "decimal props" && Nulls(for deleted props) In Db  
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -81,12 +81,6 @@ namespace AIDMS.Entities
                 .IsUnicode(true);
 
             modelBuilder.Entity<Employee>()
-            .HasOne(a => a.Role)
-            .WithMany(s => s.Employees)
-            .HasForeignKey(a => a.RoleId)
-            .OnDelete(DeleteBehavior.SetNull);
-
-            modelBuilder.Entity<Employee>()
             .HasMany(a => a.Applications)
             .WithOne(s => s.Employee)
             .OnDelete(DeleteBehavior.SetNull);
@@ -94,12 +88,6 @@ namespace AIDMS.Entities
             modelBuilder.Entity<Employee>()
             .HasMany(a => a.Notifications)
             .WithOne(s => s.Employee)
-            .OnDelete(DeleteBehavior.SetNull);
-
-            modelBuilder.Entity<Employee>()
-            .HasOne(a => a.Role)
-            .WithMany(s => s.Employees)
-            .HasForeignKey(a => a.RoleId)
             .OnDelete(DeleteBehavior.SetNull);
 
             // Notification
@@ -181,7 +169,7 @@ namespace AIDMS.Entities
             .WithOne(a => a.Application)
             .HasForeignKey<Application>(a => a.PaymentId);
 
-            //base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
 
     }

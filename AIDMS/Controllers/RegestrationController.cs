@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AIDMS.DTOs;
+using AIDMS.Security_Entities;
 
 namespace AIDMS.Controllers
 {
@@ -23,12 +24,15 @@ namespace AIDMS.Controllers
         private readonly IConfiguration _configuration;
         private readonly IGoogleCloudVisionRepository _visionRepository;
         private readonly IGoogleCloudStorageRepository _storageRepository;
-
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private static string _nationalId = null;
         // Temporary storage for documents
         private readonly Dictionary<int, List<AIDocument>> _tempDocumentStorage = new();
 
         public RegestrationController(IStudentRepository studentRepository,AIDMSContextClass context,IUniversityListNIdsRepository universityListNIds, IDocumentRepository documentRepository,
-            IConfiguration configuration, IGoogleCloudVisionRepository visionRepository, IGoogleCloudStorageRepository storageRepository)
+            IConfiguration configuration, IGoogleCloudVisionRepository visionRepository, IGoogleCloudStorageRepository storageRepository,
+            UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _studentRepository = studentRepository;
             _context = context;
@@ -37,43 +41,100 @@ namespace AIDMS.Controllers
             _configuration = configuration;
             _visionRepository = visionRepository;
             _storageRepository = storageRepository;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
-        [HttpPost("validate-national-id/{NationalId:alpha}")]
+        [HttpPost("validate-national-id")]
         public async Task<IActionResult> ValidateNationalID(string NationalId)
         {
-            var existingStudent = await _universityListNIds.CheckExistanceOfNationalId(NationalId);
-            if (existingStudent == null)
+            var existingNationalId = await _universityListNIds.CheckExistanceOfNationalId(NationalId);
+            if (existingNationalId == null)
                 return BadRequest("National ID not found");
-            return Ok();
+
+            var existingStudent = await _studentRepository.GetStudentByNationalIdAsync(NationalId);
+
+            if (existingStudent != null && existingStudent.regestrationStatus == true)
+            {
+                return Ok("You're Accepted!");
+            }
+            if (existingStudent != null && existingStudent.regestrationStatus == false)
+            {
+                return Ok("Your request is pending");
+            }
+            _nationalId = NationalId;
+            return Ok("Your id is Valid!");
+        }
+
+        private int CalculateAge(DateTime dateOfBirth)
+        {
+            DateTime now = DateTime.Now;
+            int age = now.Year - dateOfBirth.Year;
+            if (now < dateOfBirth.AddYears(age))
+                age--;
+            return age;
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDto model)
+        public async Task<IActionResult> Register([FromBody] StudentRegisterationDto model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            // Step 1: Check National ID
-            var existingStudent = _context.UniversityListNIds.FirstOrDefault(x => x.NationalId == model.NationalID);
-            if (existingStudent == null)
-                return BadRequest("National ID not found");
+            if (_nationalId == null)
+                return BadRequest("You must add National Id in step 1 first");
 
-            // Step 2: Create User
-            var student = new Student
+            // Check if the email already exists
+            var existingUser = await _userManager.FindByEmailAsync(model.Email);
+            if (existingUser != null)
+                return BadRequest("Email already in use");
+
+            var existingUsername = await _userManager.FindByNameAsync(model.Username);
+            if (existingUsername != null)
+                return BadRequest("username already in use");
+
+            // Handling userManagerProbs
+            ApplicationUser applicationUser = new ApplicationUser
             {
-                userName = model.Username,
+                UserName = model.Username,
                 Email = model.Email,
                 PhoneNumber = model.PhoneNumber,
-                SID = model.NationalID
+                NationalId = _nationalId
             };
 
+            var result = await _userManager.CreateAsync(applicationUser, model.Password);
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
+
+            // Create Cookie
+            await _userManager.AddToRoleAsync(applicationUser, "Student");
+            await _signInManager.SignInAsync(applicationUser, isPersistent: false);
+
+            // Step 4: Create Student Record without storing the plain password
+            var student = new Student
+            {
+                firstName = model.firstName, // From Google Vision Model
+                lastName = model.lastName, // From Google Vision Model
+                TotalPassedHours = 0,
+                Level = 1,
+                PhoneNumber = model.PhoneNumber,
+                militaryEducation = false,
+                regestrationStatus = null,
+                DepartmentId = 1,
+                userName = model.Username,
+                dateOfBirth = model.dateOfBirth,
+                GPA = 0,
+                IsMale = model.isMale,
+                studentPicture = model.profilePicture,
+                Age = CalculateAge(model.dateOfBirth)
+            };
+            student.SID = _nationalId;
+
             bool? ok = await _studentRepository.AddStudentAsync(student);
-            //_userManager.CreateAsync(student, model.Password);
             if (ok == false)
                 return BadRequest("Error, Please Check The Info Again!");
 
-            return Ok(new { Message = "Registration successful" });
+            return Ok(new { Message = "Successful Registration" });
         }
 
         [HttpPost("upload-document")]
@@ -82,17 +143,17 @@ namespace AIDMS.Controllers
             {
                 if (uploadDocumentDto.file == null || uploadDocumentDto.file.Length == 0)
                     return BadRequest("Invalid file");
-        
+
                 var student = await _studentRepository.GetAllStudentDataByIdAsync(uploadDocumentDto.studentId); 
                 if (student == null)
                     return NotFound("Student not found");
-        
-        
+
+
                 // Step 4: Upload to (TempBucket) Google Cloud Storage
                 var fileUrl = await _storageRepository.UploadFileAsync(uploadDocumentDto.file);
-        
+
                 var validationScore = 0.0;
-        
+
                 if (uploadDocumentDto.step == 3)
                 {
                     validationScore = await _visionRepository.CheckNationalIdValidationAsync(fileUrl);
@@ -105,7 +166,7 @@ namespace AIDMS.Controllers
                 {
                     validationScore = await _visionRepository.CheckSecondaryCertificateValidationAsync(fileUrl);
                 }
-        
+
                 if (validationScore < 70) // assuming 70% is the threshold
                     return BadRequest($"Sorry, Document validation failed!");
                 
@@ -118,13 +179,13 @@ namespace AIDMS.Controllers
                     UploadedAt = DateTime.UtcNow,
                     StudentId = student.Id
                 };
-        
+
                 if (!_tempDocumentStorage.ContainsKey(uploadDocumentDto.studentId))
                 {
                     _tempDocumentStorage[uploadDocumentDto.studentId] = new List<AIDocument>();
                 }
                 _tempDocumentStorage[uploadDocumentDto.studentId].Add(document);
-        
+
                 return Ok(new { Message = "Document uploaded and validated successfully", DocumentUrl = fileUrl });
             }
         }
@@ -169,7 +230,7 @@ namespace AIDMS.Controllers
 
             // Remove documents from temporary storage
             _tempDocumentStorage.Remove(studentId);
-
+            student.regestrationStatus = true;
             return Ok("Application submitted successfully.");
         }
     }

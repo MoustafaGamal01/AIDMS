@@ -20,13 +20,12 @@ namespace AIDMS.Controllers
         private readonly IApplicationRepository _application;
         private readonly INotificationRepository _notification;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly IRoleRepository _role;
         private readonly IDocumentRepository _document;
         private readonly IGoogleCloudStorageRepository _googleCloud;
         private readonly IPaymentRepository _payment;
 
         public StudentController(AIDMSContextClass context, IStudentRepository student, IApplicationRepository application,
-            INotificationRepository notification, IWebHostEnvironment hostingEnvironment, IRoleRepository role, IDocumentRepository document,
+            INotificationRepository notification, IWebHostEnvironment hostingEnvironment, IDocumentRepository document,
             IGoogleCloudStorageRepository googleCloud, IPaymentRepository payment)
         {
             this._context = context;
@@ -34,7 +33,6 @@ namespace AIDMS.Controllers
             this._application = application;
             this._notification = notification;
             this._hostingEnvironment = hostingEnvironment;
-            this._role = role;
             this._document = document;
             this._googleCloud = googleCloud;
             this._payment = payment;
@@ -107,9 +105,7 @@ namespace AIDMS.Controllers
             {
                 UserSettingsDto userSettingsDto = new UserSettingsDto();
                 userSettingsDto.userName = student.userName; 
-                userSettingsDto.email = student.Email;
                 userSettingsDto.Phone = student.PhoneNumber;
-                userSettingsDto.password = student.Password;
                 userSettingsDto.profilePicture = student.studentPicture;
                 return Ok(userSettingsDto);
             }
@@ -697,7 +693,7 @@ namespace AIDMS.Controllers
 
         [HttpPut]
         [Route("settings/{studentId}")]
-        public async Task<IActionResult>ChangePersonalInfo(int studentId, [FromForm] UserSettingsDto studentDto)
+        public async Task<IActionResult>ChangePersonalInfo(int studentId, [FromBody] UserSettingsDto studentDto)
         {
             Student std = _context.Students.FirstOrDefault(s => s.Id == studentId);  
             if(std == null )
@@ -711,7 +707,7 @@ namespace AIDMS.Controllers
             try
             {
                 await _student.UpdateStudentAsync(studentId, studentDto);
-                return NoContent();
+                return Ok();
             }
             catch (KeyNotFoundException)
             {

@@ -3,88 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\AIA\\Desktop\\AIDMS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\entities\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\entities\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\controllers\\test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|c:\\users\\aia\\desktop\\aidms\\aidms\\controllers\\test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|c:\\users\\aia\\desktop\\aidms\\aidms\\controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\entities\\aidmscontextclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\entities\\aidmscontextclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\repositories\\studentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\repositories\\studentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\dtos\\getallsupervisorsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\dtos\\getallsupervisorsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\controllers\\regestrationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\regestrationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\dtos\\employeeregestrationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\dtos\\employeeregestrationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\dtos\\baseemployeedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\dtos\\baseemployeedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\dtos\\updateemployeedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\dtos\\updateemployeedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\dtos\\nationaliddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\dtos\\nationaliddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\security entities\\loginmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\security entities\\loginmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\dtos\\usersettingsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\dtos\\usersettingsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\repositories\\iemployeerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\repositories\\iemployeerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\entities\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\entities\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\entities\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\entities\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\controllers\\regestrationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\regestrationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\aidms\\controllers\\applicationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:aidms\\controllers\\applicationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Migrations\\20240621121900_initSecurity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B76990D3-611B-45C9-8E8C-E9CE36A5593C}|AIDMS\\AIDMS.csproj|solutionrelative:AIDMS\\Migrations\\20240621121900_initSecurity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -94,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 17,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -102,259 +50,100 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "20240621121900_initSecurity.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Migrations\\20240621121900_initSecurity.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Migrations\\20240621121900_initSecurity.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Migrations\\20240621121900_initSecurity.cs",
-              "RelativeToolTip": "AIDMS\\Migrations\\20240621121900_initSecurity.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-21T12:19:01.421Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "GetAllSupervisorsDto.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\GetAllSupervisorsDto.cs",
-              "RelativeDocumentMoniker": "AIDMS\\DTOs\\GetAllSupervisorsDto.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\GetAllSupervisorsDto.cs",
-              "RelativeToolTip": "AIDMS\\DTOs\\GetAllSupervisorsDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAcAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-21T11:37:39.934Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "NationalIdDto.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\NationalIdDto.cs",
-              "RelativeDocumentMoniker": "AIDMS\\DTOs\\NationalIdDto.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\NationalIdDto.cs",
-              "RelativeToolTip": "AIDMS\\DTOs\\NationalIdDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-21T08:57:23.077Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Program.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Program.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Program.cs",
-              "RelativeToolTip": "AIDMS\\Program.cs",
-              "ViewState": "AQIAACsAAAAAAAAAAAAmwC0AAABXAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-21T00:29:25.341Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "BaseEmployeeDto.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\BaseEmployeeDto.cs",
-              "RelativeDocumentMoniker": "AIDMS\\DTOs\\BaseEmployeeDto.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\BaseEmployeeDto.cs",
-              "RelativeToolTip": "AIDMS\\DTOs\\BaseEmployeeDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAkAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-21T00:26:45.291Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "Role.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Entities\\Role.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Entities\\Role.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Entities\\Role.cs",
-              "RelativeToolTip": "AIDMS\\Entities\\Role.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAADAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T23:56:47.324Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Test.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\Test.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Controllers\\Test.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\Test.cs",
-              "RelativeToolTip": "AIDMS\\Controllers\\Test.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACEAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T23:26:06.708Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "RolesController.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\RolesController.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Controllers\\RolesController.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\RolesController.cs",
-              "RelativeToolTip": "AIDMS\\Controllers\\RolesController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAC4AAAAdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T23:11:07.217Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "EmployeeRegestrationDto.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\EmployeeRegestrationDto.cs",
-              "RelativeDocumentMoniker": "AIDMS\\DTOs\\EmployeeRegestrationDto.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\EmployeeRegestrationDto.cs",
-              "RelativeToolTip": "AIDMS\\DTOs\\EmployeeRegestrationDto.cs",
-              "ViewState": "AQIAABIAAAAAAAAAAAAkwCUAAAALAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T19:59:10.668Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "IEmployeeRepository.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Repositories\\IEmployeeRepository.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Repositories\\IEmployeeRepository.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Repositories\\IEmployeeRepository.cs",
-              "RelativeToolTip": "AIDMS\\Repositories\\IEmployeeRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAKAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T19:32:20.547Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "UpdateEmployeeDto.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\UpdateEmployeeDto.cs",
-              "RelativeDocumentMoniker": "AIDMS\\DTOs\\UpdateEmployeeDto.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\UpdateEmployeeDto.cs",
-              "RelativeToolTip": "AIDMS\\DTOs\\UpdateEmployeeDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAEAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T19:29:04.25Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "StudentRepository.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Repositories\\StudentRepository.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Repositories\\StudentRepository.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Repositories\\StudentRepository.cs",
-              "RelativeToolTip": "AIDMS\\Repositories\\StudentRepository.cs",
-              "ViewState": "AQIAADEAAAAAAAAAAAAcwEYAAAAoAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T14:48:47.799Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
               "Title": "StudentController.cs",
               "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\StudentController.cs",
               "RelativeDocumentMoniker": "AIDMS\\Controllers\\StudentController.cs",
               "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\StudentController.cs",
               "RelativeToolTip": "AIDMS\\Controllers\\StudentController.cs",
-              "ViewState": "AQIAAB8AAAAAAAAAAAAswDoAAAAgAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T14:45:52.683Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "EmployeeController.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\EmployeeController.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Controllers\\EmployeeController.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\EmployeeController.cs",
-              "RelativeToolTip": "AIDMS\\Controllers\\EmployeeController.cs",
-              "ViewState": "AQIAAJUAAAAAAAAAAAAcwKAAAAAKAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T14:10:09.937Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Student.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Entities\\Student.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Entities\\Student.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Entities\\Student.cs",
-              "RelativeToolTip": "AIDMS\\Entities\\Student.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAsAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T19:01:09.44Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Employee.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Entities\\Employee.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Entities\\Employee.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Entities\\Employee.cs",
-              "RelativeToolTip": "AIDMS\\Entities\\Employee.cs",
-              "ViewState": "AQIAACMAAAAAAAAAAAAswC0AAAATAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T19:00:45.683Z"
+              "WhenOpened": "2024-06-21T21:32:26.503Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Test.cs",
+              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\Test.cs",
+              "RelativeDocumentMoniker": "AIDMS\\Controllers\\Test.cs",
+              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\Test.cs",
+              "RelativeToolTip": "AIDMS\\Controllers\\Test.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-21T20:44:18.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LoginModel.cs",
+              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Security Entities\\LoginModel.cs",
+              "RelativeDocumentMoniker": "AIDMS\\Security Entities\\LoginModel.cs",
+              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Security Entities\\LoginModel.cs",
+              "RelativeToolTip": "AIDMS\\Security Entities\\LoginModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-21T20:09:57.46Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Program.cs",
+              "RelativeDocumentMoniker": "AIDMS\\Program.cs",
+              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Program.cs",
+              "RelativeToolTip": "AIDMS\\Program.cs",
+              "ViewState": "AQIAAF8AAAAAAAAAAAAgwH0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-21T20:07:18.269Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\appsettings.json",
+              "RelativeDocumentMoniker": "AIDMS\\appsettings.json",
+              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\appsettings.json",
+              "RelativeToolTip": "AIDMS\\appsettings.json",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAABoAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-06-21T19:17:58.139Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "AIDMS\\Controllers\\AuthController.cs",
               "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\AuthController.cs",
               "RelativeToolTip": "AIDMS\\Controllers\\AuthController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAQAAAA",
+              "ViewState": "AQIAABAAAAAAAAAAAAAswCEAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T17:53:05.055Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-21T19:03:20.53Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "UserSettingsDto.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\UserSettingsDto.cs",
-              "RelativeDocumentMoniker": "AIDMS\\DTOs\\UserSettingsDto.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\DTOs\\UserSettingsDto.cs",
-              "RelativeToolTip": "AIDMS\\DTOs\\UserSettingsDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAlAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T16:14:18.006Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AIDMSContextClass.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Entities\\AIDMSContextClass.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Entities\\AIDMSContextClass.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Entities\\AIDMSContextClass.cs",
-              "RelativeToolTip": "AIDMS\\Entities\\AIDMSContextClass.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAAAswBcAAABJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T14:16:55.233Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "ApplicationController.cs",
-              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\ApplicationController.cs",
-              "RelativeDocumentMoniker": "AIDMS\\Controllers\\ApplicationController.cs",
-              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\ApplicationController.cs",
-              "RelativeToolTip": "AIDMS\\Controllers\\ApplicationController.cs",
-              "ViewState": "AQIAAIMAAAAAAAAAAAAkwIsAAABJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T14:16:29.732Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 6,
               "Title": "RegestrationController.cs",
               "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\RegestrationController.cs",
               "RelativeDocumentMoniker": "AIDMS\\Controllers\\RegestrationController.cs",
               "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\RegestrationController.cs",
               "RelativeToolTip": "AIDMS\\Controllers\\RegestrationController.cs",
-              "ViewState": "AQIAAFEAAAAAAAAAAAApwFgAAAAIAAAA",
+              "ViewState": "AQIAAFEAAAAAAAAAAAAmwG4AAABRAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-20T14:10:04.217Z"
+              "WhenOpened": "2024-06-21T19:02:39.781Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ApplicationController.cs",
+              "DocumentMoniker": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\ApplicationController.cs",
+              "RelativeDocumentMoniker": "AIDMS\\Controllers\\ApplicationController.cs",
+              "ToolTip": "C:\\Users\\AIA\\Desktop\\AIDMS\\AIDMS\\Controllers\\ApplicationController.cs",
+              "RelativeToolTip": "AIDMS\\Controllers\\ApplicationController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-21T18:57:03.778Z"
             }
           ]
         }

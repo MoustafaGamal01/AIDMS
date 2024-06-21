@@ -27,7 +27,6 @@ public class ApplicationController : Controller {
     
     [HttpGet]
     [Route("admin")]
-    [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationBaseInfoDto>))]
     public async Task<IEnumerable<ApplicationBaseInfoDto>> GetAllApplicationsBaseInfo()
     {
         var Applications = await _application.GetAllApplicationsAsync();

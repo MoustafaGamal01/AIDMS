@@ -1,12 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-public class RegisterDto
+public class StudentRegisterationDto
 {
-    [Required(ErrorMessage = "National ID is required")]
-    [StringLength(14, MinimumLength = 14, ErrorMessage = "National ID must be 14 characters long")]
-    [RegularExpression(@"^\d{14}$", ErrorMessage = "National ID must be numeric and 14 digits long")]
-    public string NationalID { get; set; }
-
     [Required(ErrorMessage = "Email is required")]
     [EmailAddress(ErrorMessage = "Invalid Email Address")]
     public string Email { get; set; }
@@ -22,4 +17,17 @@ public class RegisterDto
     [Required(ErrorMessage = "Username is required")]
     [StringLength(50, MinimumLength = 3, ErrorMessage = "Username must be between 3 and 50 characters long")]
     public string Username { get; set; }
+
+    [Required]
+    public string firstName { get; set; }
+    [Required]
+    public string lastName { get; set; }
+
+    [Required]
+    public DateTime dateOfBirth { get; set; }
+    [Required]
+    public bool isMale { get; set; }
+
+    public byte[]? profilePicture { get; set; }
+
 }

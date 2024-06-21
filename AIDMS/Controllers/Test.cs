@@ -5,11 +5,13 @@ using System.Data;
 
 namespace AIDMS.Controllers
 {
+    // Test Controller
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class Test : ControllerBase
     {
-        [Authorize(Roles ="Student")]
+        [Authorize(Roles = "Student")]
         [HttpGet]
         [Route("Student")]
         public IActionResult Test1()
@@ -17,7 +19,7 @@ namespace AIDMS.Controllers
             return Ok("Hello Student!");
         }
 
-        [Authorize(Roles = "Admin")]
+         [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("Admin")]
         public IActionResult Test2()
@@ -25,7 +27,7 @@ namespace AIDMS.Controllers
             return Ok("Hello Admin!");
         }
 
-        [Authorize(Roles = "Affairs Officer")]
+      [Authorize(Roles = "Affairs Officer")]
         [HttpGet]
         [Route("Affairs-Officer")]
         public IActionResult Test3()
@@ -33,7 +35,7 @@ namespace AIDMS.Controllers
             return Ok("Hello Affairs Officer!");
         }
 
-        [Authorize(Roles = "Academic Supervisor")]
+     [Authorize(Roles = "Academic Supervisor")]
         [HttpGet]
         [Route("Supervisor")]
         public IActionResult Test4()

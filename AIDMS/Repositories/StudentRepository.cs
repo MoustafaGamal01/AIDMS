@@ -11,16 +11,20 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Identity;
+using AIDMS.Security_Entities;
 
 namespace AIDMS.Repositories
 {
     public class StudentRepository : IStudentRepository
     {
         private readonly AIDMSContextClass _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public StudentRepository(AIDMSContextClass context)
+        public StudentRepository(AIDMSContextClass context, UserManager<ApplicationUser>userManager)
         {
             _context = context;
+            this._userManager = userManager;
         }
 
         public async Task<Student> GetAllStudentDataByIdAsync(int studentId)
@@ -70,6 +74,12 @@ namespace AIDMS.Repositories
                 throw new KeyNotFoundException("Student not found");
             }
 
+            var user = await _userManager.FindByNameAsync(existingStudent.userName);
+            if (user == null)
+            {
+                throw new KeyNotFoundException($"User with username: {existingStudent.userName} not found.");
+            }
+
             // Update profile picture if provided
             if (userSettingsDto.profilePicture != null)
             {
@@ -84,6 +94,7 @@ namespace AIDMS.Repositories
                     throw new ArgumentException("Invalid username. It must be at least 4 characters long, alphanumeric, and can contain periods and underscores.");
                 }
                 existingStudent.userName = userSettingsDto.userName;
+                user.UserName = userSettingsDto.userName;
             }
 
             // Update email if provided
@@ -93,17 +104,7 @@ namespace AIDMS.Repositories
                 {
                     throw new ArgumentException("Invalid email format.");
                 }
-                existingStudent.Email = userSettingsDto.email;
-            }
-
-            // Update password if provided (hashed)
-            if (!string.IsNullOrEmpty(userSettingsDto.password))
-            {
-                if (!IsValidPassword(userSettingsDto.password))
-                {
-                    throw new ArgumentException("Invalid password. It must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one special character, and one number.");
-                }
-                existingStudent.Password = userSettingsDto.password;
+                user.Email = userSettingsDto.email;
             }
 
             // Update phone number if provided
@@ -114,12 +115,29 @@ namespace AIDMS.Repositories
                     throw new ArgumentException("Invalid phone number. It must be a valid Egyptian phone number.");
                 }
                 existingStudent.PhoneNumber = userSettingsDto.Phone;
+                user.PhoneNumber = userSettingsDto.Phone;
+            }
+
+            // Update password if provided
+            if (!string.IsNullOrEmpty(userSettingsDto.password))
+            {
+                if (!IsValidPassword(userSettingsDto.password))
+                {
+                    throw new ArgumentException("Invalid password. It must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a number, and a special character.");
+                }
+                user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, userSettingsDto.password);
             }
 
             _context.Students.Update(existingStudent);
             await _context.SaveChangesAsync();
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                throw new Exception($"Failed to update user: {errors}");
+            }
         }
-        
+
         #region Validations
 
         private bool IsValidEgyptianPhoneNumber(string phoneNumber)
@@ -188,19 +206,9 @@ namespace AIDMS.Repositories
             return null;
         }
 
-        public async Task<bool?> UpdateStudentMilitaryAsync(string PID)
+        public async Task<Student> GetStudentByNationalIdAsync(string NatId)
         {
-            var student = await _context.Students.FirstOrDefaultAsync(stu => stu.SID == PID);
-            student.militaryStatus = true;
-            _context.Students.Update(student);
-            int affected = await _context.SaveChangesAsync();
-            if (affected == 1)
-            {
-                return true;
-            }
-
-            return null;
+            return await _context.Students.FirstOrDefaultAsync(s => s.SID == NatId);
         }
-
     }
 }

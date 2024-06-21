@@ -1,8 +1,10 @@
 ﻿using AIDMS.DTOs;
 using AIDMS.Entities;
 using AIDMS.Repositories;
+using AIDMS.Security_Entities;
 using Google.Api;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,32 +14,24 @@ namespace AIDMS.Controllers;
 [ApiController]
 public class EmployeeController : Controller
 {
+    private readonly AIDMSContextClass _context;
     private readonly IEmployeeRepository _emp;
     private readonly INotificationRepository _notification;
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
 
-    public EmployeeController(IEmployeeRepository emp, INotificationRepository notification)
+    public EmployeeController(AIDMSContextClass context,IEmployeeRepository emp, INotificationRepository notification, UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
     {
+        this._context = context;
         _emp = emp;
         this._notification = notification;
+        this._userManager = userManager;
+        this._signInManager = signInManager;
+        this._roleManager = roleManager;
     }
     
-    //Admin
-    [HttpGet]
-    [Route("{empId:int}")]
-    // [ProducesResponseType(200, Type = typeof(ActionResult<BaseEmployeeDto>))]
-    public async Task<ActionResult<IEnumerable<BaseEmployeeDto>>> GetAllEmplyeesBaseInfo(int adminId)
-    {
-        var Employees = await _emp.GetAllEmployeesAndRoleAsync();
-        var employeesBaseInfo = Employees
-        .Where(em => em.Id != adminId).Select(e => new BaseEmployeeDto
-        {
-            Id = e.Id,
-            Name = $"{e.firstName} {e.lastName}",
-            roleName = e.Role != null ? e.Role.Name : ""
-        });
-        return Ok(employeesBaseInfo);
-    }
-
     [HttpGet]
     [Route("notifications/{empId:int}")]
     public async Task<ActionResult<IEnumerable<Notification>>> GetAllNotificationsByEmployeeId(int empId)
@@ -69,16 +63,56 @@ public class EmployeeController : Controller
     }
 
     [HttpGet]
-    [Route("supervisors")]
-    public async Task<ActionResult<IEnumerable<GetAllSupervisorsDto>>> GetAllSupervisors()
+    [Route("GetAllSupervisors")]
+    public async Task<IActionResult> GetAllSupervisors()
     {
-        var supervisors = await _emp.GetAllSupervisorsAsync();
-        var supervisorsDto = supervisors.Select(e => new GetAllSupervisorsDto
+        // Assuming "Supervisor" is the role name for supervisors
+        string supervisorRoleName = "Academic Supervisor";
+
+        // Find the role
+        var role = await _roleManager.FindByNameAsync(supervisorRoleName);
+        if (role == null)
         {
-            Id = e.Id,
-            Name = $"{e.firstName} {e.lastName}",
+            return NotFound($"Role '{supervisorRoleName}' not found.");
+        }
+
+        // Get the list of users in the Supervisor role
+        var usersInRole = await _userManager.GetUsersInRoleAsync(supervisorRoleName);
+
+        if (usersInRole == null || !usersInRole.Any())
+        {
+            return NotFound("No supervisors found.");
+        }
+        var supervisors = usersInRole.Select(user => new
+        {
+            Username = user.UserName,
+            Email = user.Email
         });
-        return Ok(supervisorsDto);
+
+        return Ok(supervisors);
+    }
+
+    [HttpGet]
+    [Route("GetAllUsersWithRoles")]
+    public async Task<IActionResult> GetAllUsersWithRoles()
+    {
+        var users = _userManager.Users.ToList();
+        var userRoles = new List<UserWithRolesDto>();
+        var query = from emp in _context.Employees
+                    join user in _userManager.Users
+                    on emp.userName equals user.UserName
+                    join userRole in _context.UserRoles
+                    on user.Id equals userRole.UserId
+                    join role in _context.Roles
+                    on userRole.RoleId equals role.Id
+                    select new
+                    {
+                        EmployeeId = emp.Id,
+                        EmployeeName = $"{emp.firstName}   {emp.lastName}",
+                        RoleName = role.Name
+                    };
+        var result = await query.ToListAsync();
+        return Ok(result);
     }
 
     [HttpGet]
@@ -95,73 +129,128 @@ public class EmployeeController : Controller
             UserSettingsDto employeeSettingsDto = new UserSettingsDto
             {
                 userName = employee.userName,
-                email = employee.Email,
                 Phone = employee.phoneNumber,
-                password = employee.Password,
                 profilePicture = employee.employeePicture
             };
             return Ok(employeeSettingsDto);
         }
         return BadRequest();
     }
-    
-    /////////////////
-    // [HttpGet]
-    // public async Task<IEnumerable<Employee>> GetAllEmplyeesBaseInfo()
-    // {
-    //     var Employees = await _emp.GetAllEmployeesAsync();
-    //     return Employees;
-    // }
-    //////////////
-    
-    [HttpPost]
-    [ProducesResponseType(400)]
-    public async Task<IActionResult> CreateEmployee([FromBody] Employee em)
-    {
-        if (em == null)
-        {
-            return BadRequest("invalid employee data");
-        }
-        
-        var addedEmployee = await _emp.AddEmployeeAsync(em);
-        if (addedEmployee == null)
-        {
-            return BadRequest("failed to add the employee");
-        }
 
-        return Ok(em);
+
+    private int CalculateAge(DateTime dateOfBirth)
+    {
+        DateTime now = DateTime.Now;
+        int age = now.Year - dateOfBirth.Year;
+        if (now < dateOfBirth.AddYears(age))
+            age--;
+        return age;
     }
 
-    
+    [HttpPost]
+    [ProducesResponseType(400)]
+    public async Task<IActionResult> CreateEmployee([FromBody] EmployeeRegestrationDto model)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        // Check if the email already exists
+        var existingUser = await _userManager.FindByEmailAsync(model.Email);
+        if (existingUser != null)
+            return BadRequest("Email already in use");
+
+        var existingUsername = await _userManager.FindByNameAsync(model.Username);
+        if (existingUsername != null)
+            return BadRequest("username already in use");
+
+        // Handling userManagerProbs
+        ApplicationUser applicationUser = new ApplicationUser
+        {
+            UserName = model.Username,
+            Email = model.Email,
+            PhoneNumber = model.PhoneNumber,
+            NationalId = model.nationalId,
+        };
+
+        var result = await _userManager.CreateAsync(applicationUser, model.Password);
+        if (!result.Succeeded)
+            return BadRequest(result.Errors);
+
+        // Create Cookie
+        await _userManager.AddToRoleAsync(applicationUser, model.role);
+        await _signInManager.SignInAsync(applicationUser, isPersistent: false);
+
+        // Step 4: Create Student Record without storing the plain password
+        var student = new Employee
+        {
+            firstName = model.firstName, // From Google Vision Model
+            lastName = model.lastName, // From Google Vision Model
+            phoneNumber = model.PhoneNumber,
+            userName = model.Username,
+            dateOfBirth = model.dateOfBirth,
+            IsMale = model.isMale,
+            employeePicture = model.employeePicture,
+            Age = CalculateAge(model.dateOfBirth)
+        };
+
+        bool? ok = await _emp.AddEmployeeAsync(student);
+        if (ok == false)
+            return BadRequest("Error, Please Check The Info Again!");
+
+        return Ok(new { Message = "Successful Registration" });
+    }
+
     [HttpDelete("{id}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     public async Task<IActionResult> Delete(int id)
     {
-        bool? deleted = await _emp.DeleteEmployeeAsync(id);
-        if (deleted.HasValue && deleted.Value) // Short circuit AND.
+        // Delete from Employee table
+        var emp = await _emp.GetEmployeeByIdAsync(id);
+        if (emp == null)
         {
-            return new NoContentResult(); // 204 No content.
+            return BadRequest($"Can't find Employee with id: {id}.");
         }
-        else
+        var user = await _userManager.FindByNameAsync(emp.userName);
+        if (user != null)
         {
-            return BadRequest( // 400 Bad request.
-                $"failed to delete the employee with id :{id}.");
+            // Delete the user from UserManager
+            IdentityResult result = await _userManager.DeleteAsync(user);
+            bool? ok = await _emp.DeleteEmployeeAsync(id);
+            if (!result.Succeeded)
+            {
+                return BadRequest($"Failed to delete the user associated with employee id: {id}.");
+            }
         }
-    }
 
+        return Ok("Employee Deleted"); 
+    }
 
     [HttpPut("{id}")]
     [ProducesResponseType(400)]
     public async Task<IActionResult> UpdateEmployee( int id,[FromBody] UpdateEmployeeDto updateEmp)
     {
-        var updated = await _emp.UpdateEmployeeBaseInfoAsync(id, updateEmp);
-        if (updated == null)
+        var emp = await _emp.GetEmployeeByIdAsync(id);
+        if (emp == null)
         {
-            return BadRequest("Failed to update");
+            return BadRequest($"Employee With id: {id} is not found!");
         }
-
-        var em = await _emp.GetEmployeeByIdAsync(id);
-        return Ok(em);
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        try
+        {
+            await _emp.UpdateEmployeeAsync(id, updateEmp);
+            return Ok(updateEmp);
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
     }
 }

@@ -3,24 +3,27 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-//using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-public class AuthController : ControllerBase
+namespace AIDMS.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class AuthController: ControllerBase
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly IConfiguration _configuration;
-    private readonly ILogger<AuthController> _logger;
+    private readonly JwtOptions _jwtOptions;
 
-    public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration, ILogger<AuthController> logger)
+    public AuthController(UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager, IConfiguration configuration,
+        ILogger<AuthController> logger, JwtOptions jwtOptions)
     {
         _userManager = userManager;
         _signInManager = signInManager;
-        _configuration = configuration;
-        _logger = logger;
+        this._jwtOptions = jwtOptions;
     }
 
     // making logout method async
@@ -31,28 +34,73 @@ public class AuthController : ControllerBase
         return Ok("Logged out");
     }
 
-    // making login method async
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginModel model)
+    public async Task<ActionResult<string>> Login([FromBody] LoginModel model)
     {
-        if(ModelState.IsValid)
+        if (ModelState.IsValid)
         {
             var applicationUser = await _userManager.FindByEmailAsync(model.Email);
-            if(applicationUser != null)
+            if (applicationUser != null)
             {
                 bool found = await _userManager.CheckPasswordAsync(applicationUser, model.Password);
                 if (found)
                 {
-                    await _signInManager.SignInAsync(applicationUser, model.RememberMe);
+                    // Retrieve user roles
+                    var roles = await _userManager.GetRolesAsync(applicationUser);
 
-                    // return end the function
-                    return Ok("You're Signed In!");
+                    // Generate claims including roles
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, applicationUser.UserName),
+                        new Claim(ClaimTypes.Email, applicationUser.Email),
+                        new Claim(ClaimTypes.NameIdentifier, applicationUser.Id)
+                    };
+
+                    foreach (var role in roles)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, role)); // Add each role as a claim
+                    }
+
+                    // Configure JWT token parameters
+                    var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Secret));
+                    var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+
+                    var tokenDescriptor = new SecurityTokenDescriptor
+                    {
+                        Issuer = _jwtOptions.Issuer,
+                        Audience = _jwtOptions.Audience,
+                        Subject = new ClaimsIdentity(claims),
+                        NotBefore = DateTime.UtcNow,
+                        Expires = DateTime.UtcNow.AddDays(_jwtOptions.LifeTime), // Valid for _jwtOptions.LifeTime days
+                        SigningCredentials = credentials
+                    };
+
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                    var accessToken = tokenHandler.WriteToken(securityToken);
+
+                    return Ok(accessToken);
+                }
+                else
+                {
+                    // Incorrect password
+                    return BadRequest("Invalid Username or Password");
                 }
             }
-            return BadRequest("Invalid Username or Password");
+            else
+            {
+                // User not found
+                return BadRequest("Invalid Username or Password");
+            }
         }
-        return BadRequest("Invalid Request");
+        else
+        {
+            // Model state is not valid
+            return BadRequest("Invalid Request");
+        }
     }
+
+
 
     #region Old Login With JWT stuff
 

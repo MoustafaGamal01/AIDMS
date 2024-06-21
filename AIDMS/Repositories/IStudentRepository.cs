@@ -13,7 +13,7 @@ namespace AIDMS.Repositories
         Task UpdateStudentAsync(int studentId, UserSettingsDto student);
         Task<bool?> DeleteStudentAsync(int studentId);
         Task<Student> GetStudentPersonalInfoByIdAsync(int studentId);
-        Task<bool?> UpdateStudentMilitaryAsync(string PID);
+        Task<Student> GetStudentByNationalIdAsync(string NatId);
     }
 
 }

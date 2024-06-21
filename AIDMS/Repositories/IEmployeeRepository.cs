@@ -8,11 +8,8 @@ namespace AIDMS.Repositories
         Task<Employee> GetEmployeeByNameAsync(string employeeName);
         Task<List<Employee>> GetAllEmployeesAsync();
         Task<bool?> AddEmployeeAsync(Employee employee);
-        Task UpdateEmployeeAsync(int employeeId, Employee employee);
+        Task UpdateEmployeeAsync(int employeeId, UpdateEmployeeDto employee);
         Task<bool?> DeleteEmployeeAsync(int employeeId);
-        Task<List<Employee>> GetAllEmployeesAndRoleAsync();
-        Task<bool?> UpdateEmployeeBaseInfoAsync(int employeeId, UpdateEmployeeDto employee);
-        // Supervisor 
-        Task<List<Employee>> GetAllSupervisorsAsync();
+        //Task<bool?> UpdateEmployeeBaseInfoAsync(int employeeId, UpdateEmployeeDto employee);
     }
 }

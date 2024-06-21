@@ -12,9 +12,5 @@ namespace AIDMS.Repositories
         Task<double> CheckBirthDateCertificateValidationAsync(string imagePath);
 
         Task<double> CheckNationalIdValidationAsync(string imagePath);
-
-        Task<bool> CheckPersonalPhotoAsync(string imagePath);
-
-        Task<double> CheckDocumentAuthorizationAsync(BatchAnnotateImagesResponse response, string studentName);
     }
 }
