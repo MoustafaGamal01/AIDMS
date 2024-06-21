@@ -13,13 +13,11 @@ namespace AIDMS.Controllers;
 public class EmployeeController : Controller
 {
     private readonly IEmployeeRepository _emp;
-    private readonly IRoleRepository _role;
     private readonly INotificationRepository _notification;
 
-    public EmployeeController(IEmployeeRepository emp, IRoleRepository role, INotificationRepository notification)
+    public EmployeeController(IEmployeeRepository emp, INotificationRepository notification)
     {
         _emp = emp;
-        _role = role;
         this._notification = notification;
     }
     
