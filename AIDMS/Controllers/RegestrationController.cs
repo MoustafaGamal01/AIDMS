@@ -10,13 +10,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AIDMS.DTOs;
 using AIDMS.Security_Entities;
-using Microsoft.AspNetCore.Authorization;
 
 namespace AIDMS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AllowAnonymous]
     public class RegestrationController : ControllerBase
     {
         private readonly AIDMSContextClass _context;
@@ -97,24 +95,7 @@ namespace AIDMS.Controllers
             if (existingUsername != null)
                 return BadRequest("username already in use");
 
-            // Handling userManagerProbs
-            ApplicationUser applicationUser = new ApplicationUser
-            {
-                UserName = model.Username,
-                Email = model.Email,
-                PhoneNumber = model.PhoneNumber,
-                NationalId = _nationalId
-            };
-
-            var result = await _userManager.CreateAsync(applicationUser, model.Password);
-            if (!result.Succeeded)
-                return BadRequest(result.Errors);
-
-            // Create Cookie
-            await _userManager.AddToRoleAsync(applicationUser, "Student");
-            await _signInManager.SignInAsync(applicationUser, isPersistent: false);
-
-            // Step 4: Create Student Record without storing the plain password
+            // Step 3: Create Student Record without storing the plain password
             var student = new Student
             {
                 firstName = model.firstName, // From Google Vision Model
@@ -138,6 +119,25 @@ namespace AIDMS.Controllers
             if (ok == false)
                 return BadRequest("Error, Please Check The Info Again!");
 
+
+            // Handling userManagerProbs
+            ApplicationUser applicationUser = new ApplicationUser
+            {
+                UserName = model.Username,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                NationalId = _nationalId,
+                StdId = student.Id,
+                UserType = "Student"
+            };
+
+            var result = await _userManager.CreateAsync(applicationUser, model.Password);
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
+
+            // Create Cookie
+            await _userManager.AddToRoleAsync(applicationUser, "Student");
+            await _signInManager.SignInAsync(applicationUser, isPersistent: false);
             return Ok(new { Message = "Successful Registration" });
         }
 

@@ -33,6 +33,7 @@ public class EmployeeController : Controller
         this._signInManager = signInManager;
         this._roleManager = roleManager;
     }
+
     [Authorize(Roles = "Affairs Officer, Academic Supervisor")]
     [HttpGet]
     [Route("notifications/{empId:int}")]
@@ -125,7 +126,8 @@ public class EmployeeController : Controller
     public async Task<IActionResult> GetEmplyeesSetting(int employeeId)
     {
         var employee = await _emp.GetEmployeeByIdAsync(employeeId);
-        if (employee == null)
+        var user = _userManager.FindByNameAsync(employee.userName);
+        if (employee == null || user == null)
         {
             return NotFound("Employee not found");
         }
@@ -135,13 +137,13 @@ public class EmployeeController : Controller
             {
                 userName = employee.userName,
                 Phone = employee.phoneNumber,
+                email = user.Result.Email,
                 profilePicture = employee.employeePicture
             };
             return Ok(employeeSettingsDto);
         }
         return BadRequest();
     }
-
 
     private int CalculateAge(DateTime dateOfBirth)
     {
@@ -169,25 +171,8 @@ public class EmployeeController : Controller
         if (existingUsername != null)
             return BadRequest("username already in use");
 
-        // Handling userManagerProbs
-        ApplicationUser applicationUser = new ApplicationUser
-        {
-            UserName = model.Username,
-            Email = model.Email,
-            PhoneNumber = model.PhoneNumber,
-            NationalId = model.nationalId,
-        };
-
-        var result = await _userManager.CreateAsync(applicationUser, model.Password);
-        if (!result.Succeeded)
-            return BadRequest(result.Errors);
-
-        // Create Cookie
-        await _userManager.AddToRoleAsync(applicationUser, model.role);
-        await _signInManager.SignInAsync(applicationUser, isPersistent: false);
-
-        // Step 4: Create Student Record without storing the plain password
-        var student = new Employee
+        // Step 3: Create Student Record without storing the plain password
+        var Employee = new Employee
         {
             firstName = model.firstName, // From Google Vision Model
             lastName = model.lastName, // From Google Vision Model
@@ -199,9 +184,28 @@ public class EmployeeController : Controller
             Age = CalculateAge(model.dateOfBirth)
         };
 
-        bool? ok = await _emp.AddEmployeeAsync(student);
+        bool? ok = await _emp.AddEmployeeAsync(Employee);
         if (ok == false)
             return BadRequest("Error, Please Check The Info Again!");
+
+        // Handling userManagerProbs
+        ApplicationUser applicationUser = new ApplicationUser
+        {
+            UserName = model.Username,
+            Email = model.Email,
+            PhoneNumber = model.PhoneNumber,
+            NationalId = model.nationalId,
+            UserType = "Employee",
+            EmpId = Employee.Id
+        };
+
+        var result = await _userManager.CreateAsync(applicationUser, model.Password);
+        if (!result.Succeeded)
+            return BadRequest(result.Errors);
+
+        // Create Cookie
+        await _userManager.AddToRoleAsync(applicationUser, model.role);
+        await _signInManager.SignInAsync(applicationUser, isPersistent: false);
 
         return Ok(new { Message = "Successful Registration" });
     }

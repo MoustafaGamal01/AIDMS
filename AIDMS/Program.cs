@@ -1,18 +1,18 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
 using AIDMS.Entities;
 using AIDMS.Repositories;
-using System.Text.Json.Serialization;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Google.Api;
 using AIDMS.Security_Entities;
-using Google;
-using PdfSharp.Charting;
-using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 
 namespace AIDMS
 {
@@ -26,8 +26,8 @@ namespace AIDMS
             builder.Services.AddControllers()
                 .AddJsonOptions(options =>
                 {
-                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
                 });
 
             builder.Services.AddEndpointsApiExplorer();
@@ -63,11 +63,10 @@ namespace AIDMS
 
             // Configure Identity
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<AIDMSContextClass>()
-                .AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<AIDMSContextClass>();
 
             // Configure JWT Authentication
-            var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtOptions>();//.Get<JwtOptions>();
+            var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtOptions>();
             builder.Services.AddSingleton(jwtSettings);
             builder.Services.AddAuthentication(options =>
             {
@@ -98,10 +97,39 @@ namespace AIDMS
                 });
             });
 
-            // Configure Swagger without security
+            // Configure Swagger with OAuth2 (JWT Bearer)
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AIDMS API", Version = "v1" });
+
+                // Define the JWT Bearer security scheme
+                var securityScheme = new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Description = "JWT Authorization header using the Bearer scheme.",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT"
+                };
+                c.AddSecurityDefinition("Bearer", securityScheme);
+
+                // Add JWT Bearer requirement to all endpoints
+                var securityRequirement = new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                };
+                c.AddSecurityRequirement(securityRequirement);
             });
 
             var app = builder.Build();
@@ -110,7 +138,15 @@ namespace AIDMS
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "AIDMS API v1");
+
+                    // Enable JWT authorization in Swagger UI
+                    c.OAuthClientId("swagger-client-id");
+                    c.OAuthClientSecret(""); // Normally you would set this securely
+                    c.OAuthAppName("Swagger UI");
+                });
             }
 
             app.UseHttpsRedirection();

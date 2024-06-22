@@ -37,8 +37,6 @@ namespace AIDMS.Controllers
                 else return BadRequest(result.Errors);
             }
             return BadRequest("Error Occured while creating a role");
-            
-            
         }
         
         [HttpGet]

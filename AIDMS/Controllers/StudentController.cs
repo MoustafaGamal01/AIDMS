@@ -12,9 +12,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AIDMS.Controllers
 {
-    [Authorize(Roles = "Student")]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Student")]
     public class StudentController : ControllerBase
     {
         private readonly AIDMSContextClass _context;
@@ -60,7 +60,6 @@ namespace AIDMS.Controllers
             }
             return BadRequest();
         }
-        [Authorize(Roles = "Student")]
 
         [HttpGet]
         [Route("notifications/{studentId:int}")]

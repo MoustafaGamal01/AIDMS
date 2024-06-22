@@ -50,12 +50,22 @@ public class AuthController: ControllerBase
                 {
                     var roles = await _userManager.GetRolesAsync(applicationUser);
 
+                    
                     var claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.Name, applicationUser.UserName),
                             new Claim(ClaimTypes.Email, applicationUser.Email),
                             new Claim(ClaimTypes.NameIdentifier, applicationUser.Id)
                         };
+                    
+                    if(applicationUser.UserType == "Employee")
+                    {
+                        claims.Add(new Claim("EmpId", applicationUser.EmpId.ToString()));
+                    }
+                    else if(applicationUser.UserType == "Student")
+                    {
+                        claims.Add(new Claim("StdId", applicationUser.StdId.ToString()));
+                    }
 
                     foreach (var role in roles)
                     {
