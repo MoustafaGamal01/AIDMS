@@ -311,7 +311,7 @@ namespace AIDMS.Migrations
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<bool?>("militaryEducation")
+                    b.Property<bool>("militaryEducation")
                         .HasColumnType("bit");
 
                     b.Property<bool?>("regestrationStatus")
@@ -372,6 +372,9 @@ namespace AIDMS.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("EmpId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -402,12 +405,19 @@ namespace AIDMS.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("StdId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("UserType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

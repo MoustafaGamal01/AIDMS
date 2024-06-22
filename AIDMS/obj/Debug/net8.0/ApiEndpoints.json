@@ -436,6 +436,37 @@
   },
   {
     "ContainingType": "AIDMS.Controllers.DocumentsController",
+    "Method": "MilitaryServiceDocument",
+    "RelativePath": "api/Documents/{empId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "empId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.DocumentsController",
     "Method": "GetDocumentsByDocumentTypeAndApplicationType",
     "RelativePath": "api/Documents/ByDocumentType/{documentType}/ForApplication/{applicationType}",
     "HttpMethod": "GET",
@@ -449,6 +480,32 @@
       },
       {
         "Name": "applicationType",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AIDMS.DTOs.DocumentDto, AIDMS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AIDMS.Controllers.DocumentsController",
+    "Method": "GetDocumentsBySearchingId",
+    "RelativePath": "api/Documents/search/{StuName}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "StuName",
         "Type": "System.String",
         "IsRequired": true
       }
