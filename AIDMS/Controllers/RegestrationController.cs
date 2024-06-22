@@ -50,7 +50,7 @@ namespace AIDMS.Controllers
         }
 
         [HttpPost("validate-national-id")]
-        public async Task<IActionResult> ValidateNationalID(string NationalId)
+        public async Task<IActionResult> ValidateNationalID([FromBody]string NationalId)
         {
             var existingNationalId = await _universityListNIds.CheckExistanceOfNationalId(NationalId);
             if (existingNationalId == null)

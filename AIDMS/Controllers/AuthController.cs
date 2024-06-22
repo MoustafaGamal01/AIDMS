@@ -38,33 +38,30 @@ public class AuthController: ControllerBase
 
     [HttpPost("login")]
     [AllowAnonymous]
-    public async Task<ActionResult<string>> Login([FromBody] LoginModel model)
+    public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
         if (ModelState.IsValid)
         {
             var applicationUser = await _userManager.FindByEmailAsync(model.Email);
             if (applicationUser != null)
             {
-                bool found = await _userManager.CheckPasswordAsync(applicationUser, model.Password);
-                if (found)
+                bool isPasswordValid = await _userManager.CheckPasswordAsync(applicationUser, model.Password);
+                if (isPasswordValid)
                 {
-                    // Retrieve user roles
                     var roles = await _userManager.GetRolesAsync(applicationUser);
 
-                    // Generate claims including roles
                     var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, applicationUser.UserName),
-                        new Claim(ClaimTypes.Email, applicationUser.Email),
-                        new Claim(ClaimTypes.NameIdentifier, applicationUser.Id)
-                    };
+                        {
+                            new Claim(ClaimTypes.Name, applicationUser.UserName),
+                            new Claim(ClaimTypes.Email, applicationUser.Email),
+                            new Claim(ClaimTypes.NameIdentifier, applicationUser.Id)
+                        };
 
                     foreach (var role in roles)
                     {
-                        claims.Add(new Claim(ClaimTypes.Role, role)); // Add each role as a claim
+                        claims.Add(new Claim(ClaimTypes.Role, role));
                     }
 
-                    // Configure JWT token parameters
                     var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Secret));
                     var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
 
@@ -74,7 +71,7 @@ public class AuthController: ControllerBase
                         Audience = _jwtOptions.Audience,
                         Subject = new ClaimsIdentity(claims),
                         NotBefore = DateTime.UtcNow,
-                        Expires = DateTime.UtcNow.AddDays(_jwtOptions.LifeTime), // Valid for _jwtOptions.LifeTime days
+                        Expires = DateTime.UtcNow.AddDays(_jwtOptions.LifeTime),
                         SigningCredentials = credentials
                     };
 
@@ -82,27 +79,23 @@ public class AuthController: ControllerBase
                     var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                     var accessToken = tokenHandler.WriteToken(securityToken);
 
-                    return Ok(accessToken);
+                    return Ok(new { token = accessToken });
                 }
                 else
                 {
-                    // Incorrect password
                     return BadRequest("Invalid Username or Password");
                 }
             }
             else
             {
-                // User not found
                 return BadRequest("Invalid Username or Password");
             }
         }
         else
         {
-            // Model state is not valid
             return BadRequest("Invalid Request");
         }
     }
-
     #region Old Login With JWT stuff
 
     //[HttpPost("login")]
