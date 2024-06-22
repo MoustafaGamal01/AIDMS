@@ -49,6 +49,12 @@ namespace AIDMS.Repositories
         {
             return await context.Documents.ToListAsync();
         }
+        
+        public async Task<List<AIDocument>> GetAllDocumentsWithStudentAsync()
+        {
+            return await context.Documents.Include(doc=>doc.Student).ToListAsync();
+        }
+        
         public async Task<List<AIDocument>> GetDocumentsByAppIdAndAsync(int appId)
         {
             return await context.Documents

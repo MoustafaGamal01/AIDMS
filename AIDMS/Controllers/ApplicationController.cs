@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AIDMS.Controllers;
 
@@ -27,6 +28,7 @@ public class ApplicationController : Controller {
     
     [HttpGet]
     [Route("admin")]
+    [Authorize(Roles = "Admin")]
     public async Task<IEnumerable<ApplicationBaseInfoDto>> GetAllApplicationsBaseInfo()
     {
         var Applications = await _application.GetAllApplicationsAsync();
@@ -44,7 +46,13 @@ public class ApplicationController : Controller {
 #endregion    
 
 #region Get Application Request for the employee
-
+// Academic Transcript
+//Enrollment Proof
+//Material Registration
+//Military Education
+//Expenses Payment
+//Registration Requests
+    [Authorize(Roles = "Affairs Officer")]
     [HttpGet]
     [Route("pending/employee")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
@@ -54,8 +62,8 @@ public class ApplicationController : Controller {
         
         var Applications = await _application.GetAllPendingApplicationsAsync();
         var applicationRequestDto = Applications
-            .Where(application=>application.Title.ToUpper()!="material".ToUpper()&&
-                                application.Title.ToUpper()!="registeration".ToUpper())
+            .Where(application=>application.Title.ToUpper()!="Material Registration".ToUpper()&&
+                                application.Title.ToUpper()!="Registration Requests".ToUpper())
             .Select(app => new ApplicationRequestDto
         {
             Id = app.Id,
@@ -68,6 +76,7 @@ public class ApplicationController : Controller {
     }
     
 
+    [Authorize(Roles = "Affairs Officer")]
     [HttpGet]
     [Route("archived/employee")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationArchivedDto>))]
@@ -75,8 +84,8 @@ public class ApplicationController : Controller {
     {
         var Applications = await _application.GetAllArchivedApplicationsAsync();
         var applicationArchivedDto = Applications
-            .Where(application=>application.Title.ToUpper()!="Material".ToUpper()&&
-                                application.Title.ToUpper()!="registeration".ToUpper())
+            .Where(application=>application.Title.ToUpper()!="Material Registration".ToUpper()&&
+                                application.Title.ToUpper()!="Registration Requests".ToUpper())
             .Select(app => new ApplicationArchivedDto
             {
                 Id = app.Id,
@@ -93,6 +102,7 @@ public class ApplicationController : Controller {
 
 #region Get Application Request for the employee by search
    
+    [Authorize(Roles = "Affairs Officer")]
     [HttpGet]
     [Route("pending/employee/{studentName}")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
@@ -105,6 +115,7 @@ public class ApplicationController : Controller {
         return applicationRequestDto;
     }
         
+    [Authorize(Roles = "Affairs Officer")]
     [HttpGet]
     [Route("archived/employee/{studentName}")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationArchivedDto>))]
@@ -124,6 +135,7 @@ public class ApplicationController : Controller {
 
 #region Registeration
 
+    [Authorize(Roles = "Affairs Officer")]
     [HttpGet]
     [Route("pending/registeration")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<RegisterationDto>))]
@@ -131,7 +143,7 @@ public class ApplicationController : Controller {
     {
         var Applications = await _application.GetAllPendingApplicationsAsync();
         var registerationDto = Applications
-            .Where(application=>application.Title.ToUpper() == "registeration".ToUpper())
+            .Where(application=>application.Title.ToUpper() == "Registration Requests".ToUpper())
             .Select(app => new RegisterationDto
             {
                 Id = app.Id,
@@ -141,7 +153,7 @@ public class ApplicationController : Controller {
         return registerationDto;
     }
         
-        
+    [Authorize(Roles = "Affairs Officer")]
     [HttpGet]
     [Route("archived/registeration")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<RegisterationDto>))]
@@ -149,7 +161,7 @@ public class ApplicationController : Controller {
     {
         var Applications = await _application.GetAllArchivedApplicationsAsync();
         var registerationArchivedDto = Applications
-            .Where(application=>application.Title.ToUpper() != "registeration".ToUpper())
+            .Where(application=>application.Title.ToUpper() != "Registration Requests".ToUpper())
             .Select(app => new RegisterationDto
             {
                 Id = app.Id,
@@ -163,6 +175,8 @@ public class ApplicationController : Controller {
 #endregion
 
 #region Accept & Decline Registeration
+
+    [Authorize(Roles = "Affairs Officer")]
     [HttpDelete("decline/registeration/{appId}")]
     [ProducesResponseType(400)]
     public async Task<IActionResult> deleteRegisterationApplicationStatus(int appId)
@@ -188,6 +202,7 @@ public class ApplicationController : Controller {
 
 #region Accept & Decline
 
+    [Authorize(Roles = "Affairs Officer, Academic Supervisor")]
     [HttpPut("accept/{empId}/{appId}")]
     [ProducesResponseType(400)]
 
@@ -228,6 +243,7 @@ public class ApplicationController : Controller {
         return BadRequest();
     }
     
+    [Authorize(Roles = "Affairs Officer, Academic Supervisor")]
     [HttpPut("decline/{empId}/{appId}")]
     [ProducesResponseType(400)]
 
@@ -273,6 +289,7 @@ public class ApplicationController : Controller {
     
 #region Get Application Request for the supervisor
     
+    [Authorize(Roles = "Academic Supervisor")]
     [HttpGet]
     [Route("pending/supervisor/{empId:int}")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
@@ -280,7 +297,7 @@ public class ApplicationController : Controller {
     {
         var Applications = await _application.GetAllPendingApplicationsByEmployeeIdAsync(empId);
         var applicationRequestDto = Applications
-            .Where(application=>application.Title.ToUpper()=="Material".ToUpper())
+            .Where(application=>application.Title.ToUpper()=="Material Registration".ToUpper())
             .Select(app => new ApplicationRequestDto
         {
             Id = app.Id,
@@ -291,7 +308,7 @@ public class ApplicationController : Controller {
         return applicationRequestDto;
     }
     
-  
+    [Authorize(Roles = "Academic Supervisor")]
     [HttpGet]
     [Route("archived/supervisor/{empId:int}")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationArchivedDto>))]
@@ -299,7 +316,7 @@ public class ApplicationController : Controller {
     {
         var Applications = await _application.GetAllArchivedApplicationsByEmployeeIdAsync(empId);
         var applicationArchivedDto = Applications
-            .Where(application=>application.Title.ToUpper()=="Material".ToUpper())
+            .Where(application=>application.Title.ToUpper()=="Material Registration".ToUpper())
             .Select(app => new ApplicationArchivedDto
             {
                 Id = app.Id,
@@ -315,6 +332,7 @@ public class ApplicationController : Controller {
 
 #region Get Application Request for the supervisor by search
 
+    [Authorize(Roles = "Academic Supervisor")]
     [HttpGet]
     [Route("pending/supervisor/{empId:int}/{studentName}")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationRequestDto>))]
@@ -327,7 +345,7 @@ public class ApplicationController : Controller {
         return applicationRequestDto;
     }
     
-        
+    [Authorize(Roles = "Academic Supervisor")]
     [HttpGet]
     [Route("archived/supervisor/{empId:int}/{studentName}")]
     [ProducesResponseType(200, Type = typeof(IEnumerable<ApplicationArchivedDto>))]
