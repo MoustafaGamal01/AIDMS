@@ -12,20 +12,22 @@ namespace AIDMS.DTOs
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string email { get; set; }
-        
-        [Required(ErrorMessage = "Password is required")]
-        [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters long")]
-        public string password { get; set; }
+
+        [DataType(DataType.Password)]
+        [StringLength(20, MinimumLength = 8, ErrorMessage = "Password must be between 8 and 20 characters")]
+        public string? CurrentPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [StringLength(20, MinimumLength = 8, ErrorMessage = "Password must be between 8 and 20 characters")]
+        public string? NewPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Compare("NewPassword", ErrorMessage = "Passwords do not match")]
+        public string? ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "Phone number is required")]
         [Phone(ErrorMessage = "Invalid phone number")]
         public string Phone { get; set; }
-        [Required]
-        public DateTime dateOfBirth { get; set; }
-        [Required]
-        public bool isMale { get; set; }
 
-        public string firstName { get; set; }
-        public string lastName { get; set; }
     }
 }

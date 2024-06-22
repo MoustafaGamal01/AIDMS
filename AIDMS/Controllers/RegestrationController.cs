@@ -10,11 +10,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using AIDMS.DTOs;
 using AIDMS.Security_Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AIDMS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class RegestrationController : ControllerBase
     {
         private readonly AIDMSContextClass _context;
@@ -27,6 +29,8 @@ namespace AIDMS.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private static string _nationalId = null;
+        private static int _studentId = 0;
+
         // Temporary storage for documents
         private readonly Dictionary<int, List<AIDocument>> _tempDocumentStorage = new();
 
@@ -129,7 +133,7 @@ namespace AIDMS.Controllers
                 Age = CalculateAge(model.dateOfBirth)
             };
             student.SID = _nationalId;
-
+            _studentId = student.Id;
             bool? ok = await _studentRepository.AddStudentAsync(student);
             if (ok == false)
                 return BadRequest("Error, Please Check The Info Again!");
@@ -141,6 +145,7 @@ namespace AIDMS.Controllers
         public async Task<IActionResult> UploadDocument([FromForm] UploadDocumentDto uploadDocumentDto)
         {
             {
+                uploadDocumentDto.studentId = _studentId;
                 if (uploadDocumentDto.file == null || uploadDocumentDto.file.Length == 0)
                     return BadRequest("Invalid file");
 
@@ -193,7 +198,8 @@ namespace AIDMS.Controllers
         [HttpPost("submit-application/{studentId}")]
         public async Task<IActionResult> SubmitApplication(int studentId)
         {
-             var student =  await _studentRepository.GetAllStudentDataByIdAsync(studentId);
+            studentId = _studentId;
+            var student =  await _studentRepository.GetAllStudentDataByIdAsync(studentId);
             if (student == null)
                 return NotFound("Student not found");
 

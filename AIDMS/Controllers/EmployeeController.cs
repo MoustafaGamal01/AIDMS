@@ -3,6 +3,7 @@ using AIDMS.Entities;
 using AIDMS.Repositories;
 using AIDMS.Security_Entities;
 using Google.Api;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ namespace AIDMS.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+//[Authorize]
 public class EmployeeController : Controller
 {
     private readonly AIDMSContextClass _context;
@@ -31,7 +33,7 @@ public class EmployeeController : Controller
         this._signInManager = signInManager;
         this._roleManager = roleManager;
     }
-    
+    [Authorize(Roles = "Affairs Officer, Academic Supervisor")]
     [HttpGet]
     [Route("notifications/{empId:int}")]
     public async Task<ActionResult<IEnumerable<Notification>>> GetAllNotificationsByEmployeeId(int empId)
@@ -62,6 +64,7 @@ public class EmployeeController : Controller
         return Ok(EmpNotificationDto);
     }
 
+    [Authorize(Roles = "Admin, Student")]
     [HttpGet]
     [Route("GetAllSupervisors")]
     public async Task<IActionResult> GetAllSupervisors()
@@ -92,6 +95,7 @@ public class EmployeeController : Controller
         return Ok(supervisors);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     [Route("GetAllUsersWithRoles")]
     public async Task<IActionResult> GetAllUsersWithRoles()
@@ -108,13 +112,14 @@ public class EmployeeController : Controller
                     select new
                     {
                         EmployeeId = emp.Id,
-                        EmployeeName = $"{emp.firstName}   {emp.lastName}",
+                        EmployeeName = $"{emp.firstName} {emp.lastName}",
                         RoleName = role.Name
                     };
         var result = await query.ToListAsync();
         return Ok(result);
     }
 
+    [Authorize(Roles=("Affairs Officer, Academic Supervisor, Admin"))]
     [HttpGet]
     [Route("settings/{employeeId:int}")]
     public async Task<IActionResult> GetEmplyeesSetting(int employeeId)
@@ -147,6 +152,7 @@ public class EmployeeController : Controller
         return age;
     }
 
+    [Authorize(Roles =("Admin"))]
     [HttpPost]
     [ProducesResponseType(400)]
     public async Task<IActionResult> CreateEmployee([FromBody] EmployeeRegestrationDto model)
@@ -200,6 +206,7 @@ public class EmployeeController : Controller
         return Ok(new { Message = "Successful Registration" });
     }
 
+    [Authorize(Roles = ("Admin"))]
     [HttpDelete("{id}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
@@ -222,10 +229,10 @@ public class EmployeeController : Controller
                 return BadRequest($"Failed to delete the user associated with employee id: {id}.");
             }
         }
-
         return Ok("Employee Deleted"); 
     }
 
+    [Authorize(Roles = ("Admin, Affairs Officer, Academic Supervisor"))]
     [HttpPut("{id}")]
     [ProducesResponseType(400)]
     public async Task<IActionResult> UpdateEmployee( int id,[FromBody] UpdateEmployeeDto updateEmp)

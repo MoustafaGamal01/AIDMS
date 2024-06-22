@@ -8,9 +8,11 @@ using System;
 using MimeKit;
 using static System.Net.Mime.MediaTypeNames;
 using Google.Apis.Auth.OAuth2.Requests;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AIDMS.Controllers
 {
+    [Authorize(Roles = "Student")]
     [Route("api/[controller]")]
     [ApiController]
     public class StudentController : ControllerBase
@@ -19,8 +21,6 @@ namespace AIDMS.Controllers
         private readonly IStudentRepository _student;
         private readonly IApplicationRepository _application;
         private readonly INotificationRepository _notification;
-        private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly IDocumentRepository _document;
         private readonly IGoogleCloudStorageRepository _googleCloud;
         private readonly IPaymentRepository _payment;
 
@@ -32,12 +32,9 @@ namespace AIDMS.Controllers
             this._student = student;
             this._application = application;
             this._notification = notification;
-            this._hostingEnvironment = hostingEnvironment;
-            this._document = document;
             this._googleCloud = googleCloud;
             this._payment = payment;
         }
-
         [HttpGet]
         [Route("{Id:int}", Name = "StudentPersonalInfo")]
         public async Task<IActionResult> GetStudentPersonalInfoById(int Id)
@@ -63,6 +60,7 @@ namespace AIDMS.Controllers
             }
             return BadRequest();
         }
+        [Authorize(Roles = "Student")]
 
         [HttpGet]
         [Route("notifications/{studentId:int}")]
@@ -787,7 +785,5 @@ namespace AIDMS.Controllers
                 return "Unknown";
             }
         }
-
-
     }
 }

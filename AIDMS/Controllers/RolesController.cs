@@ -1,6 +1,7 @@
 ﻿using AIDMS.DTOs;
 using AIDMS.Entities;
 using AIDMS.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ namespace AIDMS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = ("Admin"))]
     public class RolesController : ControllerBase
     {
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -46,7 +48,5 @@ namespace AIDMS.Controllers
             var roles = await _roleManager.Roles.ToListAsync();
             return Ok(roles);
         }
-
-
     }
 }

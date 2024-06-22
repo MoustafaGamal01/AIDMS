@@ -118,15 +118,18 @@ namespace AIDMS.Repositories
                 user.PhoneNumber = userSettingsDto.Phone;
             }
 
-            // Update password if provided
-            if (!string.IsNullOrEmpty(userSettingsDto.password))
+            if (!string.IsNullOrEmpty(userSettingsDto.CurrentPassword) &&
+                !string.IsNullOrEmpty(userSettingsDto.NewPassword) &&
+                !string.IsNullOrEmpty(userSettingsDto.ConfirmPassword))
             {
-                if (!IsValidPassword(userSettingsDto.password))
+                var passwordChangeResult = await _userManager.ChangePasswordAsync(user, userSettingsDto.CurrentPassword, userSettingsDto.NewPassword);
+                if (!passwordChangeResult.Succeeded)
                 {
-                    throw new ArgumentException("Invalid password. It must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a number, and a special character.");
+                    var errors = string.Join(", ", passwordChangeResult.Errors.Select(e => e.Description));
+                    throw new Exception($"Failed to change password: {errors}");
                 }
-                user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, userSettingsDto.password);
             }
+
 
             _context.Students.Update(existingStudent);
             await _context.SaveChangesAsync();

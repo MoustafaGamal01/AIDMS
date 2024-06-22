@@ -1,4 +1,5 @@
 ﻿using AIDMS.Security_Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -27,6 +28,7 @@ public class AuthController: ControllerBase
     }
 
     // making logout method async
+    [Authorize]
     [HttpGet("logout")]
     public async Task<IActionResult> Logout()
     {
@@ -35,6 +37,7 @@ public class AuthController: ControllerBase
     }
 
     [HttpPost("login")]
+    [AllowAnonymous]
     public async Task<ActionResult<string>> Login([FromBody] LoginModel model)
     {
         if (ModelState.IsValid)
@@ -99,8 +102,6 @@ public class AuthController: ControllerBase
             return BadRequest("Invalid Request");
         }
     }
-
-
 
     #region Old Login With JWT stuff
 
