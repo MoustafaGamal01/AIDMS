@@ -58,14 +58,13 @@ namespace AIDMS
             // Configure Database Context
             builder.Services.AddDbContext<AIDMSContextClass>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("LocalCS"));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("RemoteCS"));
             });
 
             // Configure Identity
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AIDMSContextClass>()
                 .AddDefaultTokenProviders();
-
 
             // Configure JWT Authentication
             var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtOptions>();//.Get<JwtOptions>();

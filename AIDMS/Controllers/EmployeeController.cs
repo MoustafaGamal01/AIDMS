@@ -13,7 +13,7 @@ namespace AIDMS.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-//[Authorize]
+[Authorize]
 public class EmployeeController : Controller
 {
     private readonly AIDMSContextClass _context;
