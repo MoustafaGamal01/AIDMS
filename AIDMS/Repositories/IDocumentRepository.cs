@@ -15,5 +15,6 @@ namespace AIDMS.Repositories
         // Task<List<AIDocument>> GetDocumentsByApplicationTypeAsync(string applicationType);
         Task<List<AIDocument>> GetDocumentsByDocumentTypeAndApplicationTypeAsync(string documentType, string applicationType);
         Task<List<AIDocument>> GetDocumentsByAppIdAndAsync(int appId);
+        Task<List<AIDocument>> GetAllDocumentsWithStudentAsync();
     }
 }

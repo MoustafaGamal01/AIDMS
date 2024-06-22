@@ -14,6 +14,7 @@ namespace AIDMS.Repositories
         Task<bool?> DeleteStudentAsync(int studentId);
         Task<Student> GetStudentPersonalInfoByIdAsync(int studentId);
         Task<Student> GetStudentByNationalIdAsync(string NatId);
+        Task<bool?> UpdateStudentMilitaryAsync(string PID);
     }
 
 }

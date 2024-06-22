@@ -213,5 +213,24 @@ namespace AIDMS.Repositories
         {
             return await _context.Students.FirstOrDefaultAsync(s => s.SID == NatId);
         }
+
+        public async Task<bool?> UpdateStudentMilitaryAsync(string PID)
+        {
+            var student = await _context.Students.FirstOrDefaultAsync(stu => stu.SID == PID);
+            if (student == null)
+            {
+                return null;
+            }
+
+            student.militaryEducation = true;
+            _context.Update(student);
+            int affected = await _context.SaveChangesAsync();
+            if (affected == 1)
+            {
+                return true;
+            }
+
+            return null;
+        }
     }
 }

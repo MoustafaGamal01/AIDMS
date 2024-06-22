@@ -39,6 +39,7 @@ namespace AIDMS.Entities
 
         public bool IsMale { get; set; } = true;
 
+
         [DataType(DataType.Date)]
         public DateTime dateOfBirth { get; set; }
 
@@ -48,7 +49,7 @@ namespace AIDMS.Entities
         [Range(0.0, 4.0, ErrorMessage = "Level must be between 1 and 4")]
         public int Level { get; set; }
 
-        public bool? militaryEducation { get; set; } = false;
+        public bool militaryEducation { get; set; } = false;
         public bool? regestrationStatus { get; set; } = null;
 
         // Nav Prop

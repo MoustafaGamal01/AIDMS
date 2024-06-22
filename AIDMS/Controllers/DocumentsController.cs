@@ -15,11 +15,16 @@ public class DocumentsController : Controller {
     
     private readonly IApplicationRepository _application;
     private readonly IDocumentRepository _doc;
+    private readonly IStudentRepository _student;
+    private readonly IPDFManagementRepository _pdf;
+
     
-    public DocumentsController(IApplicationRepository application,IDocumentRepository doc)
+    public DocumentsController(IPDFManagementRepository pdf,IApplicationRepository application,IDocumentRepository doc,IStudentRepository student)
     {
         _application = application;
         _doc = doc;
+        _student = student;
+        _pdf = pdf;
     }
 
     [HttpGet]
@@ -78,4 +83,55 @@ public class DocumentsController : Controller {
         });
         return Ok(documents);
     }
+    
+    
+    [Authorize(Roles = ("Affairs Officer"))]
+    [HttpPost("{empId}")]
+    public async Task<ActionResult<IEnumerable<string>>> MilitaryServiceDocument(int empId,[FromBody] IFormFile file)
+    {
+        string document = await _pdf.ReadPDFContent(file);
+        string PID = "";
+        List<string> notUpdated = new List<string>(); 
+        for (int i = 0; i < document.Length; i++)
+        {
+            if (Char.IsDigit(document[i]))
+            {
+                PID += document[i];
+                if (PID.Length == 14)
+                {
+                    bool? affected = await _student.UpdateStudentMilitaryAsync(PID);
+                    if (affected == null)
+                    {
+                        notUpdated.Add(PID);
+                    }
+                    PID = "";
+                }
+            }
+            else
+            {
+                PID = "";
+            }
+        }
+        return notUpdated;
+    }
+    
+    [Authorize(Roles = ("Affairs Officer"))]
+    [HttpGet("search/{StuName}")]
+    public async Task<IEnumerable<DocumentDto>> GetDocumentsBySearchingId(string StuName)
+    {
+        var Documents = await _doc.GetAllDocumentsWithStudentAsync();
+        var doc = Documents
+            .Where(document => $"{document.Student.firstName} {document.Student.lastName}".Contains(StuName));
+        
+        var documents = doc.Select(doc => new DocumentDto
+        {
+            FilePath = doc.FilePath,
+            FileName = doc.FileName,
+            FileType = doc.FileType,
+            uploadedAt = doc.UploadedAt
+        });
+        return documents;
+    }
+    
+    
 }
